@@ -6,11 +6,11 @@ tailwind.config = {
                 medieval: {
                     dark: '#1a1614',
                     brown: '#2d2520',
-                    gold: '#d4af37',
-                    lightgold: '#f4e5c3',
+                    red: '#c62828',
+                    lightred: '#fc9e9eff',
                     cream: '#e8d4b0',
                 }
-            },
+            }, 
             fontFamily: {
                 'inter': ['Inter', 'sans-serif'],
             }
