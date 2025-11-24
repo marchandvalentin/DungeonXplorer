@@ -8,10 +8,14 @@
     <title>Index</title>
 </head>
 <body>
-    <?php include_once './PHP/bdd_functions.php'; ?>
+    <?php 
+        session_start(); 
+        include_once './PHP/connexion.php'; 
+        include_once './PHP/bdd_functions.php'; 
+    ?>
 
     <h1 class="text-3xl font-bold underline">
-        
+        Dungeon Xplorer
     </h1>
 </body>
 </html>
