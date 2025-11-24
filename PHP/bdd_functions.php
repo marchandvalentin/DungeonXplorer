@@ -1,6 +1,8 @@
 <?php
     require_once 'connexion.php';
 
+    ////////////////// ITEM FUNCTIONS ///////////////////////
+
     function getItemById($item_id) {
         global $pdo;
         $stmt = $pdo->prepare("SELECT * FROM items WHERE id = :id");
@@ -9,7 +11,7 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    
+    /////////////// INVENTORY FUNCTIONS ///////////////////////
 
     function getInventoryByHeroId($hero_id) {
         global $pdo;
@@ -55,7 +57,7 @@
         return $stmt->execute();
     }
 
-    //HERO FUNCTIONS
+    ////////////////// HERO FUNCTIONS ///////////////////////
 
     function getHeroById($id) {
         global $pdo;
@@ -97,7 +99,7 @@
         return $stmt->execute();
     }
 
-    function changeHeroArmorById($hero_id, $new_armor_id) {
+    function updateHeroArmorById($hero_id, $new_armor_id) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE hero SET armor = :armor WHERE id = :id");
         $stmt->bindParam(':armor', $new_armor_id, PDO::PARAM_INT);
@@ -105,7 +107,7 @@
         return $stmt->execute();
     }
 
-    function changePrimaryWeaponById($hero_id, $new_weapon_id) {
+    function updatePrimaryWeaponById($hero_id, $new_weapon_id) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE hero SET primary_weapon = :primary_weapon WHERE id = :id");
         $stmt->bindParam(':primary_weapon', $new_weapon_id, PDO::PARAM_INT);
@@ -113,7 +115,7 @@
         return $stmt->execute();
     }
 
-    function changeSecondaryWeaponById($hero_id, $new_weapon_id) {
+    function updateSecondaryWeaponById($hero_id, $new_weapon_id) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE hero SET secondary_weapon = :secondary_weapon WHERE id = :id");
         $stmt->bindParam(':secondary_weapon', $new_weapon_id, PDO::PARAM_INT);
@@ -121,7 +123,7 @@
         return $stmt->execute();
     }
 
-    function changeShieldById($hero_id, $new_shield_id) {
+    function updateShieldById($hero_id, $new_shield_id) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE hero SET shield = :shield WHERE id = :id");
         $stmt->bindParam(':shield', $new_shield_id, PDO::PARAM_INT);
@@ -129,7 +131,7 @@
         return $stmt->execute();
     }
 
-    function setXp($hero_id, $new_xp) {
+    function updateXp($hero_id, $new_xp) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE hero SET xp = :xp WHERE id = :id");
         $stmt->bindParam(':xp', $new_xp, PDO::PARAM_INT);
@@ -156,7 +158,7 @@
     }
 
 
-    //MONSTER FUNCTIONS
+    ////////////////// MONSTER FUNCTIONS ///////////////////////
 
 
     function getMonsterById($id) {
@@ -175,4 +177,103 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    function updateMonsterNameById($monster_id, $new_name) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE monster SET name = :name WHERE id = :id");
+        $stmt->bindParam(':name', $new_name, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $monster_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function updateMonsterHealthById($monster_id, $new_health) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE monster SET health = :health WHERE id = :id");
+        $stmt->bindParam(':health', $new_health, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $monster_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function updateMonsterManaById($monster_id, $new_mana) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE monster SET mana = :mana WHERE id = :id");
+        $stmt->bindParam(':mana', $new_mana, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $monster_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function updateMonsterInitiativeById($monster_id, $new_initiative) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE monster SET initiative = :initiative WHERE id = :id");
+        $stmt->bindParam(':initiative', $new_initiative, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $monster_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function updateMonsterStrengthById($monster_id, $new_strength) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE monster SET strength = :strength WHERE id = :id");
+        $stmt->bindParam(':strength', $new_strength, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $monster_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function updateMonsterAttackById($monster_id, $new_attack) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE monster SET attack = :attack WHERE id = :id");
+        $stmt->bindParam(':attack', $new_attack, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $monster_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    ////////////////// CHAPTER FUNCTIONS ///////////////////////
+
+    function isEncounterAtChapter($chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM level WHERE chapter_id = :chapter_id AND has_encounter = 1");
+        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count > 0;
+    }
+
+    function getMonsterAtEncounter($encounter_id) {
+        global $pdo;
+
+        $stmt = $pdo->prepare("SELECT monster_id FROM encounter WHERE id = :id");
+        $stmt->bindParam(':id', $encounter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $monster = getMonsterById($result['monster_id']);
+        return $monster;
+    }
+
+    function getContentAndImageFromChapterId($chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT image, content FROM chapter WHERE id = :id");
+        $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return ($result ? $result['image'] : null) && ($result ? $result['content'] : null);
+    }
+
+    function getChapterTreasureById($id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT chapter_id, item_id, quantity FROM chapter WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['treasure'] : null;
+    }
+
+    ////////////////// PROGRESS FUNCTIONS ///////////////////////
+
+    function saveHeroProgress($hero_id, $chapter_id, $status) {
+        global $pdo;
+        $stmt = $pdo->prepare("INSERT INTO hero_progress (hero_id, chapter_id, status) VALUES (:hero_id, :chapter_id, :status)");
+        $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
 ?>
