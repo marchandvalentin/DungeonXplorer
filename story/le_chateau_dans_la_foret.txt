@@ -144,5 +144,9 @@ De l’autre côté du portail, se trouve le jardin du château, ce dernier semble ta
 
 Chapitre 2.
 
-	En vous rapprochant du cabanon, vous remarquer de la lumière jaillissant de la petite fenêtre sur le coter du cabanon. Mais mise a part cette lumiere aucun autre indices indiquant la présance de d’une personne habitant dans ce cabanon lugubre.
+	En vous rapprochant du cabanon, vous remarquez de la lumière jaillissant de la petite fenêtre sur le côté du cabanon. Mais mise à part cette lumière, aucun autre indice n’indique la présence d’une personne habitant dans ce cabanon lugubre.
+Vous voyez cependant que la porte du cabanon est légèrement entrouverte et que le sol au pied de la porte semble être régulièrement retourné par le passage de quelque chose.
+
+    • Si vous souhaitez entrer a l’intérieur du cabanon aller au chapitre 4 de la partie 2.
+    • Si vous souhaitez attendre a l’extérieur aller au chapitre 5 de la partie 2.
 	
