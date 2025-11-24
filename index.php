@@ -8,8 +8,10 @@
     <title>Index</title>
 </head>
 <body>
+    <?php include_once './PHP/bdd_functions.php'; ?>
+
     <h1 class="text-3xl font-bold underline">
-        Hello world!
+        
     </h1>
 </body>
 </html>
