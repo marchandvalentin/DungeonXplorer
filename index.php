@@ -5,26 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        medieval: {
-                            dark: '#1a1614',
-                            brown: '#2d2520',
-                            gold: '#d4af37',
-                            lightgold: '#f4e5c3',
-                            cream: '#e8d4b0',
-                        }
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="JS/script.js" defer></script>
     <style>
         body {
             background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);

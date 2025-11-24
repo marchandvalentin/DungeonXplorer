@@ -5,26 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        medieval: {
-                            dark: '#1a1614',
-                            brown: '#2d2520',
-                            gold: '#d4af37',
-                            lightgold: '#f4e5c3',
-                            cream: '#e8d4b0',
-                        }
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    
 </head>
 <body>
     <nav class="navbar-gradient navbar-top-line relative border-b border-medieval-gold/30 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md font-inter">
