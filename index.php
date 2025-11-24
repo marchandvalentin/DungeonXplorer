@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/personaliseColors.css">
     <script>
         tailwind.config = {
             theme: {
@@ -13,9 +14,9 @@
                         medieval: {
                             dark: '#1a1614',
                             brown: '#2d2520',
-                            gold: '#d4af37',
-                            lightgold: '#f4e5c3',
-                            cream: '#e8d4b0',
+                            gold: '#c62828',
+                            lightgold: '#ff6b6b',
+                            cream: '#ffdede',
                         }
                     },
                     fontFamily: {
@@ -25,92 +26,7 @@
             }
         }
     </script>
-    <style>
-        body {
-            background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .gradient-gold {
-            background: linear-gradient(135deg, #d4af37 0%, #f4e5c3 50%, #d4af37 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero-card {
-            background: linear-gradient(135deg, rgba(42, 30, 20, 0.6), rgba(26, 22, 20, 0.8));
-            backdrop-filter: blur(10px);
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .feature-card:hover::before {
-            left: 100%;
-        }
-        
-        .navbar-gradient {
-            background: linear-gradient(135deg, #1a1614 0%, #2d2520 50%, #1a1614 100%);
-        }
-        
-        .navbar-top-line::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            opacity: 0.5;
-        }
-        
-        .logo-underline::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            opacity: 0.5;
-        }
-        
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .nav-link:hover::before {
-            left: 100%;
-        }
-        
-        .nav-link-active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-        }
-    </style>
+    
     <title>DungeonXPlorer - Votre Aventure Commence Ici</title>
 </head>
 <body class="text-medieval-cream">
@@ -129,10 +45,10 @@
                     <span class="text-medieval-cream">votre aventure médiévale fantaisie commence ici.</span>
                 </p>
                 <div class="flex flex-wrap justify-center gap-4 pt-8">
-                    <a href="createAccount.php" class="px-8 py-4 bg-gradient-to-r from-medieval-gold/20 to-medieval-gold/30 border-2 border-medieval-gold/80 rounded-lg text-yellow-400 font-bold text-lg tracking-wide hover:from-medieval-gold/30 hover:to-medieval-gold/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(212,175,55,0.4)] transition-all duration-300">
+                    <a href="createAccount.php" class="px-8 py-4 bg-gradient-to-r from-medieval-gold/20 to-medieval-gold/30 border-2 border-medieval-gold/80 rounded-lg text-red-400 font-bold text-lg tracking-wide hover:from-medieval-gold/30 hover:to-medieval-gold/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(198,40,40,0.4)] transition-all duration-300">
                         Commencer l'Aventure
                     </a>
-                    <a href="connection.php" class="px-8 py-4 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,105,20,0.3)] rounded-lg text-medieval-cream font-bold text-lg tracking-wide hover:bg-[rgba(139,105,20,0.3)] hover:border-medieval-gold/60 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(212,175,55,0.2)] transition-all duration-300">
+                    <a href="connection.php" class="px-8 py-4 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream font-bold text-lg tracking-wide hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-gold/60 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(198,40,40,0.2)] transition-all duration-300">
                         Se Connecter
                     </a>
                 </div>
@@ -185,7 +101,7 @@
             <p class="text-xl text-medieval-cream mb-8 max-w-2xl mx-auto">
                 Rejoignez des milliers d'aventuriers et plongez dans un monde de magie, de mystères et de batailles épiques.
             </p>
-            <a href="createAccount.php" class="inline-block px-10 py-5 bg-gradient-to-r from-medieval-gold/30 to-medieval-gold/40 border-2 border-medieval-gold text-yellow-300 font-bold text-xl tracking-wide rounded-lg hover:from-medieval-gold/40 hover:to-medieval-gold/50 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(212,175,55,0.5)] transition-all duration-300">
+            <a href="createAccount.php" class="inline-block px-10 py-5 bg-gradient-to-r from-medieval-gold/30 to-medieval-gold/40 border-2 border-medieval-gold text-red-300 font-bold text-xl tracking-wide rounded-lg hover:from-medieval-gold/40 hover:to-medieval-gold/50 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(198,40,40,0.5)] transition-all duration-300">
                 Créer Mon Compte Gratuitement
             </a>
         </div>
