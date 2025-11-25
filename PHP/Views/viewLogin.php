@@ -72,7 +72,7 @@
                 
                 <p class="text-medieval-cream/70 text-sm">
                     Pas encore de compte ? 
-                    <a href="createAccount.php" class="text-medieval-lightred font-semibold hover:text-red-400 transition-colors">
+                    <a href="/register" class="text-medieval-lightred font-semibold hover:text-red-400 transition-colors">
                         Créer un compte
                     </a>
                 </p>

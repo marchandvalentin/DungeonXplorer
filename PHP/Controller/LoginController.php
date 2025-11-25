@@ -15,8 +15,6 @@
 
             $user = getUserByEmail($email);
 
-             echo "<script>console.log('" . json_encode($user) . "');</script>";
-
             if ($user && password_verify($password, $user['USER_PASSWORD_HASH'])) {
                 $_SESSION['user_id'] = $user['USER_ID'];
                 $_SESSION['user_name'] = $user['USER_NAME'];
