@@ -288,10 +288,9 @@
         return $result ? $result['user_password_hash'] : null;
     }
 
-    function createUser($user_id, $user_mail, $user_name, $password_hash) {
+    function createUser($user_mail, $user_name, $password_hash) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO users (user_id, user_mail, user_name, user_password_hash) VALUES (:user_id, :user_mail, :user_name, :password_hash)");
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt = $pdo->prepare("INSERT INTO users (user_mail, user_name, user_password_hash) VALUES (:user_mail, :user_name, :password_hash)");
         $stmt->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
         $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
         $stmt->bindParam(':password_hash', $password_hash, PDO::PARAM_STR);
