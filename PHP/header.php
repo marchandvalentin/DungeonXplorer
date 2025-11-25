@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $isLoggedIn = isset($_SESSION['user_id']);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,11 +13,6 @@
 </head>
 <body>
     <script src="JS/script.js" defer></script>
-
-    <?php
-        session_start();
-        $isLoggedIn = isset($_SESSION['user_id']);
-    ?>
 
     <nav class="navbar-gradient navbar-top-line relative border-b border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md font-inter">
         <div class="max-w-7xl mx-auto px-10 py-5 flex flex-col md:flex-row justify-between items-center gap-5">
