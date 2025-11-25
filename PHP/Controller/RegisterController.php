@@ -3,7 +3,7 @@
     class RegisterController{
         function show()
         {
-            include __DIR__ . '/../Views/veiwRegister.php';
+            include __DIR__ . '/../Views/viewRegister.php';
         }
     }
 ?>
