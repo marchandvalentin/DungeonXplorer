@@ -14,6 +14,8 @@
             $password = $_POST['password'];
 
             $user = getUserByEmail($email);
+            
+             echo "<script>console.log('" . $user . "');</script>";
 
             if ($user && password_verify($password, $user['user_password_hash'])) {
                 $_SESSION['user_id'] = $user['user_id'];
