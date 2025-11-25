@@ -14,13 +14,13 @@
             $password = $_POST['password'];
 
             $user = getUserByEmail($email);
-            
-             echo "<script>console.log('" . $user . "');</script>";
 
-            if ($user && password_verify($password, $user['user_password_hash'])) {
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['user_name'] = $user['user_name'];
-                echo "Bienvenue " . $user['user_name'];
+             echo "<script>console.log('" . json_encode($user) . "');</script>";
+
+            if ($user && password_verify($password, $user['USER_PASSWORD_HASH'])) {
+                $_SESSION['user_id'] = $user['USER_ID'];
+                $_SESSION['user_name'] = $user['USER_NAME'];
+                echo "Bienvenue " . $user['USER_NAME'];
             } else {
                 echo "Identifiants incorrects";
             }
