@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/../BDD/bdd_functions.php';
+require_once __DIR__ . '/../BDD/bdd_functions.php';
 
 class RegisterController {
     private $errors = [];
