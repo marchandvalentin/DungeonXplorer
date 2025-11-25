@@ -281,7 +281,7 @@
 
     function getUserPasswordHash($user_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT user_password_hash FROM user WHERE user_id = :id");
+        $stmt = $pdo->prepare("SELECT user_password_hash FROM users WHERE user_id = :id");
         $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -290,12 +290,28 @@
 
     function createUser($user_id, $user_mail, $user_name, $password_hash) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO user (user_id, user_mail, user_name, user_password_hash) VALUES (:user_id, :user_mail, :user_name, :password_hash)");
+        $stmt = $pdo->prepare("INSERT INTO users (user_id, user_mail, user_name, user_password_hash) VALUES (:user_id, :user_mail, :user_name, :password_hash)");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
         $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
         $stmt->bindParam(':password_hash', $password_hash, PDO::PARAM_STR);
         return $stmt->execute();
+    }
+
+
+    /*
+    Table user :
+    - user_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+    - user_mail (VARCHAR(255), UNIQUE)
+    - user_name (VARCHAR(100))
+    - user_password_hash (VARCHAR(255))
+    */
+    function getUserByEmail($user_mail) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_mail = :user_mail");
+        $stmt->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 ?>
