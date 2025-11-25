@@ -18,6 +18,11 @@ $router->get('/login', function() {
     $controller->show();
 });
 
+$router->get('/register', function() {
+    $controller = new RegisterController();
+    $controller->show();
+});
+
 // Run the router
 $router->run();
 
