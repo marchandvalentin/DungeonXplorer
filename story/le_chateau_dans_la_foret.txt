@@ -1,47 +1,47 @@
 Christophe Vallot DungeonXplorer 1
 UNE AVENTURE
 AU VAL PERDU
-Voici le contenu des premiers chapitres de l’aventure.
+Voici le contenu des premiers chapitres de lï¿½aventure.
 
 
 Chapitre 1 : Introduction
-Le ciel est lourd ce soir sur le village du Val Perdu, dissimulé entre les montagnes. La
-petite taverne, dernier refuge avant l'immense forêt, est étrangement calme quand le
-bourgmestre s’approche de vous. Homme d’apparence usée par les années et les soucis,
-il vous adresse un regard désespéré.
-« Ma fille… elle a disparu dans la forêt. Personne n’a osé la chercher… sauf vous, peut-
-être ? On raconte qu’un sorcier vit dans un château en ruines, caché au cœur des bois.
-Depuis des mois, des jeunes filles disparaissent… J'ai besoin de vous pour la retrouver. »
-Vous sentez le poids de la mission qui s’annonce, et un frisson parcourt votre échine.
-Bientôt, la forêt s'ouvre devant vous, sombre et menaçante. La quête commence.
+Le ciel est lourd ce soir sur le village du Val Perdu, dissimulï¿½ entre les montagnes. La
+petite taverne, dernier refuge avant l'immense forï¿½t, est ï¿½trangement calme quand le
+bourgmestre sï¿½approche de vous. Homme dï¿½apparence usï¿½e par les annï¿½es et les soucis,
+il vous adresse un regard dï¿½sespï¿½rï¿½.
+ï¿½ Ma filleï¿½ elle a disparu dans la forï¿½t. Personne nï¿½a osï¿½ la chercherï¿½ sauf vous, peut-
+ï¿½tre ? On raconte quï¿½un sorcier vit dans un chï¿½teau en ruines, cachï¿½ au cï¿½ur des bois.
+Depuis des mois, des jeunes filles disparaissentï¿½ J'ai besoin de vous pour la retrouver. ï¿½
+Vous sentez le poids de la mission qui sï¿½annonce, et un frisson parcourt votre ï¿½chine.
+Bientï¿½t, la forï¿½t s'ouvre devant vous, sombre et menaï¿½ante. La quï¿½te commence.
 
 
-Chapitre 2 : L'orée de la forêt
-Vous franchissez la lisière des arbres, la pénombre de la forêt avalant le sentier devant
-vous. Un vent froid glisse entre les troncs, et le bruissement des feuilles ressemble à un
-murmure menaçant. Deux chemins s’offrent à vous : l’un sinueux, bordé de vieux arbres
-noueux ; l’autre droit mais envahi par des ronces épaisses.
-• Si vous empruntez le chemin sinueux, rendez-vous au chapitre 3.
-• Si vous choisissez le sentier couvert de ronces, rendez-vous au chapitre 4.
+Chapitre 2 : L'orï¿½e de la forï¿½t
+Vous franchissez la lisiï¿½re des arbres, la pï¿½nombre de la forï¿½t avalant le sentier devant
+vous. Un vent froid glisse entre les troncs, et le bruissement des feuilles ressemble ï¿½ un
+murmure menaï¿½ant. Deux chemins sï¿½offrent ï¿½ vous : lï¿½un sinueux, bordï¿½ de vieux arbres
+noueux ; lï¿½autre droit mais envahi par des ronces ï¿½paisses.
+ï¿½ Si vous empruntez le chemin sinueux, rendez-vous au chapitre 3.
+ï¿½ Si vous choisissez le sentier couvert de ronces, rendez-vous au chapitre 4.
 
 
 Chapitre 3 : L'arbre aux corbeaux
-Votre choix vous mène devant un vieux chêne aux branches tordues, grouillant de
-corbeaux noirs qui vous observent en silence. À vos pieds, des traces de pas légers,
-probablement récents, mènent plus loin dans les bois. Soudain, un bruit de pas feutrés
-se fait entendre. Vous ressentez la présence d’un prédateur.
-• Si vous choisissez de rester prudent, rendez-vous au chapitre 5.
+Votre choix vous mï¿½ne devant un vieux chï¿½ne aux branches tordues, grouillant de
+corbeaux noirs qui vous observent en silence. ï¿½ vos pieds, des traces de pas lï¿½gers,
+probablement rï¿½cents, mï¿½nent plus loin dans les bois. Soudain, un bruit de pas feutrï¿½s
+se fait entendre. Vous ressentez la prï¿½sence dï¿½un prï¿½dateur.
+ï¿½ Si vous choisissez de rester prudent, rendez-vous au chapitre 5.
 Christophe Vallot DungeonXplorer 2
-• Si vous décidez d’ignorer les bruits et de poursuivre votre route, rendez-vous au
+ï¿½ Si vous dï¿½cidez dï¿½ignorer les bruits et de poursuivre votre route, rendez-vous au
 chapitre 6.
 
 
-Chapitre 4 : Le sanglier enragé
-En progressant, le calme de la forêt est soudain brisé par un grognement. Surgissant des
-buissons, un énorme sanglier, au pelage épais et aux yeux injectés de sang, se dirige vers
-vous. Sa rage est palpable, et il semble prêt à en découdre. Le voici qui décide
+Chapitre 4 : Le sanglier enragï¿½
+En progressant, le calme de la forï¿½t est soudain brisï¿½ par un grognement. Surgissant des
+buissons, un ï¿½norme sanglier, au pelage ï¿½pais et aux yeux injectï¿½s de sang, se dirige vers
+vous. Sa rage est palpable, et il semble prï¿½t ï¿½ en dï¿½coudre. Le voici qui dï¿½cide
 brutalement de vous charger !
-• Après avoir vaincu le sanglier, vous pourrez vous rendre au chapitre 8 sinon
+ï¿½ Aprï¿½s avoir vaincu le sanglier, vous pourrez vous rendre au chapitre 8 sinon
 rendez-vous au chapitre 10.
 
 
@@ -52,101 +52,128 @@ rendez-vous au chapitre 10.
 
 
 Chapitre 5 : Rencontre avec le paysan
-Tandis que vous progressez, une voix humaine s’élève, interrompant le silence de la forêt.
-Vous tombez sur un vieux paysan, accroupi près de champignons aux couleurs vives. Il
-sursaute en vous voyant, puis se détend, vous souriant tristement.
-« Vous devriez faire attention, étranger, murmure-t-il. La nuit, des cris terrifiants
-retentissent depuis le cœur de la forêt… Des créatures rôdent. »
-• Après l'avoir écouté, vous pouvez continuer vers chapitre 7.
+Tandis que vous progressez, une voix humaine sï¿½ï¿½lï¿½ve, interrompant le silence de la forï¿½t.
+Vous tombez sur un vieux paysan, accroupi prï¿½s de champignons aux couleurs vives. Il
+sursaute en vous voyant, puis se dï¿½tend, vous souriant tristement.
+ï¿½ Vous devriez faire attention, ï¿½tranger, murmure-t-il. La nuit, des cris terrifiants
+retentissent depuis le cï¿½ur de la forï¿½tï¿½ Des crï¿½atures rï¿½dent. ï¿½
+ï¿½ Aprï¿½s l'avoir ï¿½coutï¿½, vous pouvez continuer vers chapitre 7.
 
 
 Chapitre 6 : Le loup noir
-À mesure que vous avancez, un bruissement attire votre attention. Une silhouette sombre
-s’élance soudainement devant vous : un loup noir aux yeux perçants. Son poil est hérissé
-et sa gueule laisse entrevoir des crocs acérés. Vous sentez son regard fixé sur vous, prêt
-à bondir.
-Le combat est inévitable
-• Si vous survivez au loup, rendez-vous au chapitre 7.
-• Si le loup vous terrasse, allez au chapitre 10.
+ï¿½ mesure que vous avancez, un bruissement attire votre attention. Une silhouette sombre
+sï¿½ï¿½lance soudainement devant vous : un loup noir aux yeux perï¿½ants. Son poil est hï¿½rissï¿½
+et sa gueule laisse entrevoir des crocs acï¿½rï¿½s. Vous sentez son regard fixï¿½ sur vous, prï¿½t
+ï¿½ bondir.
+Le combat est inï¿½vitable
+ï¿½ Si vous survivez au loup, rendez-vous au chapitre 7.
+ï¿½ Si le loup vous terrasse, allez au chapitre 10.
 
 
-Chapitre 7 : La clairière aux pierres anciennes
-Après votre rencontre, vous atteignez une clairière étrange, entourée de pierres dressées,
-comme un ancien autel oublié par le temps. Une légère brume rampe au sol, et les
+Chapitre 7 : La clairiï¿½re aux pierres anciennes
+Aprï¿½s votre rencontre, vous atteignez une clairiï¿½re ï¿½trange, entourï¿½e de pierres dressï¿½es,
+comme un ancien autel oubliï¿½ par le temps. Une lï¿½gï¿½re brume rampe au sol, et les
 ombres des pierres semblent danser sous la lueur de la lune.
-Christophe Vallot DungeonXplorer 3
-• Si vous décidez de prendre le sentier couvert de mousse, rendez-vous au
+
+
+ï¿½ Si vous dï¿½cidez de prendre le sentier couvert de mousse, rendez-vous au
 chapitre 8.
-• Si vous choisissez de suivre le chemin tortueux à travers les racines, allez au
+ï¿½ Si vous choisissez de suivre le chemin tortueux ï¿½ travers les racines, allez au
 chapitre 9.
 
 
 Chapitre 8 : Les murmures du ruisseau
-Essoufflé mais déterminé, vous arrivez près d’un petit ruisseau qui serpente au milieu des
-arbres. Le chant de l’eau vous apaise quelque peu, mais des murmures étranges
-semblent émaner de la rive. Vous apercevez des inscriptions anciennes gravées dans une
+Essoufflï¿½ mais dï¿½terminï¿½, vous arrivez prï¿½s dï¿½un petit ruisseau qui serpente au milieu des
+arbres. Le chant de lï¿½eau vous apaise quelque peu, mais des murmures ï¿½tranges
+semblent ï¿½maner de la rive. Vous apercevez des inscriptions anciennes gravï¿½es dans une
 pierre moussue.
-• Si vous touchez la pierre gravée, allez au chapitre 11.
-• Si vous ignorez cette curiosité et poursuivez votre route, allez au chapitre 9.
+ï¿½ Si vous touchez la pierre gravï¿½e, allez au chapitre 11.
+ï¿½ Si vous ignorez cette curiositï¿½ et poursuivez votre route, allez au chapitre 9.
 
 
-Chapitre 9 : Au pied du château
-La forêt se disperse enfin, et devant vous se dresse une colline escarpée. Au sommet, le
-château en ruines projette une ombre menaçante sous le clair de lune. Les murs effrités
-et les tours en partie effondrées ajoutent à la sinistre réputation du lieu.
-Vous sentez que la véritable aventure commence ici, et que l’influence du sorcier n’est
-peut-être pas qu’une légende…
-
-
-
+Chapitre 9 : Au pied du chï¿½teau
+La forï¿½t se disperse enfin, et devant vous se dresse une colline escarpï¿½e. Au sommet, le
+chï¿½teau en ruines projette une ombre menaï¿½ante sous le clair de lune. Les murs effritï¿½s
+et les tours en partie effondrï¿½es ajoutent ï¿½ la sinistre rï¿½putation du lieu.
+Vous sentez que la vï¿½ritable aventure commence ici, et que lï¿½influence du sorcier nï¿½est
+peut-ï¿½tre pas quï¿½une lï¿½gendeï¿½
 
 
 
-Chapitre 10 : La lumière au bout du néant
-Le monde se dérobe sous vos pieds, et une obscurité profonde vous enveloppe, glaciale
-et insondable. Vous ne sentez plus le poids de votre équipement, ni la morsure de la
-douleur. Juste un vide infini, vous aspirant lentement dans les ténèbres.
-Alors que vous perdez toute notion du temps, une lueur douce apparaît au loin, vacillante
-comme une flamme fragile dans l’obscurité. Au fur et à mesure que vous approchez, vous
-entendez une voix, faible mais bienveillante, qui murmure des mots oubliés, anciens.
-« Brave âme, ton chemin n'est pas achevé... À ceux qui échouent, une seconde chance
-est accordée. Mais les caprices du destin exigent un sacrifice. »
-La lumière s'intensifie, et vous sentez vos forces revenir, mais vos poches sont vides, votre
-sac allégé de tout trésor. Votre équipement, vos armes, tout a disparu, laissant place à
-une sensation de vulnérabilité.
-Lorsque la lumière vous enveloppe, vous ouvrez de nouveau les yeux, retrouvant la terre
-ferme sous vos pieds. Vous êtes de retour, sans autre possession que votre volonté de
-reprendre cette quête. Mais cette fois-ci, peut-être, saurez-vous éviter les pièges fatals
-qui vous ont mené à votre perte.
-• Si vous souhaitez reprendre l’aventure depuis le début, rendez-vous de nouveau
+
+
+
+Chapitre 10 : La lumiï¿½re au bout du nï¿½ant
+Le monde se dï¿½robe sous vos pieds, et une obscuritï¿½ profonde vous enveloppe, glaciale
+et insondable. Vous ne sentez plus le poids de votre ï¿½quipement, ni la morsure de la
+douleur. Juste un vide infini, vous aspirant lentement dans les tï¿½nï¿½bres.
+Alors que vous perdez toute notion du temps, une lueur douce apparaï¿½t au loin, vacillante
+comme une flamme fragile dans lï¿½obscuritï¿½. Au fur et ï¿½ mesure que vous approchez, vous
+entendez une voix, faible mais bienveillante, qui murmure des mots oubliï¿½s, anciens.
+ï¿½ Brave ï¿½me, ton chemin n'est pas achevï¿½... ï¿½ ceux qui ï¿½chouent, une seconde chance
+est accordï¿½e. Mais les caprices du destin exigent un sacrifice. ï¿½
+La lumiï¿½re s'intensifie, et vous sentez vos forces revenir, mais vos poches sont vides, votre
+sac allï¿½gï¿½ de tout trï¿½sor. Votre ï¿½quipement, vos armes, tout a disparu, laissant place ï¿½
+une sensation de vulnï¿½rabilitï¿½.
+Lorsque la lumiï¿½re vous enveloppe, vous ouvrez de nouveau les yeux, retrouvant la terre
+ferme sous vos pieds. Vous ï¿½tes de retour, sans autre possession que votre volontï¿½ de
+reprendre cette quï¿½te. Mais cette fois-ci, peut-ï¿½tre, saurez-vous ï¿½viter les piï¿½ges fatals
+qui vous ont menï¿½ ï¿½ votre perte.
+ï¿½ Si vous souhaitez reprendre lï¿½aventure depuis le dï¿½but, rendez-vous de nouveau
 au chapitre 1.
 
 
-Chapitre 11 : La curiosité tua le chat
-Qu’avez-vous fait, Malheureux !
+Chapitre 11 : La curiositï¿½ tua le chat
+Quï¿½avez-vous fait, Malheureux !
 Rendez-vous sans perdre de temps au chapitre 10.
 
 
 Partie 2 
 
-l’escalade du château.
+lï¿½escalade du chï¿½teau.
 
 Chapitre 1.
 
-	Après de longues heures de marche, vous voilà enfin arrivé au pied du château, en plein cœur de la forêt sombre et repoussante. Vous sentez que ce château cache de sombres secrets que vous ne devriez pas connaître pour votre propre bien.
-Autours de vous, le crépuscule commence à tomber, le ciel se teinte d’un orange menaçant.
-Vous voyez à côté du portail du château, un cabanon. Il est fait d’un bois brun usé par l’âge mais semble calme et capable de vous protéger pour une nuit peut-être.
-De l’autre côté du portail, se trouve le jardin du château, ce dernier semble taillé et même certains buissons sont taillés en forme humaine, des silhouettes féminines ressemblant aux femmes disparues.
+	Aprï¿½s de longues heures de marche, vous voilï¿½ enfin arrivï¿½ au pied du chï¿½teau, en plein cï¿½ur de la forï¿½t sombre et repoussante. Vous sentez que ce chï¿½teau cache de sombres secrets que vous ne devriez pas connaï¿½tre pour votre propre bien.
+Autours de vous, le crï¿½puscule commence ï¿½ tomber, le ciel se teinte dï¿½un orange menaï¿½ant.
+Vous voyez ï¿½ cï¿½tï¿½ du portail du chï¿½teau, un cabanon. Il est fait dï¿½un bois brun usï¿½ par lï¿½ï¿½ge mais semble calme et capable de vous protï¿½ger pour une nuit peut-ï¿½tre.
+De lï¿½autre cï¿½tï¿½ du portail, se trouve le jardin du chï¿½teau, ce dernier semble taillï¿½ et mï¿½me certains buissons sont taillï¿½s en forme humaine, des silhouettes fï¿½minines ressemblant aux femmes disparues.
 
-    • Si vous souhaitez vous avancer vers le cabanon, rendez-vous vers le chapitre 2 de la partie 2.
-    • Si vous ne souhaitez pas prendre de pose et avancer vers le portail du château. Rendez-vous vers le chapitre 3 de la partie 2.
+    ï¿½ Si vous souhaitez vous avancer vers le cabanon, rendez-vous vers le chapitre 2 de la partie 2.
+    ï¿½ Si vous ne souhaitez pas prendre de pose et avancer vers le portail du chï¿½teau. Rendez-vous vers le chapitre 3 de la partie 2.
 
 
 Chapitre 2.
 
-	En vous rapprochant du cabanon, vous remarquez de la lumière jaillissant de la petite fenêtre sur le côté du cabanon. Mais mise à part cette lumière, aucun autre indice n’indique la présence d’une personne habitant dans ce cabanon lugubre.
-Vous voyez cependant que la porte du cabanon est légèrement entrouverte et que le sol au pied de la porte semble être régulièrement retourné par le passage de quelque chose.
+	En vous rapprochant du cabanon, vous remarquez de la lumiï¿½re jaillissant de la petite fenï¿½tre sur le cï¿½tï¿½ du cabanon. Mais mise ï¿½ part cette lumiï¿½re, aucun autre indice nï¿½indique la prï¿½sence dï¿½une personne habitant dans ce cabanon lugubre.
+Vous voyez cependant que la porte du cabanon est lï¿½gï¿½rement entrouverte et que le sol au pied de la porte semble ï¿½tre rï¿½guliï¿½rement retournï¿½ par le passage de quelque chose.
 
-    • Si vous souhaitez entrer a l’intérieur du cabanon aller au chapitre 4 de la partie 2.
-    • Si vous souhaitez attendre a l’extérieur aller au chapitre 5 de la partie 2.
+    ï¿½ Si vous souhaitez entrer a lï¿½intï¿½rieur du cabanon aller au chapitre 4 de la partie 2.
+    ï¿½ Si vous souhaitez attendre a lï¿½extï¿½rieur aller au chapitre 5 de la partie 2.
+
+Chapitre 3.
+
+	Vous vous avancez vers le portail en fer forgï¿½ qui vous semble aussi coï¿½teux que tout votre ï¿½quipement reunit. Vous attrapez la poignï¿½e et la baisser sans crainte confiant en votre capacitï¿½ a vous battre et a gagnï¿½ pour sauver la femme disparue. 
+Alors que votre pied se pose sur la terre entretenue du jardin, vous entendez un bruit de cloche prï¿½venant lï¿½entiï¿½retï¿½ du chï¿½teau de votre prï¿½sence sans savoir pourquoi ni comment ce piï¿½ge sï¿½est dï¿½clenchï¿½, cependant alors que tout le chï¿½teau sait que vous ï¿½tes prï¿½sent sur cette terreï¿½ Rien, juste des bruits dï¿½oiseau et le vent qui fait grincer les branches. Mais alors que vous levez la tï¿½te car vous vous sentez observï¿½, vous remarquez que le soleil couchant a disparu pour devenir une lune claire et menaï¿½ante.
+
+    ï¿½ Si vous souhaitez continuer ï¿½ vous enfoncer dans le jardin, rendez-vous chapitre 6 de la partie 2
+    ï¿½ Si vous souhaitez revenir en arriï¿½re, rendez-vous chapitre 7 de la partie 2.
+
+Chapitre 4.
+
+	En entrant ï¿½ lï¿½intï¿½rieur du cabanon, vous ressentez la chaleur de lï¿½endroit chauffï¿½ que par quelques bougies dï¿½jï¿½ ï¿½ moitiï¿½ fondues, lï¿½odeur de cire et de cuire de lï¿½endroit est forte mais malgrï¿½ tout, lï¿½endroit est rassurant, vous profitez de lï¿½endroit pour vous prï¿½parer ï¿½ manger et vous reposer. 
+Le lit semble vous appeler ï¿½ le rejoindre pour une bonne nuit de sommeil bien mï¿½ritï¿½e aprï¿½s cette route ï¿½puisante.
+
+    ï¿½ Si vous souhaitez vous allonger et vous endormir, rendez-vous chapitre 8 de la partie 2
+    ï¿½ Si vous souhaitez sortir aprï¿½s cette pause, rendez-vous chapitre 9 de la partie 2.
+
+Chapitre 5. 
+
+	Aprï¿½s 1h ï¿½ lï¿½extï¿½rieur, vous crï¿½ez alors une pause bien mï¿½ritï¿½e, alors que vous commencez ï¿½ vous lever pour partir explorer le jardin, vous croisez sur votre chemin un Gobelin, il semble faire votre chemin mais dans le sens inverse, le gobelin vous regarde alors surpris de voir un humain ici. ï¿½ Maisï¿½ Que faites-vous iciï¿½ Le chï¿½teau nï¿½a pas redemandï¿½ de servant depuis la derniï¿½re amener iciï¿½ Vous avez une demande ï¿½ faire ï¿½ monsieur ? ï¿½
+
+    ï¿½ Si vous ne souhaitez pas ï¿½couter le gobelin et lï¿½attaquer, rendez-vous au chapitre 10 de la partie 2.
+    ï¿½ Si vous souhaitez discuter avec le gobelin, rendez vous au chapitre 11 de la partie 2.
+
+Chapitre 6. 
+
 	
