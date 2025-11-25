@@ -15,7 +15,7 @@
     <section class="max-w-7xl mx-auto px-6 py-20">
         <div class="hero-card rounded-2xl p-12 md:p-16 border border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] relative overflow-hidden">
             <div class="text-center space-y-6">
-                <h1 class="gradient-red text-5xl md:text-7xl font-bold tracking-wider uppercase">
+                <h1 class="gradient-red text-6xl md:text-4xl font-bold tracking-wider uppercase">
                     DungeonXPlorer
                 </h1>
                 <div class="w-32 h-1 mx-auto bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
@@ -25,10 +25,7 @@
                 </p>
                 <div class="flex flex-wrap justify-center gap-4 pt-8">
                     <a href="createAccount.php" class="px-8 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-lg tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(198,40,40,0.4)] transition-all duration-300">
-                        Commencer l'Aventure
-                    </a>
-                    <a href="connection.php" class="px-8 py-4 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream font-bold text-lg tracking-wide hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(198,40,40,0.2)] transition-all duration-300">
-                        Se Connecter
+                        Commencer l'Aventure !
                     </a>
                 </div>
             </div>
@@ -80,7 +77,7 @@
             <p class="text-xl text-medieval-cream mb-8 max-w-2xl mx-auto">
                 Rejoignez des milliers d'aventuriers et plongez dans un monde de magie, de mystères et de batailles épiques.
             </p>
-            <a href="createAccount.php" class="inline-block px-10 py-5 bg-gradient-to-r from-medieval-red/30 to-medieval-red/40 border-2 border-medieval-red text-red-300 font-bold text-xl tracking-wide rounded-lg hover:from-medieval-red/40 hover:to-medieval-red/50 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(198,40,40,0.5)] transition-all duration-300">
+            <a href="createAccount.php" class="inline-block px-10 py-5 bg-gradient-to-r from-medieval-red/30 to-medieval-red/40 border-2 border-medieval-red text-white font-bold text-xl tracking-wide rounded-lg hover:from-medieval-red/40 hover:to-medieval-red/50 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(198,40,40,0.5)] transition-all duration-300">
                 Créer Mon Compte Gratuitement
             </a>
         </div>
