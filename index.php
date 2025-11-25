@@ -2,6 +2,7 @@
 
 require 'vendor/autoload.php';
 require 'PHP/Controller/LoginController.php';
+require 'PHP/Controller/RegisterController.php';
 
 use Bramus\Router\Router;
 
