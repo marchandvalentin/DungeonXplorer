@@ -25,5 +25,5 @@ $router->get('/register', function() {
 
 // Run the router
 $router->run();
-
+ 
 ?>
