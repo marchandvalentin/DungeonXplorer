@@ -21,7 +21,10 @@
             </div>
             
             <ul class="flex flex-wrap justify-center gap-2 list-none">
-                <?php if ($isset($_SESSION['user_id'])): ?>
+                <?php 
+                    $isloggedIn = isset($_SESSION['user_id']);
+                if ($isloggedIn): 
+                ?>
                     <li>
                         <a href="/" class="nav-link nav-link-active relative flex items-center px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg bg-[rgba(139,40,40,0.4)] border border-medieval-red/80 shadow-[0_4px_15px_rgba(198,40,40,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 
                             hover:shadow-[0_8px_20px_rgba(198,40,40,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">
