@@ -25,7 +25,7 @@
                     $isloggedIn = isset($_SESSION['user_id']);
                 if ($isloggedIn): 
                 ?>
-                    <li class="px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg">
+                    <li class="px-6 py-3 text-white text-3l font-semibold tracking-wide text-sm rounded-lg">
                         <?php echo htmlspecialchars($_SESSION['user_name']); ?>
                     </li>
 

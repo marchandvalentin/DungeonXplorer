@@ -35,6 +35,11 @@ $router->post('/register', function() {
     $controller->register();
 });
 
+$router->get('/logout', function() {
+    $controller = new LoginController();
+    $controller->logout();
+});
+
 // Run the router
 $router->run();
  
