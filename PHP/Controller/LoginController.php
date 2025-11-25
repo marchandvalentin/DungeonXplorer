@@ -18,7 +18,7 @@
             if ($user && password_verify($password, $user['USER_PASSWORD_HASH'])) {
                 $_SESSION['user_id'] = $user['USER_ID'];
                 $_SESSION['user_name'] = $user['USER_NAME'];
-                echo "Bienvenue " . $user['USER_NAME'];
+                include __DIR__ . '/../Views/viewWelcome.php';
             } else {
                 echo "Identifiants incorrects";
             }
