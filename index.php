@@ -19,9 +19,19 @@ $router->get('/login', function() {
     $controller->show();
 });
 
+$router->post('/login', function() {
+    $controller = new LoginController();
+    $controller->login();
+});
+
 $router->get('/register', function() {
     $controller = new RegisterController();
     $controller->show();
+});
+
+$router->post('/register', function() {
+    $controller = new RegisterController();
+    $controller->register();
 });
 
 // Run the router

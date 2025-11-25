@@ -21,10 +21,26 @@
                 </h1>
                 <div class="w-24 h-1 mx-auto bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
                 
+                <!-- Error Messages -->
+                <?php if (!empty($errors) && !($success ?? false)): ?>
+                    <div class="bg-red-900/30 border border-red-600/50 rounded-lg p-4 space-y-2">
+                        <?php foreach ($errors as $error): ?>
+                            <p class="text-red-300 text-sm">• <?php echo htmlspecialchars($error); ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                
+                <!-- Success Message -->
+                <?php if ($success ?? false): ?>
+                    <div class="bg-green-900/30 border border-green-600/50 rounded-lg p-4">
+                        <p class="text-green-300 text-sm"><?php echo htmlspecialchars($successMessage ?? ''); ?></p>
+                    </div>
+                <?php endif; ?>
+                
                 <form method="POST" action="/register" class="space-y-6">
                     <!-- Nom -->
                     <div>
-                        <label for="nom" class="block text-sm font-semibold mb-2 text-medieval-lightred">Nom</label>
+                        <label for="nom" class="flex text-sm font-semibold mb-2 text-medieval-lightred">Nom</label>
                         <input 
                             type="text" 
                             id="nom" 
@@ -37,7 +53,7 @@
                     
                     <!-- Email -->
                     <div>
-                        <label for="email" class="block text-sm font-semibold mb-2 text-medieval-lightred">Email</label>
+                        <label for="email" class="flex text-sm font-semibold mb-2 text-medieval-lightred">Email</label>
                         <input 
                             type="email" 
                             id="email" 
@@ -50,7 +66,7 @@
                     
                     <!-- Mot de passe -->
                     <div>
-                        <label for="password" class="block text-sm font-semibold mb-2 text-medieval-lightred">Mot de passe</label>
+                        <label for="password" class="flex text-sm font-semibold mb-2 text-medieval-lightred">Mot de passe</label>
                         <input 
                             type="password" 
                             id="password" 
@@ -63,7 +79,7 @@
                     
                     <!-- Confirmer Mot de passe -->
                     <div>
-                        <label for="password_confirm" class="block text-sm font-semibold mb-2 text-medieval-lightred">Confirmer mot de passe</label>
+                        <label for="password_confirm" class="flex text-sm font-semibold mb-2 text-medieval-lightred">Confirmer mot de passe</label>
                         <input 
                             type="password" 
                             id="password_confirm" 
