@@ -288,10 +288,10 @@
         return $result ? $result['user_password_hash'] : null;
     }
 
-    function createUser($user_mail, $user_name, $password_hash) {
+    function createUser($user_email, $user_name, $password_hash) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO Users (user_mail, user_name, user_password_hash) VALUES (:user_mail, :user_name, :password_hash)");
-        $stmt->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $stmt = $pdo->prepare("INSERT INTO Users (user_email, user_name, user_password_hash) VALUES (:user_email, :user_name, :password_hash)");
+        $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
         $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
         $stmt->bindParam(':password_hash', $password_hash, PDO::PARAM_STR);
         return $stmt->execute();
@@ -301,14 +301,14 @@
     /*
     Table user :
     - user_id (INT, PRIMARY KEY, AUTO_INCREMENT)
-    - user_mail (VARCHAR(255), UNIQUE)
+    - user_email (VARCHAR(255), UNIQUE)
     - user_name (VARCHAR(100))
     - user_password_hash (VARCHAR(255))
     */
-    function getUserByEmail($user_mail) {
+    function getUserByEmail($user_email) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_mail = :user_mail");
-        $stmt->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_email = :user_email");
+        $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
