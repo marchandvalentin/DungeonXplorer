@@ -337,7 +337,6 @@
         return $res['count(*)'];
     }
 
-
     function getActiveHeroes() {
         global $pdo;
         $stmt = $pdo->prepare("SELECT count(*) FROM Hero");
@@ -354,5 +353,110 @@
 
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         return $res['count(*)'];
+    }
+
+    // Calculate percentage growth for users (this month vs last month)
+    function getUsersGrowthPercentage() {
+        global $pdo;
+        
+        $currentMonth = date('Y-m');
+        $lastMonth = date('Y-m', strtotime('last month'));
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Users WHERE DATE_FORMAT(created_at, '%Y-%m') = :currentMonth");
+        $stmt->bindParam(':currentMonth', $currentMonth, PDO::PARAM_STR);
+        $stmt->execute();
+        $currentCount = $stmt->fetchColumn();
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Users WHERE DATE_FORMAT(created_at, '%Y-%m') = :lastMonth");
+        $stmt->bindParam(':lastMonth', $lastMonth, PDO::PARAM_STR);
+        $stmt->execute();
+        $lastCount = $stmt->fetchColumn();
+        
+        if ($lastCount == 0) return 0;
+        $percentage = (($currentCount - $lastCount) / $lastCount) * 100;
+        return round($percentage, 1);
+    }
+
+    // Calculate percentage growth for heroes (this week vs last week)
+    function getHeroesGrowthPercentage() {
+        global $pdo;
+        
+        $currentWeekStart = date('Y-m-d', strtotime('monday this week'));
+        $lastWeekStart = date('Y-m-d', strtotime('monday last week'));
+        $lastWeekEnd = date('Y-m-d', strtotime('sunday last week'));
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero WHERE created_at >= :currentWeekStart");
+        $stmt->bindParam(':currentWeekStart', $currentWeekStart, PDO::PARAM_STR);
+        $stmt->execute();
+        $currentCount = $stmt->fetchColumn();
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero WHERE created_at >= :lastWeekStart AND created_at <= :lastWeekEnd");
+        $stmt->bindParam(':lastWeekStart', $lastWeekStart, PDO::PARAM_STR);
+        $stmt->bindParam(':lastWeekEnd', $lastWeekEnd, PDO::PARAM_STR);
+        $stmt->execute();
+        $lastCount = $stmt->fetchColumn();
+        
+        if ($lastCount == 0) return 0;
+        $percentage = (($currentCount - $lastCount) / $lastCount) * 100;
+        return round($percentage, 1);
+    }
+
+    // Calculate percentage growth for completed chapters (this month vs last month)
+    function getCompletedChaptersGrowthPercentage() {
+        global $pdo;
+        
+        $currentMonth = date('Y-m');
+        $lastMonth = date('Y-m', strtotime('last month'));
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero_Progress WHERE status = 'completed' AND DATE_FORMAT(updated_at, '%Y-%m') = :currentMonth");
+        $stmt->bindParam(':currentMonth', $currentMonth, PDO::PARAM_STR);
+        $stmt->execute();
+        $currentCount = $stmt->fetchColumn();
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero_Progress WHERE status = 'completed' AND DATE_FORMAT(updated_at, '%Y-%m') = :lastMonth");
+        $stmt->bindParam(':lastMonth', $lastMonth, PDO::PARAM_STR);
+        $stmt->execute();
+        $lastCount = $stmt->fetchColumn();
+        
+        if ($lastCount == 0) return 0;
+        $percentage = (($currentCount - $lastCount) / $lastCount) * 100;
+        return round($percentage, 1);
+    }
+
+
+    // Get monthly activity percentage (encounters completed per month)
+    function getMonthlyActivityPercentage($month) {
+        global $pdo;
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM hero_progress WHERE status = 'completed' AND MONTH(updated_at) = :month");
+        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+        $stmt->execute();
+        $completed = $stmt->fetchColumn();
+        
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM hero_progress WHERE MONTH(updated_at) = :month");
+        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+        $stmt->execute();
+        $total = $stmt->fetchColumn();
+        
+        if ($total == 0) return 0;
+        return round(($completed / $total) * 100, 0);
+    }
+
+    // Get top heroes by experience/level
+    function getTopHeroes($limit = 4) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT id, name, level, xp FROM Hero ORDER BY level DESC, xp DESC LIMIT :limit");
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Get total chapters in the game
+    function getTotalChapters() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM chapter");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'];
     }
 ?>
