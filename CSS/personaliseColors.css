@@ -141,3 +141,27 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, #c62828, transparent);
         }
+
+        .gradient-red {
+            background: linear-gradient(135deg, #c62828 0%, #ff6b6b 50%, #c62828 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .form-input {
+            background: rgba(42, 30, 20, 0.5);
+            border: 1px solid rgba(198, 40, 40, 0.3);
+            color: #e8d4b0;
+        }
+        
+        .form-input::placeholder {
+            color: rgba(232, 212, 176, 0.5);
+        }
+        
+        .form-input:focus {
+            background: rgba(42, 30, 20, 0.7);
+            border-color: rgba(198, 40, 40, 0.6);
+            outline: none;
+            box-shadow: 0 0 15px rgba(198, 40, 40, 0.3);
+        }

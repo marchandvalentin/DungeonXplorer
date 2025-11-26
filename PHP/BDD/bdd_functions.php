@@ -281,21 +281,49 @@
 
     function getUserPasswordHash($user_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT user_password_hash FROM user WHERE user_id = :id");
+        $stmt = $pdo->prepare("SELECT user_password_hash FROM Users WHERE user_id = :id");
         $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['user_password_hash'] : null;
     }
 
-    function createUser($user_id, $user_mail, $user_name, $password_hash) {
+    function createUser($user_email, $user_name, $password_hash) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO user (user_id, user_mail, user_name, user_password_hash) VALUES (:user_id, :user_mail, :user_name, :password_hash)");
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindParam(':user_mail', $user_mail, PDO::PARAM_STR);
+        $stmt = $pdo->prepare("INSERT INTO Users (user_email, user_name, user_password_hash) VALUES (:user_email, :user_name, :password_hash)");
+        $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
         $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
         $stmt->bindParam(':password_hash', $password_hash, PDO::PARAM_STR);
         return $stmt->execute();
+    }
+
+
+    /*
+    Table user :
+    - user_id (INT, PRIMARY KEY, AUTO_INCREMENT)
+    - user_email (VARCHAR(255), UNIQUE)
+    - user_name (VARCHAR(100))
+    - user_password_hash (VARCHAR(255))
+    */
+    function getUserByEmail($user_email) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_email = :user_email");
+        $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user && isset($user['USER_ID'])) {
+            $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
+            $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
+            $val_admin->execute();
+            $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
+
+            $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
+        } else {
+            $user['IS_ADMIN'] = false;
+        }
+
+        return $user;
     }
 
 ?>
