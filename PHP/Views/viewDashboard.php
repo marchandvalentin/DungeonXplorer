@@ -11,19 +11,19 @@
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php 
-    include 'PHP/header.php';
-    require_once __DIR__ . '/../BDD/bdd_functions.php';
+        include 'PHP/header.php';
+        require_once __DIR__ . '/../BDD/bdd_functions.php';
 
-    // Fetch dashboard data
-    $usersNumber = getAllUsers();
-    $usersGrowth = getUsersGrowthPercentage();
-    $activeHeroes = getActiveHeroes();
-    $heroesGrowth = getHeroesGrowthPercentage();
-    $completedChapterCount = completedChapters();
-    $chaptersGrowth = getCompletedChaptersGrowthPercentage();
-    $monsteredDefeated = 10 /*getMonstersDefeated()*/;
-    $monstersGrowth = getMonstersGrowthPercentage();
-    $topHeroes = getTopHeroes(4);
+        // Fetch dashboard data
+        $usersNumber = getAllUsers();
+        $usersGrowth = getUsersGrowthPercentage();
+        $activeHeroes = getActiveHeroes();
+        $heroesGrowth = getHeroesGrowthPercentage();
+        $completedChapterCount = completedChapters();
+        $chaptersGrowth = getCompletedChaptersGrowthPercentage();
+        $monsteredDefeated = 10 /*getMonstersDefeated()*/;
+        $monstersGrowth = getMonstersGrowthPercentage();
+        $topHeroes = getTopHeroes(4);
     ?>
     
 
