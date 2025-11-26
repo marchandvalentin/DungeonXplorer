@@ -23,12 +23,11 @@
             <ul class="flex flex-wrap justify-center gap-2 list-none">
                 <?php 
                     $isloggedIn = isset($_SESSION['user_id']);
-                if ($isloggedIn): 
+                    if ($isloggedIn): 
                 ?>
                     <li class="px-6 py-3 text-white text-3l font-semibold tracking-wide text-sm rounded-lg">
                         <?php echo htmlspecialchars($_SESSION['user_name']); ?>
                     </li>
-
 
                     <?php if (isset($user) && $user['IS_ADMIN']): ?>
                         <li>
@@ -46,7 +45,6 @@
                         </li> 
 
                     <?php endif; ?>
-
 
                     <li>
                         <a href="/" class="nav-link relative flex items-center px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:bg-[rgba(139,40,40,0.3)]  hover:-translate-y-1 hover:border-medieval-red/60 

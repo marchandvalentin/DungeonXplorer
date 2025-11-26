@@ -41,12 +41,11 @@ $router->get('/logout', function() {
 });
 
 $router->get('/dashboard', function() {
+    $controller = new DashboardController();
+
     if (isset($_SESSION['user_id'])) {
-        include 'PHP/Views/viewDashboard.php';
-    } else {
-        header('Location: /login');
-        exit();
-    }
+        $controller->show();
+    } 
 });
 
 // Run the router
