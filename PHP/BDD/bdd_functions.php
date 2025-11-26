@@ -290,10 +290,12 @@
 
     function createUser($user_email, $user_name, $password_hash) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO Users (user_email, user_name, user_password_hash) VALUES (:user_email, :user_name, :password_hash)");
+        $created_at = date('Y-m-d H:i:s');
+        $stmt = $pdo->prepare("INSERT INTO Users (user_email, user_name, user_password_hash, created_at) VALUES (:user_email, :user_name, :password_hash, :created_at)");
         $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
         $stmt->bindParam(':user_name', $user_name, PDO::PARAM_STR);
         $stmt->bindParam(':password_hash', $password_hash, PDO::PARAM_STR);
+        $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
         return $stmt->execute();
     }
 
