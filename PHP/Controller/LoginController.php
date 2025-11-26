@@ -8,8 +8,6 @@
         }
 
         function login(){
-            session_start();
-
             $email = $_POST['email'];
             $password = $_POST['password'];
 
@@ -28,7 +26,7 @@
             session_unset();
             session_destroy();
             echo "Vous avez été déconnecté.";
-            header("Location: index.php");
+            header("Location: /viewWelcome.php");
             exit();
         }
     }
