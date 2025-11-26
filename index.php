@@ -40,6 +40,15 @@ $router->get('/logout', function() {
     $controller->logout();
 });
 
+$router->get('/dashboard', function() {
+    if (isset($_SESSION['user_id'])) {
+        include 'PHP/Views/viewDashboard.php';
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
 // Run the router
 $router->run();
  
