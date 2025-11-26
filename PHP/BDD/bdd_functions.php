@@ -163,7 +163,7 @@
         $created_at = date('Y-m-d H:i:s');
         
         // Get class details to set base stats
-        $classStmt = $pdo->prepare("SELECT base_pv, base_mana, base_strength, base_initiative FROM Class WHERE id = :class_id");
+        $classStmt = $pdo->prepare("SELECT base_pv, base_mana, strength, initiative FROM Class WHERE id = :class_id");
         $classStmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
         $classStmt->execute();
         $classData = $classStmt->fetch(PDO::FETCH_ASSOC);
