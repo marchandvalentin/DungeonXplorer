@@ -49,6 +49,19 @@ $router->get('/dashboard', function() {
     } 
 });
 
+$router->get('/createHhero', function() {
+    $controller = new CreateHeroController();
+    $controller->show();
+});
+
+$router->post('/createHero', function() {
+    $controller = new CreateHeroController();
+
+    if (isset($_SESSION['user_id'])) {
+        $controller->create();
+    } 
+});
+
 // Run the router
 $router->run();
  
