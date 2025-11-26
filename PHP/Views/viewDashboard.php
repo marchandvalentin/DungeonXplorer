@@ -145,34 +145,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- System Status -->
-        <div class="feature-card relative bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8 overflow-hidden">
-            <h2 class="text-2xl font-bold text-medieval-lightred mb-6">État du Système</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-medieval-cream">Serveur Principal</span>
-                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-                    </div>
-                    <p class="text-medieval-cream/70 text-sm">Opérationnel • 99.8% uptime</p>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-medieval-cream">Base de Données</span>
-                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-                    </div>
-                    <p class="text-medieval-cream/70 text-sm">Opérationnel • Synchronisé</p>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-medieval-cream">API Externes</span>
-                        <span class="inline-block w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-                    </div>
-                    <p class="text-medieval-cream/70 text-sm">Opérationnel • Normal</p>
-                </div>
-            </div>
-        </div>
     </section>
     <?php include 'PHP/footer.php'; ?>
 </body>
