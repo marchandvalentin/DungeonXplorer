@@ -363,89 +363,39 @@
 
     // Calculate percentage growth for users (this month vs last month)
     function getUsersGrowthPercentage() {
-        global $pdo;
-        
-        $currentMonth = date('Y-m');
-        $lastMonth = date('Y-m', strtotime('last month'));
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Users WHERE DATE_FORMAT(created_at, '%Y-%m') = :currentMonth");
-        $stmt->bindParam(':currentMonth', $currentMonth, PDO::PARAM_STR);
-        $stmt->execute();
-        $currentCount = $stmt->fetchColumn();
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Users WHERE DATE_FORMAT(created_at, '%Y-%m') = :lastMonth");
-        $stmt->bindParam(':lastMonth', $lastMonth, PDO::PARAM_STR);
-        $stmt->execute();
-        $lastCount = $stmt->fetchColumn();
-        
-        if ($lastCount == 0) return 0;
-        $percentage = (($currentCount - $lastCount) / $lastCount) * 100;
-        return round($percentage, 1);
+        // Placeholder until timestamp fields are added to database
+        // Returns a random percentage between -10 and +30 for demonstration
+        return rand(-10, 30);
     }
 
     // Calculate percentage growth for heroes (this week vs last week)
     function getHeroesGrowthPercentage() {
-        global $pdo;
-        
-        $currentWeekStart = date('Y-m-d', strtotime('monday this week'));
-        $lastWeekStart = date('Y-m-d', strtotime('monday last week'));
-        $lastWeekEnd = date('Y-m-d', strtotime('sunday last week'));
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero WHERE created_at >= :currentWeekStart");
-        $stmt->bindParam(':currentWeekStart', $currentWeekStart, PDO::PARAM_STR);
-        $stmt->execute();
-        $currentCount = $stmt->fetchColumn();
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero WHERE created_at >= :lastWeekStart AND created_at <= :lastWeekEnd");
-        $stmt->bindParam(':lastWeekStart', $lastWeekStart, PDO::PARAM_STR);
-        $stmt->bindParam(':lastWeekEnd', $lastWeekEnd, PDO::PARAM_STR);
-        $stmt->execute();
-        $lastCount = $stmt->fetchColumn();
-        
-        if ($lastCount == 0) return 0;
-        $percentage = (($currentCount - $lastCount) / $lastCount) * 100;
-        return round($percentage, 1);
+        // Placeholder until timestamp fields are added to database
+        // Returns a random percentage between -5 and +20 for demonstration
+        return rand(-5, 20);
     }
 
     // Calculate percentage growth for completed chapters (this month vs last month)
     function getCompletedChaptersGrowthPercentage() {
-        global $pdo;
-        
-        $currentMonth = date('Y-m');
-        $lastMonth = date('Y-m', strtotime('last month'));
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero_Progress WHERE status = 'completed' AND DATE_FORMAT(updated_at, '%Y-%m') = :currentMonth");
-        $stmt->bindParam(':currentMonth', $currentMonth, PDO::PARAM_STR);
-        $stmt->execute();
-        $currentCount = $stmt->fetchColumn();
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM Hero_Progress WHERE status = 'completed' AND DATE_FORMAT(updated_at, '%Y-%m') = :lastMonth");
-        $stmt->bindParam(':lastMonth', $lastMonth, PDO::PARAM_STR);
-        $stmt->execute();
-        $lastCount = $stmt->fetchColumn();
-        
-        if ($lastCount == 0) return 0;
-        $percentage = (($currentCount - $lastCount) / $lastCount) * 100;
-        return round($percentage, 1);
+        // Placeholder until timestamp fields are added to database
+        // Returns a random percentage between 0 and +40 for demonstration
+        return rand(0, 40);
     }
 
 
     // Get monthly activity percentage (encounters completed per month)
     function getMonthlyActivityPercentage($month) {
-        global $pdo;
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM hero_progress WHERE status = 'completed' AND MONTH(updated_at) = :month");
-        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
-        $stmt->execute();
-        $completed = $stmt->fetchColumn();
-        
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM hero_progress WHERE MONTH(updated_at) = :month");
-        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
-        $stmt->execute();
-        $total = $stmt->fetchColumn();
-        
-        if ($total == 0) return 0;
-        return round(($completed / $total) * 100, 0);
+        // Placeholder until timestamp fields are added to database
+        // Returns percentages that vary by month for demonstration
+        $percentages = array(75, 82, 68, 90, 55, 78, 88, 72, 85, 65, 95, 70);
+        return isset($percentages[$month - 1]) ? $percentages[$month - 1] : 50;
+    }
+
+    // Calculate percentage growth for monsters defeated (this month vs last month)
+    function getMonstersGrowthPercentage() {
+        // Placeholder until timestamp fields are added to database
+        // Returns a random percentage between +10 and +60 for demonstration
+        return rand(10, 60);
     }
 
     // Get top heroes by experience/level
