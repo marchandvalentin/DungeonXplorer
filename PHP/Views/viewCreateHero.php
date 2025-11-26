@@ -66,7 +66,7 @@
                                     <label for="class_<?php echo $class['id']; ?>" class="block p-3 border-2 border-[rgba(139,40,40,0.3)] rounded-lg cursor-pointer transition-all duration-300 peer-checked:border-medieval-red peer-checked:bg-[rgba(198,40,40,0.2)] hover:border-medieval-red/60">
                                         <div class="flex items-center gap-2 mb-2">
                                             <span class="text-2xl"><?php 
-                                                $classEmojis = ['Warrior' => '⚔️', 'Mage' => '🔮', 'Archer' => '🏹', 'Rogue' => '🗡️', 'Paladin' => '✨', 'Berserker' => '💥'];
+                                                $classEmojis = ['Guerrier' => '⚔️', 'Mage' => '🔮', 'Voleur' => '🗡️'];
                                                 echo $classEmojis[$class['name']] ?? '🛡️';
                                             ?></span>
                                             <div class="font-bold text-medieval-lightred text-sm"><?php echo htmlspecialchars($class['name']); ?></div>
@@ -148,7 +148,7 @@
                 'Voleur': '🗡️',
             };
 
-            const emoji = classEmojis[classData.name]/* || '🛡️'*/;
+            const emoji = classEmojis[classData.name] || '🛡️';
             
             document.getElementById('classPreviewName').textContent = classData.name;
             document.getElementById('classPreviewDesc').innerHTML = `
