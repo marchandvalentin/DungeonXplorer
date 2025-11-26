@@ -87,10 +87,10 @@
                                                 <span class="text-medieval-lightred">Mana:</span> <?php echo $class['base_mana']; ?>
                                             </div>
                                             <div class="text-medieval-cream/60">
-                                                <span class="text-medieval-lightred">Force:</span> <?php echo $class['base_strength']; ?>
+                                                <span class="text-medieval-lightred">Force:</span> <?php echo $class['strength']; ?>
                                             </div>
                                             <div class="text-medieval-cream/60">
-                                                <span class="text-medieval-lightred">Init:</span> <?php echo $class['base_initiative']; ?>
+                                                <span class="text-medieval-lightred">Init:</span> <?php echo $class['initiative']; ?>
                                             </div>
                                         </div>
                                     </label>
