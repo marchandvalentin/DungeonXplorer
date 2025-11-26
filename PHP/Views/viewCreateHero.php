@@ -160,11 +160,11 @@
                         <div class="text-medieval-cream/60">Mana</div>
                     </div>
                     <div class="bg-[rgba(198,40,40,0.2)] p-2 rounded">
-                        <div class="text-medieval-lightred font-bold">${classData.base_strength}</div>
+                        <div class="text-medieval-lightred font-bold">${classData.strength}</div>
                         <div class="text-medieval-cream/60">Force</div>
                     </div>
                     <div class="bg-[rgba(198,40,40,0.2)] p-2 rounded">
-                        <div class="text-medieval-lightred font-bold">${classData.base_initiative}</div>
+                        <div class="text-medieval-lightred font-bold">${classData.initiative}</div>
                         <div class="text-medieval-cream/60">Init</div>
                     </div>
                 </div>
