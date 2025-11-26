@@ -349,7 +349,7 @@
 
     function completedChapters() {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT count(*) FROM Hero_progress ");
+        $stmt = $pdo->prepare("SELECT count(*) FROM Hero_Progress ");
         $stmt->execute();
 
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
