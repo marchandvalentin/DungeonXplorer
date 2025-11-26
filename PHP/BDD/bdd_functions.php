@@ -412,7 +412,7 @@
     // Get top heroes by experience/level
     function getTopHeroes($limit = 4) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT id, name, xp FROM Hero ORDER BY DESC created_at DESC LIMIT :limit");
+        $stmt = $pdo->prepare("SELECT id, name, xp FROM Hero ORDER BY xp DESC LIMIT :limit");
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
