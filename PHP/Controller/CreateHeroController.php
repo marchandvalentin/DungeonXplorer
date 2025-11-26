@@ -70,7 +70,7 @@
                 $successMessage = $this->successMessage;
                 $classes = getAllClasses();
                 /*include __DIR__ . '/../Views/viewCreateHero.php';*/
-                header('Location: /viewCreateHero');
+                header('Location: /viewCreateHero.php');
                 exit;
             } catch (Exception $e) {
                 $this->errors[] = 'Erreur lors de la création du héros: ' . $e->getMessage();
