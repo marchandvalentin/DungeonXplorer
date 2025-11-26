@@ -4,6 +4,7 @@ session_start();
 require 'vendor/autoload.php';
 require 'PHP/Controller/LoginController.php';
 require 'PHP/Controller/RegisterController.php';
+require 'PHP/Controller/DashboardController.php';
 
 use Bramus\Router\Router;
 
