@@ -10,15 +10,20 @@
     <title>DungeonXPlorer - Tableau de bord</title>
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
-    <?php include 'PHP/header.php'; 
+    <?php 
+    include 'PHP/header.php';
+    require_once __DIR__ . '/../BDD/bdd_functions.php';
 
-        // Fetch dashboard data
-        $usersNumber = getAllUsers();
-        $usersGrowth = getUsersGrowthPercentage('users');
-        $activeHeroes = getActiveHeroes();
-        $heroesGrowth = getHeroesGrowthPercentage('heroes');
-        //$completedChapters = completedChapters();
-        //$chaptersGrowth = getCompletedChaptersGrowthPercentage();
+    // Fetch dashboard data
+    $usersNumber = getAllUsers();
+    $usersGrowth = getUsersGrowthPercentage();
+    $activeHeroes = getActiveHeroes();
+    $heroesGrowth = getHeroesGrowthPercentage();
+    $completedChapterCount = completedChapters();
+    $chaptersGrowth = getCompletedChaptersGrowthPercentage();
+    $monsteredDefeated = getMonstersDefeated();
+    $monstersGrowth = getMonstersGrowthPercentage();
+    $topHeroes = getTopHeroes(4);
     ?>
     
 
@@ -64,8 +69,8 @@
             <div class="feature-card relative group bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8 hover:bg-[rgba(42,30,20,0.7)] hover:border-medieval-red/50 hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(198,40,40,0.3)] transition-all duration-300 overflow-hidden">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Chaptitres Complétées</p>
-                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo number_format($completedChapters); ?>*/</h3>
+                        <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Chapitres Complétés</p>
+                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo number_format($completedChapterCount); ?></h3>
                     </div>
                     <div class="text-4xl">📜</div>
                 </div>
@@ -77,11 +82,11 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Monstres Vaincus</p>
-                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo "pas implementé" /* echo number_format($monsteredDefeated);*/ ?></h3>
+                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo number_format($monsteredDefeated); ?></h3>
                     </div>
                     <div class="text-4xl">👹</div>
                 </div>
-                <p class="text-medieval-cream/50 text-xs mt-4"><?php  echo "pas implementé" /* echo ($monstersGrowth >= 0 ? '+' : '') . $monstersGrowth; */?>% ce mois</p>
+                <p class="text-medieval-cream/50 text-xs mt-4"><?php echo ($monstersGrowth >= 0 ? '+' : '') . $monstersGrowth; ?>% ce mois</p>
             </div>
         </div>
 

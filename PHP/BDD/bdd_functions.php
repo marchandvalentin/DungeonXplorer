@@ -361,6 +361,15 @@
         return $res['count(*)'];
     }
 
+    function getMonstersDefeated() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT count(*) FROM encounter WHERE defeated = 1");
+        $stmt->execute();
+
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $res['count(*)'];
+    }
+
     // Calculate percentage growth for users (this month vs last month)
     function getUsersGrowthPercentage() {
         // Placeholder until timestamp fields are added to database
