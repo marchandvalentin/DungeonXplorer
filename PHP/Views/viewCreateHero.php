@@ -148,7 +148,7 @@
                 'Voleur': '🗡️',
             };
 
-            const emoji = classEmojis[classData.name] || '🛡️';
+            const emoji = classEmojis[classData.name]/* || '🛡️'*/;
             
             document.getElementById('classPreviewName').textContent = classData.name;
             document.getElementById('classPreviewDesc').innerHTML = `
