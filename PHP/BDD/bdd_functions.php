@@ -458,7 +458,7 @@
     // Get all classes from database
     function getAllClasses() {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, base_strength, base_initiative FROM Class ORDER BY name ASC");
+        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class ORDER BY name ASC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
