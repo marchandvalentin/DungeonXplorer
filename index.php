@@ -4,6 +4,7 @@ session_start();
 require 'vendor/autoload.php';
 require 'PHP/Controller/LoginController.php';
 require 'PHP/Controller/RegisterController.php';
+require 'PHP/Controller/HeroSelectionController.php';
 
 use Bramus\Router\Router;
 
@@ -43,6 +44,17 @@ $router->get('/logout', function() {
 $router->get('/dashboard', function() {
     if (isset($_SESSION['user_id'])) {
         include 'PHP/Views/viewDashboard.php';
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+$router->get('/heros', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new HeroSelectionController();
+        $heros = $controller->getHerosByUserId($_SESSION['user_id']);
+        $controller->show($_SESSION['user_id']);
     } else {
         header('Location: /login');
         exit();

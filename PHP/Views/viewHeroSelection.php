@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medieval: {
+                            dark: '#1a1614',
+                            brown: '#2d2520',
+                            red: '#c62828',
+                            lightred: '#ef5350',
+                            cream: '#e8d4b0',
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-red {
+            background: linear-gradient(135deg, #c62828 0%, #ef5350 50%, #c62828 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-save-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(198, 40, 40, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .hero-save-card:hover::before {
+            left: 100%;
+        }
+    </style>
+    <title>Sélection de Héros - DungeonXPlorer</title>
+</head>
+<body class="text-medieval-cream">
+    <?php include '../header.php'; ?>
+
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="text-center mb-16">
+            <h1 class="gradient-red text-5xl md:text-6xl font-bold tracking-wider uppercase mb-4">
+                Vos Héros
+            </h1>
+            <div class="w-32 h-1 mx-auto bg-gradient-to-r from-transparent via-medieval-red to-transparent mb-6"></div>
+            <p class="text-xl text-medieval-cream/80 max-w-2xl mx-auto">
+                Choisissez votre champion et partez à l'aventure dans les donjons mystérieux
+            </p>
+        </div>
+
+        <!-- Hero Cards Grid -->
+        <?php if (!empty($heros)): ?>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <?php foreach ($heros as $hero): ?>
+                    <?php $isDead = $hero->isDead(); ?>
+                    <div class="hero-save-card relative group rounded-2xl p-6 border <?php echo $isDead ? 'border-gray-600/50' : 'border-medieval-red/30'; ?> shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden transition-all duration-300 <?php echo $isDead ? 'grayscale opacity-75 hover:opacity-90' : 'hover:-translate-y-3 hover:border-medieval-red/60 hover:shadow-[0_16px_40px_rgba(198,40,40,0.4)]'; ?>" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.6), rgba(26, 22, 20, 0.8)); backdrop-filter: blur(10px);">
+                        
+                        <?php if ($isDead): ?>
+                        <!-- Dead Badge -->
+                        <div class="absolute top-4 right-4 bg-gray-800/90 border border-gray-600 rounded-lg px-3 py-1 flex items-center gap-2 z-10">
+                            <span class="text-xl">💀</span>
+                            <span class="text-gray-300 font-bold text-sm">Mort</span>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <!-- Hero Header -->
+                        <div class="text-center mb-6">
+                            <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-red/10 border-2 <?php echo $isDead ? 'border-gray-600/50' : 'border-medieval-red/50'; ?> flex items-center justify-center shadow-lg <?php echo $isDead ? 'opacity-50' : ''; ?>">
+                                <span class="text-5xl"><?php echo $isDead ? '💀' : '⚔️'; ?></span>
+                            </div>
+                            <h2 class="text-3xl font-bold <?php echo $isDead ? 'text-gray-400' : 'text-medieval-lightred'; ?> mb-2">
+                                <?php echo htmlspecialchars($hero['name']); ?>
+                            </h2>
+                            <div class="w-16 h-0.5 mx-auto bg-gradient-to-r from-transparent <?php echo $isDead ? 'via-gray-600' : 'via-medieval-red'; ?> to-transparent"></div>
+                        </div>
+
+                        <!-- Hero Stats -->
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between items-center p-3 rounded-lg <?php echo $isDead ? 'bg-[rgba(100,100,100,0.1)] border border-gray-600/20' : 'bg-[rgba(198,40,40,0.1)] border border-medieval-red/20'; ?>">
+                                <span class="<?php echo $isDead ? 'text-gray-400' : 'text-medieval-cream'; ?> font-semibold">Classe :</span>
+                                <span class="<?php echo $isDead ? 'text-gray-500' : 'text-medieval-lightred'; ?> font-bold"><?php echo htmlspecialchars($hero['class']); ?></span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-3 rounded-lg <?php echo $isDead ? 'bg-[rgba(100,100,100,0.1)] border border-gray-600/20' : 'bg-[rgba(198,40,40,0.1)] border border-medieval-red/20'; ?>">
+                                <span class="<?php echo $isDead ? 'text-gray-400' : 'text-medieval-cream'; ?> font-semibold">Niveau :</span>
+                                <span class="<?php echo $isDead ? 'text-gray-500' : 'text-yellow-400'; ?> font-bold text-lg"><?php echo htmlspecialchars($hero['level']); ?></span>
+                            </div>
+                            
+                            <div class="p-3 rounded-lg <?php echo $isDead ? 'bg-[rgba(100,100,100,0.1)] border border-gray-600/20' : 'bg-[rgba(198,40,40,0.1)] border border-medieval-red/20'; ?>">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="<?php echo $isDead ? 'text-gray-400' : 'text-medieval-cream'; ?> font-semibold">Expérience :</span>
+                                    <span class="<?php echo $isDead ? 'text-gray-500' : 'text-medieval-lightred'; ?> font-bold"><?php echo htmlspecialchars($hero['experience']); ?> XP</span>
+                                </div>
+                                <div class="w-full bg-[rgba(0,0,0,0.3)] rounded-full h-2 overflow-hidden">
+                                    <div class="<?php echo $isDead ? 'bg-gradient-to-r from-gray-600 to-gray-500' : 'bg-gradient-to-r from-medieval-red to-red-400'; ?> h-full rounded-full" style="width: <?php echo min(100, ($hero['experience'] % 1000) / 10); ?>%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <?php if ($isDead): ?>
+                        <div class="space-y-3">
+                            <div class="text-center p-3 bg-gray-800/50 rounded-lg border border-gray-600/30">
+                                <p class="text-gray-400 text-sm mb-1">Ce héros est tombé au combat</p>
+                                <p class="text-gray-500 text-xs">Vous pouvez l'achever pour libérer cet emplacement</p>
+                            </div>
+                            <button class="w-full px-4 py-3 bg-gradient-to-r from-gray-700/50 to-gray-800/50 border-2 border-gray-600 rounded-lg text-gray-300 font-bold tracking-wide hover:from-gray-600/50 hover:to-gray-700/50 hover:border-gray-500 hover:text-gray-200 hover:scale-105 transition-all duration-300">
+                                ⚰️ Achever le Héros
+                            </button>
+                        </div>
+                        <?php else: ?>
+                        <div class="flex gap-3">
+                            <button class="flex-1 px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:scale-105 hover:shadow-[0_8px_20px_rgba(198,40,40,0.4)] transition-all duration-300">
+                                Jouer
+                            </button>
+                            <button class="px-4 py-3 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 hover:scale-105 transition-all duration-300">
+                                📊
+                            </button>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+
+            <!-- Create New Hero Card - Only show if less than 4 heroes -->
+            <?php if (count($heros) < 4): ?>
+            <a href="/creationhero" class="hero-save-card relative group rounded-2xl p-6 border-2 border-dashed border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 hover:-translate-y-3 hover:border-medieval-red/60 hover:shadow-[0_16px_40px_rgba(198,40,40,0.3)] cursor-pointer block" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.3), rgba(26, 22, 20, 0.5)); backdrop-filter: blur(10px);">
+                <div class="flex flex-col items-center justify-center h-full min-h-[400px] text-center">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-medieval-red/20 to-medieval-red/5 border-2 border-dashed border-medieval-red/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <span class="text-5xl text-medieval-red/70 group-hover:text-medieval-lightred transition-colors duration-300">➕</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-medieval-lightred mb-3 group-hover:text-red-400 transition-colors duration-300">Créer un Nouveau Héros</h3>
+                    <p class="text-medieval-cream/70 max-w-xs group-hover:text-medieval-cream transition-colors duration-300">
+                        Forgez votre légende en créant un nouveau champion
+                    </p>
+                </div>
+            </a>
+            <?php endif; ?>
+        </div>
+        <?php else: ?>
+        <!-- Create New Hero Card - Centered when no heroes -->
+        <div class="flex justify-center mb-12">
+            <a href="/creationhero" class="hero-save-card relative group rounded-2xl p-6 border-2 border-dashed border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden transition-all duration-300 hover:-translate-y-3 hover:border-medieval-red/60 hover:shadow-[0_16px_40px_rgba(198,40,40,0.3)] cursor-pointer max-w-md w-full block" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.3), rgba(26, 22, 20, 0.5)); backdrop-filter: blur(10px);">
+                <div class="flex flex-col items-center justify-center h-full min-h-[400px] text-center">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-medieval-red/20 to-medieval-red/5 border-2 border-dashed border-medieval-red/40 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <span class="text-5xl text-medieval-red/70 group-hover:text-medieval-lightred transition-colors duration-300">➕</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-medieval-lightred mb-3 group-hover:text-red-400 transition-colors duration-300">Créer un Nouveau Héros</h3>
+                    <p class="text-medieval-cream/70 max-w-xs group-hover:text-medieval-cream transition-colors duration-300">
+                        Forgez votre légende en créant un nouveau champion
+                    </p>
+                </div>
+            </a>
+        </div>
+        <?php endif; ?>
+
+        <!-- Statistics Section -->
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="rounded-xl p-6 border border-medieval-red/20 text-center" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.4), rgba(26, 22, 20, 0.6)); backdrop-filter: blur(5px);">
+                <div class="text-4xl font-bold text-medieval-lightred mb-2">
+                    <?php echo count($heros ?? []); ?>
+                </div>
+                <div class="text-medieval-cream/70">Héros Actifs</div>
+            </div>
+            
+            <div class="rounded-xl p-6 border border-medieval-red/20 text-center" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.4), rgba(26, 22, 20, 0.6)); backdrop-filter: blur(5px);">
+                <div class="text-4xl font-bold text-yellow-400 mb-2">
+                    <?php 
+                        $totalLevel = 0;
+                        foreach ($heros ?? [] as $hero) {
+                            $totalLevel += $hero['level'];
+                        }
+                        echo $totalLevel;
+                    ?>
+                </div>
+                <div class="text-medieval-cream/70">Niveaux Totaux</div>
+            </div>
+            
+            <div class="rounded-xl p-6 border border-medieval-red/20 text-center" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.4), rgba(26, 22, 20, 0.6)); backdrop-filter: blur(5px);">
+                <div class="text-4xl font-bold text-red-400 mb-2">
+                    <?php 
+                        $totalXP = 0;
+                        foreach ($heros ?? [] as $hero) {
+                            $totalXP += $hero['experience'];
+                        }
+                        echo number_format($totalXP);
+                    ?>
+                </div>
+                <div class="text-medieval-cream/70">XP Total</div>
+            </div>
+        </div>
+    </section>
+
+    <?php include '../footer.php'; ?>
+
+</body>
+</html>
