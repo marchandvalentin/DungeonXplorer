@@ -64,7 +64,13 @@
                                         onchange="updateClassPreview(<?php echo htmlspecialchars(json_encode($class)); ?>)"
                                     >
                                     <label for="class_<?php echo $class['id']; ?>" class="block p-3 border-2 border-[rgba(139,40,40,0.3)] rounded-lg cursor-pointer transition-all duration-300 peer-checked:border-medieval-red peer-checked:bg-[rgba(198,40,40,0.2)] hover:border-medieval-red/60">
-                                        <div class="font-bold text-medieval-lightred text-sm"><?php echo htmlspecialchars($class['name']); ?></div>
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="text-2xl"><?php 
+                                                $classEmojis = ['Warrior' => '⚔️', 'Mage' => '🔮', 'Archer' => '🏹', 'Rogue' => '🗡️', 'Paladin' => '✨', 'Berserker' => '💥'];
+                                                echo $classEmojis[$class['name']] ?? '🛡️';
+                                            ?></span>
+                                            <div class="font-bold text-medieval-lightred text-sm"><?php echo htmlspecialchars($class['name']); ?></div>
+                                        </div>
                                         <div class="grid grid-cols-2 gap-1 text-xs mt-2">
                                             <div class="text-medieval-cream/60">
                                                 <span class="text-medieval-lightred">PV:</span> <?php echo $class['base_pv']; ?>
@@ -86,9 +92,9 @@
                     </div>
 
                     <!-- Right Column: Class Preview and Name Input -->
-                    <div class="md:col-span-2 space-y-6">
+                    <div class="md:col-span-2 flex flex-col">
                         <!-- Class Preview Card -->
-                        <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg p-6 text-center">
+                        <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg p-6 text-center flex-1">
                             <div id="classPreviewContainer" class="mb-4">
                                 <div class="text-6xl mb-4">🛡️</div>
                                 <h3 id="classPreviewName" class="text-2xl font-bold text-medieval-lightred mb-2">Sélectionnez une classe</h3>
@@ -97,7 +103,7 @@
                         </div>
 
                         <!-- Hero Name Input -->
-                        <div>
+                        <div class="mt-6">
                             <label for="hero_name" class="block text-sm font-semibold mb-3 text-medieval-lightred">Nom du Héros</label>
                             <input 
                                 type="text" 
@@ -137,12 +143,9 @@
     <script>
         function updateClassPreview(classData) {
             const classEmojis = {
-                'Warrior': '⚔️',
+                'Guerrier': '⚔️',
                 'Mage': '🔮',
-                'Archer': '🏹',
-                'Rogue': '🗡️',
-                'Paladin': '✨',
-                'Berserker': '💥'
+                'Voleur': '🗡️',
             };
 
             const emoji = classEmojis[classData.name] || '🛡️';
