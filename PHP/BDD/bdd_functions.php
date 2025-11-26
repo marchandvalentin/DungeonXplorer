@@ -180,8 +180,8 @@
         $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
         $stmt->bindParam(':health', $classData['base_pv'], PDO::PARAM_INT);
         $stmt->bindParam(':mana', $classData['base_mana'], PDO::PARAM_INT);
-        $stmt->bindParam(':strength', $classData['base_strength'], PDO::PARAM_INT);
-        $stmt->bindParam(':initiative', $classData['base_initiative'], PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $classData['strength'], PDO::PARAM_INT);
+        $stmt->bindParam(':initiative', $classData['initiative'], PDO::PARAM_INT);
         $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
         return $stmt->execute();
     }
