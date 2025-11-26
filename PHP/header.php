@@ -29,12 +29,25 @@
                         <?php echo htmlspecialchars($_SESSION['user_name']); ?>
                     </li>
 
-                    <li>
-                        <a href="/" class="nav-link nav-link-active relative flex items-center px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg bg-[rgba(139,40,40,0.4)] border border-medieval-red/80 shadow-[0_4px_15px_rgba(198,40,40,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 
-                            hover:shadow-[0_8px_20px_rgba(198,40,40,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">
-                            Tableau de bord
-                        </a>
-                    </li>
+
+                    <?php if (isset($user) && $user['IS_ADMIN']): ?>
+                        <li>
+                            <a href="/dashboard" class="nav-link nav-link-active relative flex items-center px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg bg-[rgba(139,40,40,0.4)] border border-medieval-red/80 shadow-[0_4px_15px_rgba(198,40,40,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 
+                                hover:shadow-[0_8px_20px_rgba(198,40,40,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">
+                                Tableau de bord
+                            </a>
+                        </li>
+                        <?php else: ?>
+                        <li>
+                            <a href="/adventures" class="nav-link nav-link-active relative flex items-center px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg bg-[rgba(139,40,40,0.4)] border border-medieval-red/80 shadow-[0_4px_15px_rgba(198,40,40,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 
+                                hover:shadow-[0_8px_20px_rgba(198,40,40,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">
+                                Mes aventures
+                            </a>
+                        </li> 
+
+                    <?php endif; ?>
+
+
                     <li>
                         <a href="/" class="nav-link relative flex items-center px-6 py-3 text-white font-semibold tracking-wide text-sm rounded-lg bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:bg-[rgba(139,40,40,0.3)]  hover:-translate-y-1 hover:border-medieval-red/60 
                         hover:shadow-[0_8px_20px_rgba(198,40,40,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]">

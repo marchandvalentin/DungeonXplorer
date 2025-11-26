@@ -310,7 +310,17 @@
         $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_email = :user_email");
         $stmt->bindParam(':user_email', $user_email, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
+        $val_admin->bindParam(':user_email', $stmt['USER_ID'], PDO::PARAM_STR);
+        $val_admin->execute();
+        $val_admin->fetch(PDO::FETCH_ASSOC);
+        
+
+        $stmt['IS_ADMIN'] = $val_admin['count(*)'] > 0 ? true : false;
+
+        return $stmt;
     }
 
 ?>
