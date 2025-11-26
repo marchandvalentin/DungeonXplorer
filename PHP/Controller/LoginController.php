@@ -25,8 +25,7 @@
         function logout(){
             session_unset();
             session_destroy();
-            echo "Vous avez été déconnecté.";
-            header("Location: /viewWelcome.php");
+            include __DIR__ . '/../Views/viewWelcome.php';
             exit();
         }
     }
