@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 require 'PHP/Controller/LoginController.php';
 require 'PHP/Controller/RegisterController.php';
 require 'PHP/Controller/DashboardController.php';
+require 'PHP/Controller/CreateHeroController.php';
 
 use Bramus\Router\Router;
 
@@ -49,12 +50,12 @@ $router->get('/dashboard', function() {
     } 
 });
 
-$router->get('/createHhero', function() {
+$router->get('/createHero', function() {
     $controller = new CreateHeroController();
     $controller->show();
 });
 
-$router->post('/createHero', function() {
+$router->post('/create-hero', function() {
     $controller = new CreateHeroController();
 
     if (isset($_SESSION['user_id'])) {

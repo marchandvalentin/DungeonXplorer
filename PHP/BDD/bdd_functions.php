@@ -157,6 +157,34 @@
         return $result ? $result['level'] : null;
     }
 
+    // Create a new hero for a user
+    function createHero($user_id, $hero_name, $class_id) {
+        global $pdo;
+        $created_at = date('Y-m-d H:i:s');
+        
+        // Get class details to set base stats
+        $classStmt = $pdo->prepare("SELECT base_pv, base_mana, base_strength, base_initiative FROM Class WHERE id = :class_id");
+        $classStmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
+        $classStmt->execute();
+        $classData = $classStmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$classData) {
+            return false;
+        }
+        
+        // Insert new hero with base stats from class
+        $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, health, mana, strength, initiative, level, xp, created_at) 
+                              VALUES (:user_id, :name, :class_id, :health, :mana, :strength, :initiative, 1, 0, :created_at)");
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':name', $hero_name, PDO::PARAM_STR);
+        $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
+        $stmt->bindParam(':health', $classData['base_pv'], PDO::PARAM_INT);
+        $stmt->bindParam(':mana', $classData['base_mana'], PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $classData['base_strength'], PDO::PARAM_INT);
+        $stmt->bindParam(':initiative', $classData['base_initiative'], PDO::PARAM_INT);
+        $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
 
     ////////////////// MONSTER FUNCTIONS ///////////////////////
 
@@ -426,4 +454,14 @@
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['count'];
     }
+
+    // Get all classes from database
+    function getAllClasses() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, base_strength, base_initiative FROM Class ORDER BY name ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    
 ?>
