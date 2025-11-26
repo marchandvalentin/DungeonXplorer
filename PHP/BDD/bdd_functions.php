@@ -363,14 +363,14 @@
         return $res['count(*)'];
     }
 
-    function getMonstersDefeated() {
+    /*function getMonstersDefeated() {
         global $pdo;
         $stmt = $pdo->prepare("SELECT count(*) FROM Encounter WHERE defeated = 1");
         $stmt->execute();
 
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         return $res['count(*)'];
-    }
+    }*/
 
     // Calculate percentage growth for users (this month vs last month)
     function getUsersGrowthPercentage() {
