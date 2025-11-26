@@ -326,4 +326,33 @@
         return $user;
     }
 
+    /////////////////////// DASHBOARD FUNCTIONS ///////////////////////
+
+    function getAllUsers() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT count(*) FROM Users");
+        $stmt->execute();
+
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $res['count(*)'];
+    }
+
+
+    function activeHeroes() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT count(*) FROM Hero");
+        $stmt->execute();
+
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $res['count(*)'];
+    }
+
+    function completedChapters() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT count(*) FROM Hero_progress ");
+        $stmt->execute();
+
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $res['count(*)'];
+    }
 ?>
