@@ -21,7 +21,7 @@
     $heroesGrowth = getHeroesGrowthPercentage();
     $completedChapterCount = completedChapters();
     $chaptersGrowth = getCompletedChaptersGrowthPercentage();
-    $monsteredDefeated = getMonstersDefeated();
+    $monsteredDefeated = 10 /*getMonstersDefeated()*/;
     $monstersGrowth = getMonstersGrowthPercentage();
     $topHeroes = getTopHeroes(4);
     ?>
