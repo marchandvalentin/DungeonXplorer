@@ -55,7 +55,7 @@ $router->get('/createHero', function() {
     $controller->show();
 });
 
-$router->post('/create-hero', function() {
+$router->post('/createHero', function() {
     $controller = new CreateHeroController();
 
     if (isset($_SESSION['user_id'])) {

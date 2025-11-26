@@ -45,7 +45,7 @@
                 </div>
             <?php endif; ?>
 
-            <form method="POST" action="/create-hero" class="space-y-8">
+            <form method="POST" action="/createHero" class="space-y-8">
                 <!-- Two Column Layout -->
                 <div class="grid md:grid-cols-3 gap-8">
                     <!-- Left Column: Class Selection -->
