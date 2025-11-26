@@ -30,11 +30,11 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Utilisateurs Totaux</p>
-                        <h3 class="text-4xl font-bold text-medieval-lightred">1,234</h3>
+                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo getAllUsers(); ?></h3>
                     </div>
                     <div class="text-4xl">👥</div>
                 </div>
-                <p class="text-medieval-cream/50 text-xs mt-4">+12% ce mois</p>
+                <p class="text-medieval-cream/50 text-xs mt-4">+12% ce mois (facultatif)</p>
             </div>
 
             <!-- Card 2: Active Heroes -->
@@ -42,19 +42,19 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Héros Actifs</p>
-                        <h3 class="text-4xl font-bold text-medieval-lightred">856</h3>
+                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo getActiveHeroes(); ?></h3>
                     </div>
                     <div class="text-4xl">⚔️</div>
                 </div>
-                <p class="text-medieval-cream/50 text-xs mt-4">+8% cette semaine</p>
+                <p class="text-medieval-cream/50 text-xs mt-4">+8% cette semaine (facultatif)</p>
             </div>
 
             <!-- Card 3: Completed Quests -->
             <div class="feature-card relative group bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8 hover:bg-[rgba(42,30,20,0.7)] hover:border-medieval-red/50 hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(198,40,40,0.3)] transition-all duration-300 overflow-hidden">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Quêtes Complétées</p>
-                        <h3 class="text-4xl font-bold text-medieval-lightred">5,432</h3>
+                        <p class="text-medieval-cream/70 text-sm font-semibold mb-2">Chaptitres Complétées</p>
+                        <h3 class="text-4xl font-bold text-medieval-lightred"><?php echo completedChapters(); ?></h3>
                     </div>
                     <div class="text-4xl">📜</div>
                 </div>

@@ -338,7 +338,7 @@
     }
 
 
-    function activeHeroes() {
+    function getActiveHeroes() {
         global $pdo;
         $stmt = $pdo->prepare("SELECT count(*) FROM Hero");
         $stmt->execute();
