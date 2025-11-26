@@ -54,9 +54,9 @@ class RegisterController {
             return;
         }
 
-        // Check if email already exists
-        $user = getUserByEmail($email);
-        if ($user) {
+        // Check if email already exists - critical fix
+        $existingUser = getUserByEmail($email);
+        if ($existingUser !== false) {
             $this->errors[] = 'Cet email est déjà utilisé.';
             $errors = $this->errors;
             $success = false;
@@ -69,7 +69,10 @@ class RegisterController {
         
         try {
             //(createUser parameters: email, username, password_hash)
-            createUser($email, $nom, $passwordHash);
+            $result = createUser($email, $nom, $passwordHash);
+            if (!$result) {
+                throw new Exception('Impossible d\'insérer l\'utilisateur dans la base de données.');
+            }
             // For now, showing success. Replace with actual DB insert
             $this->success = true;
             $this->successMessage = 'Inscription réussie! Vous pouvez maintenant vous connecter.';
