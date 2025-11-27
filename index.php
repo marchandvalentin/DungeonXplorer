@@ -45,14 +45,17 @@ $router->get('/logout', function() {
 $router->get('/dashboard', function() {
     $controller = new DashboardController();
 
-    if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['user_id']) && ($_SESSION['IS_ADMIN'] >= 1)) {
         $controller->show();
     } 
 });
 
 $router->get('/createHero', function() {
     $controller = new CreateHeroController();
-    $controller->show();
+    
+    if (isset($_SESSION['user_id'])) {
+        $controller->show();
+    } 
 });
 
 $router->post('/createHero', function() {
