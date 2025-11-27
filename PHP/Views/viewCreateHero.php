@@ -40,7 +40,7 @@
                 <div class="bg-green-900/30 border border-green-600/50 rounded-lg p-4 mb-6">
                     <p class="text-green-300 text-sm"><?php echo htmlspecialchars($successMessage ?? ''); ?></p>
                     <p class="text-green-300/70 text-xs mt-2">
-                        <a href="/adventures" class="text-green-400 hover:text-green-300 underline">Aller à vos aventures →</a>
+                        <a href="/heros" class="text-green-400 hover:text-green-300 underline">Aller à vos aventures →</a>
                     </p>
                 </div>
             <?php endif; ?>
