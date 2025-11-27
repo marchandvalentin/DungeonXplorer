@@ -173,12 +173,12 @@
         }
         
         // Insert new hero with base stats from class
-        $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, health, mana, strength, initiative, level, xp, created_at) 
-                              VALUES (:user_id, :name, :class_id, :health, :mana, :strength, :initiative, 1, 0, :created_at)");
+        $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, pv, mana, strength, initiative, level, xp, created_at) 
+                              VALUES (:user_id, :name, :class_id, :pv, :mana, :strength, :initiative, 1, 0, :created_at)");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':name', $hero_name, PDO::PARAM_STR);
         $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
-        $stmt->bindParam(':health', $classData['base_pv'], PDO::PARAM_INT);
+        $stmt->bindParam(':pv', $classData['base_pv'], PDO::PARAM_INT);
         $stmt->bindParam(':mana', $classData['base_mana'], PDO::PARAM_INT);
         $stmt->bindParam(':strength', $classData['strength'], PDO::PARAM_INT);
         $stmt->bindParam(':initiative', $classData['initiative'], PDO::PARAM_INT);
