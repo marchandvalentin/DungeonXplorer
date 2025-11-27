@@ -55,7 +55,7 @@ $router->get('/heros', function() {
     if (isset($_SESSION['user_id'])) {
         $controller = new HeroSelectionController();
         $heros = $controller->getHerosByUserId($_SESSION['user_id']);
-        $controller->show($_SESSION['user_id']);
+        $controller->show();
     } else {
         header('Location: /login');
         exit();
