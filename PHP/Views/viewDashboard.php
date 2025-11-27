@@ -137,7 +137,7 @@
                     <div class="flex justify-between items-center p-3 bg-[rgba(198,40,40,<?php echo $index === 0 ? '0.1' : '0.05'; ?>)] rounded-lg border border-[rgba(198,40,40,<?php echo $index === 0 ? '0.2' : '0.15'; ?>)]">
                         <div>
                             <p class="text-medieval-cream font-semibold"><?php echo htmlspecialchars($hero['name']); ?></p>
-                            <p class="text-medieval-cream/70 text-sm">Niveau <?php echo $hero['level']; ?></p>
+                            <p class="text-medieval-cream/70 text-sm">Niveau <?php echo $hero['xp']; ?></p>
                         </div>
                         <span class="text-medieval-lightred font-bold"><?php echo $medals[$index]; ?></span>
                     </div>
