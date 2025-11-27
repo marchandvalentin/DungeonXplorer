@@ -7,6 +7,12 @@
         private $successMessage = '';
 
         function show(){
+            // Check if user is logged in
+            if (!isset($_SESSION['user_id'])) {
+                header('Location: /login');
+                exit;
+            }
+            
             // Get all available classes
             $classes = getAllClasses();
             $errors = $this->errors;
