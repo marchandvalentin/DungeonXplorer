@@ -1,0 +1,163 @@
+{
+  "adventure": {
+    "title": "Une Aventure au Val Perdu",
+    "chapters": [
+      {
+        "id": 1,
+        "title": "Introduction",
+        "text": "Le ciel est lourd ce soir sur le village du Val Perdu, dissimulé entre les montagnes. La petite taverne, dernier refuge avant l'immense forêt, est étrangement calme quand le bourgmestre s'approche de vous. Homme d'apparence usée par les années et les soucis, il vous adresse un regard désespéré.\n\n« Ma fille… elle a disparu dans la forêt. Personne n'a osé la chercher… sauf vous, peut-être ? On raconte qu'un sorcier vit dans un château en ruines, caché au cœur des bois. Depuis des mois, des jeunes filles disparaissent… J'ai besoin de vous pour la retrouver. »\n\nVous sentez le poids de la mission qui s'annonce, et un frisson parcourt votre échine. Bientôt, la forêt s'ouvre devant vous, sombre et menaçante. La quête commence.",
+        "choices": [
+          {
+            "text": "Entrer dans la forêt",
+            "next": 2
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "L'orée de la forêt",
+        "text": "Vous franchissez la lisière des arbres, la pénombre de la forêt avalant le sentier devant vous. Un vent froid glisse entre les troncs, et le bruissement des feuilles ressemble à un murmure menaçant. Deux chemins s'offrent à vous : l'un sinueux, bordé de vieux arbres noueux ; l'autre droit mais envahi par des ronces épaisses.",
+        "choices": [
+          {
+            "text": "Emprunter le chemin sinueux",
+            "next": 3
+          },
+          {
+            "text": "Choisir le sentier couvert de ronces",
+            "next": 4
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "L'arbre aux corbeaux",
+        "text": "Votre choix vous mène devant un vieux chêne aux branches tordues, grouillant de corbeaux noirs qui vous observent en silence. À vos pieds, des traces de pas légers, probablement récents, mènent plus loin dans les bois. Soudain, un bruit de pas feutrés se fait entendre. Vous ressentez la présence d'un prédateur.",
+        "choices": [
+          {
+            "text": "Rester prudent",
+            "next": 5
+          },
+          {
+            "text": "Ignorer les bruits et poursuivre votre route",
+            "next": 6
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Le sanglier enragé",
+        "text": "En progressant, le calme de la forêt est soudain brisé par un grognement. Surgissant des buissons, un énorme sanglier, au pelage épais et aux yeux injectés de sang, se dirige vers vous. Sa rage est palpable, et il semble prêt à en découdre. Le voici qui décide brutalement de vous charger !",
+        "encounter": {
+          "type": "combat",
+          "enemy": "Sanglier enragé"
+        },
+        "choices": [
+          {
+            "text": "Vous avez vaincu le sanglier",
+            "condition": "victory",
+            "next": 8
+          },
+          {
+            "text": "Vous avez été vaincu par le sanglier",
+            "condition": "defeat",
+            "next": 10
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Rencontre avec le paysan",
+        "text": "Tandis que vous progressez, une voix humaine s'élève, interrompant le silence de la forêt. Vous tombez sur un vieux paysan, accroupi près de champignons aux couleurs vives. Il sursaute en vous voyant, puis se détend, vous souriant tristement.\n\n« Vous devriez faire attention, étranger, murmure-t-il. La nuit, des cris terrifiants retentissent depuis le cœur de la forêt… Des créatures rôdent. »",
+        "choices": [
+          {
+            "text": "Continuer après l'avoir écouté",
+            "next": 7
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Le loup noir",
+        "text": "À mesure que vous avancez, un bruissement attire votre attention. Une silhouette sombre s'élance soudainement devant vous : un loup noir aux yeux perçants. Son poil est hérissé et sa gueule laisse entrevoir des crocs acérés. Vous sentez son regard fixé sur vous, prêt à bondir.\n\nLe combat est inévitable",
+        "encounter": {
+          "type": "combat",
+          "enemy": "Loup noir"
+        },
+        "choices": [
+          {
+            "text": "Si vous survivez au loup",
+            "condition": "victory",
+            "next": 7
+          },
+          {
+            "text": "Si le loup vous terrasse",
+            "condition": "defeat",
+            "next": 10
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "La clairière aux pierres anciennes",
+        "text": "Après votre rencontre, vous atteignez une clairière étrange, entourée de pierres dressées, comme un ancien autel oublié par le temps. Une légère brume rampe au sol, et les ombres des pierres semblent danser sous la lueur de la lune.",
+        "choices": [
+          {
+            "text": "Prendre le sentier couvert de mousse",
+            "next": 8
+          },
+          {
+            "text": "Suivre le chemin tortueux à travers les racines",
+            "next": 9
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Les murmures du ruisseau",
+        "text": "Essoufflé mais déterminé, vous arrivez près d'un petit ruisseau qui serpente au milieu des arbres. Le chant de l'eau vous apaise quelque peu, mais des murmures étranges semblent émaner de la rive. Vous apercevez des inscriptions anciennes gravées dans une pierre moussue.",
+        "choices": [
+          {
+            "text": "Toucher la pierre gravée",
+            "next": 11
+          },
+          {
+            "text": "Ignorer cette curiosité et poursuivre votre route",
+            "next": 9
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Au pied du château",
+        "text": "La forêt se disperse enfin, et devant vous se dresse une colline escarpée. Au sommet, le château en ruines projette une ombre menaçante sous le clair de lune. Les murs effrités et les tours en partie effondrées ajoutent à la sinistre réputation du lieu.\n\nVous sentez que la véritable aventure commence ici, et que l'influence du sorcier n'est peut-être pas qu'une légende…",
+        "choices": []
+      },
+      {
+        "id": 10,
+        "title": "La lumière au bout du néant",
+        "text": "Le monde se dérobe sous vos pieds, et une obscurité profonde vous enveloppe, glaciale et insondable. Vous ne sentez plus le poids de votre équipement, ni la morsure de la douleur. Juste un vide infini, vous aspirant lentement dans les ténèbres.\n\nAlors que vous perdez toute notion du temps, une lueur douce apparaît au loin, vacillante comme une flamme fragile dans l'obscurité. Au fur et à mesure que vous approchez, vous entendez une voix, faible mais bienveillante, qui murmure des mots oubliés, anciens.\n\n« Brave âme, ton chemin n'est pas achevé... À ceux qui échouent, une seconde chance est accordée. Mais les caprices du destin exigent un sacrifice. »\n\nLa lumière s'intensifie, et vous sentez vos forces revenir, mais vos poches sont vides, votre sac allégé de tout trésor. Votre équipement, vos armes, tout a disparu, laissant place à une sensation de vulnérabilité.\n\nLorsque la lumière vous enveloppe, vous ouvrez de nouveau les yeux, retrouvant la terre ferme sous vos pieds. Vous êtes de retour, sans autre possession que votre volonté de reprendre cette quête. Mais cette fois-ci, peut-être, saurez-vous éviter les pièges fatals qui vous ont mené à votre perte.",
+        "type": "death",
+        "choices": [
+          {
+            "text": "Reprendre l'aventure depuis le début",
+            "next": 1,
+            "effect": "reset_inventory"
+          }
+          
+        ]
+      },
+      {
+        "id": 11,
+        "title": "La curiosité tua le chat",
+        "text": "Qu'avez-vous fait, Malheureux !",
+        "type": "trap",
+        "choices": [
+          {
+            "text": "Rendez-vous sans perdre de temps au chapitre 10",
+            "next": 10
+          }
+        ]
+      }
+    ]
+  }
+}
