@@ -51,19 +51,23 @@ $router->get('/dashboard', function() {
 });
 
 $router->get('/createHero', function() {
-    $controller = new CreateHeroController();
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
     
-    if (isset($_SESSION['user_id'])) {
-        $controller->show();
-    } 
+    $controller = new CreateHeroController();
+    $controller->show();
 });
 
 $router->post('/createHero', function() {
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /login');
+        exit;
+    }
+    
     $controller = new CreateHeroController();
-
-    if (isset($_SESSION['user_id'])) {
-        $controller->create();
-    } 
+    $controller->create();
 });
 
 // Run the router
