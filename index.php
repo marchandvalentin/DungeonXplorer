@@ -60,7 +60,7 @@ $router->get('/createHero', function() {
     $controller->show();
 });
 
-$router->post('/createHero', function() {
+$router->post('/create-hero', function() {
     if (!isset($_SESSION['user_id'])) {
         header('Location: /login');
         exit;
