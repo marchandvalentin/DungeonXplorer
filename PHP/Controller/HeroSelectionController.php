@@ -36,6 +36,7 @@
         }
 
         function show(){
+            $heros = $this->_Heros;
             include __DIR__ . '/../Views/viewHeroSelection.php';
         }
 
