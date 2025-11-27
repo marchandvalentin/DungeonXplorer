@@ -47,7 +47,7 @@
 
             <form method="POST" action="/create-hero" class="space-y-8">
                 <!-- Two Column Layout -->
-                <div class="grid md:grid-cols-3 gap-8">
+                <div class="grid md:grid-cols-4 gap-8">
                     <!-- Left Column: Class Selection -->
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold mb-4 text-medieval-lightred">Sélectionnez Votre Classe</label>
