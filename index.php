@@ -6,6 +6,7 @@ require 'PHP/Controller/LoginController.php';
 require 'PHP/Controller/RegisterController.php';
 require 'PHP/Controller/DashboardController.php';
 require 'PHP/Controller/CreateHeroController.php';
+require 'PHP/Controller/HeroSelectionController.php';
 
 use Bramus\Router\Router;
 
@@ -48,6 +49,17 @@ $router->get('/dashboard', function() {
     if (isset($_SESSION['user_id']) && ($_SESSION['IS_ADMIN'] >= 1)) {
         $controller->show();
     } 
+});
+
+$router->get('/heros', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new HeroSelectionController();
+        $heros = $controller->getHerosByUserId($_SESSION['user_id']);
+        $controller->show($_SESSION['user_id']);
+    } else {
+        header('Location: /login');
+        exit();
+    }
 });
 
 $router->get('/createHero', function() {

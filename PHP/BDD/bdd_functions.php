@@ -67,6 +67,20 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    function getHerosByUserId($userId){
+        // Connexion à la base de données
+        $pdo = new PDO('mysql:host=localhost;dbname=dungeonxplorer', 'root', '');
+
+        // Préparation et exécution de la requête
+        $stmt = $pdo->prepare('SELECT * FROM heros WHERE user_id = :user_id');
+        $stmt->execute(['user_id' => $userId]);
+
+        // Récupération des résultats
+        $heros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $heros;
+    }
+
     function updateHeroPV($hero_id, $new_health) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE Hero SET health = :health WHERE id = :id");
