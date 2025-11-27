@@ -70,14 +70,12 @@
                     throw new Exception('Impossible de créer le héros. Veuillez vérifier les données saisies.');
                 }
                 
-                $this->success = true;
-                $this->successMessage = 'Héros créé avec succès! Vous pouvez maintenant commencer votre aventure.';
-                $success = $this->success;
-                $successMessage = $this->successMessage;
+                // Display success message and reset form
+                $errors = [];
+                $success = true;
+                $successMessage = 'Héros créé avec succès! Vous pouvez maintenant commencer votre aventure.';
                 $classes = getAllClasses();
                 include __DIR__ . '/../Views/viewCreateHero.php';
-                /*header('Location: /viewCreateHero.php');*/
-                exit;
             } catch (Exception $e) {
                 $this->errors[] = 'Erreur lors de la création du héros: ' . $e->getMessage();
                 $errors = $this->errors;
