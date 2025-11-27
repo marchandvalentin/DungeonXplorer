@@ -68,12 +68,12 @@
     }
 
     function getHerosByUserId($userId){
-        // Connexion à la base de données
-        $pdo = new PDO('mysql:host=localhost;dbname=dungeonxplorer', 'root', '');
-
+        global $pdo;
+        
         // Préparation et exécution de la requête
-        $stmt = $pdo->prepare('SELECT * FROM heros WHERE user_id = :user_id');
-        $stmt->execute(['user_id' => $userId]);
+        $stmt = $pdo->prepare('SELECT * FROM Hero WHERE user_id = :user_id');
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
 
         // Récupération des résultats
         $heros = $stmt->fetchAll(PDO::FETCH_ASSOC);

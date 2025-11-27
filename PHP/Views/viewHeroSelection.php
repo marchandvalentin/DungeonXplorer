@@ -5,59 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        medieval: {
-                            dark: '#1a1614',
-                            brown: '#2d2520',
-                            red: '#c62828',
-                            lightred: '#ef5350',
-                            cream: '#e8d4b0',
-                        }
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .gradient-red {
-            background: linear-gradient(135deg, #c62828 0%, #ef5350 50%, #c62828 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero-save-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(198, 40, 40, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .hero-save-card:hover::before {
-            left: 100%;
-        }
-    </style>
+    <script src="JS/script.js" defer></script>
+    <link rel="stylesheet" href="CSS/personaliseColors.css">
     <title>Sélection de Héros - DungeonXPlorer</title>
 </head>
 <body class="text-medieval-cream">
-    <?php include '../header.php'; ?>
+    <?php include 'PHP/header.php'; ?>
 
     <section class="max-w-7xl mx-auto px-6 py-20">
         <div class="text-center mb-16">
@@ -212,7 +165,7 @@
         </div>
     </section>
 
-    <?php include '../footer.php'; ?>
+    <?php include 'PHP/footer.php'; ?>
 
 </body>
 </html>
