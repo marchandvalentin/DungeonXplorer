@@ -178,11 +178,11 @@
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':name', $hero_name, PDO::PARAM_STR);
         $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
-        $stmt->bindParam(':pv', $classData['base_pv'], PDO::PARAM_INT);
-        $stmt->bindParam(':mana', $classData['base_mana'], PDO::PARAM_INT);
-        $stmt->bindParam(':strength', $classData['strength'], PDO::PARAM_INT);
-        $stmt->bindParam(':initiative', $classData['initiative'], PDO::PARAM_INT);
-        $stmt->bindParam(':xp', 0, PDO::PARAM_INT);
+        $stmt->bindValue(':pv', $classData['base_pv'], PDO::PARAM_INT);
+        $stmt->bindValue(':mana', $classData['base_mana'], PDO::PARAM_INT);
+        $stmt->bindValue(':strength', $classData['strength'], PDO::PARAM_INT);
+        $stmt->bindValue(':initiative', $classData['initiative'], PDO::PARAM_INT);
+        $stmt->bindValue(':xp', 0, PDO::PARAM_INT);
         $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
         return $stmt->execute();
     }
