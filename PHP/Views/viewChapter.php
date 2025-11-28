@@ -11,7 +11,10 @@
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php include 'PHP/header.php'; ?>
-    
+    <?php
+        require_once __DIR__ . '/../BDD/bdd_functions.php';
+        $chapter = getContentAndImageFromChapterId(1); 
+    ?>
     <!-- Chapter Book Section -->
     <section class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex gap-6 items-start">
@@ -103,7 +106,7 @@
                         <!-- Chapter Title -->
                         <div class="mb-8">
                             <h1 class="gradient-red text-4xl font-bold tracking-wider uppercase mb-4">
-                                Chapitre [Numéro]
+                                Chapitre [<?php echo htmlspecialchars($chapter['id'] ?? '1'); ?>]
                             </h1>
                             <div class="w-24 h-1 bg-gradient-to-r from-medieval-red to-transparent"></div>
                         </div>
@@ -111,13 +114,7 @@
                         <!-- Chapter Text Content -->
                         <div class="text-medieval-cream/90 leading-relaxed space-y-4 text-justify">
                             <p>
-                                [Votre texte de chapitre ici. Description de la scène, événements, dialogues...]
-                            </p>
-                            <p>
-                                [Suite du texte...]
-                            </p>
-                            <p>
-                                [Texte additionnel...]
+                                <?php echo nl2br(htmlspecialchars($chapter['content'] ?? 'Contenu du chapitre introuvable')); ?>
                             </p>
                         </div>
                     </div>
