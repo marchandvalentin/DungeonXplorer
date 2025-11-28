@@ -293,11 +293,11 @@
 
     function getContentAndImageFromChapterId($chapter_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT image, content FROM Chapter WHERE id = :id");
+        $stmt = $pdo->prepare("SELECT id, title, content, image FROM Chapter WHERE id = :id");
         $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return ($result ? $result['image'] : null) && ($result ? $result['content'] : null);
+        return $result ? $result : null;
     }
 
     function getChapterTreasureById($id) {
