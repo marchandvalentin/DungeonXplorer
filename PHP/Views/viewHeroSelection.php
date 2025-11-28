@@ -11,7 +11,7 @@
 </head>
 <body class="text-medieval-cream">
     <?php include 'PHP/header.php'; ?>
-
+    <?php require_once __DIR__ . '/../BDD/bdd_functions.php'; ?>
     <section class="max-w-7xl mx-auto px-6 py-20">
         <div class="text-center mb-16">
             <h1 class="gradient-red text-5xl md:text-6xl font-bold tracking-wider uppercase mb-4">
