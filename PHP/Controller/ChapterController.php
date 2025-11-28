@@ -1,6 +1,6 @@
 <?php
     class ChapterController{
-        function show(){
+        function show($hero){
             //if not logged in, redirect to login
             if (!isset($_SESSION['user_id'])) {
                 header('Location: /login');

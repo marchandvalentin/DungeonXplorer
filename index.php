@@ -82,10 +82,10 @@ $router->post('/create-hero', function() {
     $controller->create();
 });
 
-$router->get('/chapter', function() {
+$router->get('/chapter/{hero}', function($hero) {
     if (isset($_SESSION['user_id'])) {
         $controller = new ChapterController();
-        $controller->show();
+        $controller->show($hero);
     } else {
         header('Location: /login');
         exit();
