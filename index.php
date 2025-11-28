@@ -7,6 +7,7 @@ require 'PHP/Controller/RegisterController.php';
 require 'PHP/Controller/DashboardController.php';
 require 'PHP/Controller/CreateHeroController.php';
 require 'PHP/Controller/HeroSelectionController.php';
+require 'PHP/Controller/ChapterController.php';
 
 use Bramus\Router\Router;
 
