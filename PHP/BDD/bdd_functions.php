@@ -323,9 +323,10 @@
         global $pdo;
         $isAlredaySavedStmt = $pdo->prepare("SELECT COUNT(*) FROM Hero_Progress WHERE hero_id = :hero_id");
         $isAlredaySavedStmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
-        $isSaved = $isAlredaySavedStmt->execute();
+        $isAlredaySavedStmt->execute();
+        $isSaved = $isAlredaySavedStmt->fetchColumn();
         
-        if($isSaved && $isSaved->fetchColumn() > 0){
+        if($isSaved > 0){
             //update
             $stmt = $pdo->prepare("UPDATE Hero_Progress SET chapter_id = :chapter_id, status = :status WHERE hero_id = :hero_id");
             $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
