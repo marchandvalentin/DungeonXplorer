@@ -65,7 +65,7 @@
 
                         <!-- Action Buttons -->
                         <div class="flex gap-3">
-                            <button onclick="window.location.href='/chapter/<?php echo $hero['id']; ?>'" class="flex-1 px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:scale-105 hover:shadow-[0_8px_20px_rgba(198,40,40,0.4)] transition-all duration-300">
+                            <button onclick="window.location.href='/chapter/<?php echo $hero; ?>'" class="flex-1 px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:scale-105 hover:shadow-[0_8px_20px_rgba(198,40,40,0.4)] transition-all duration-300">
                                 Jouer
                             </button>
                             <button class="px-4 py-3 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 hover:scale-105 transition-all duration-300">
