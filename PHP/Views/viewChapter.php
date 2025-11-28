@@ -11,13 +11,17 @@
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php include 'PHP/header.php'; ?>
-    <!-- Chapter Book Section -->
-    <section class="max-w-7xl mx-auto px-6 py-20">
-        <div class="flex gap-6 items-start">
-            <button onclick="window.location.href='/save/<?php echo htmlspecialchars($hero['id']); ?>?<?php echo htmlspecialchars($chapter_id); ?>'" class="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream text-sm font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 transition-all duration-300">
-                Quitter et sauvegarder
-            </button>
+    
+    <!-- Save and Quit Button -->
+    <div class="max-w-7xl mx-auto px-6 pt-6">
+        <button onclick="window.location.href='/save/<?php echo htmlspecialchars($hero['id']); ?>?<?php echo htmlspecialchars($chapter_id); ?>'" class="flex items-center gap-2 px-4 py-2 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream text-sm font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 transition-all duration-300">
+            💾 Quitter et sauvegarder
+        </button>
+    </div>
 
+    <!-- Chapter Book Section -->
+    <section class="max-w-7xl mx-auto px-6 py-8">
+        <div class="flex gap-6 items-start">
             <!-- Hero Information Sidebar - Left Side -->
             <div class="w-64 flex-shrink-0">
                 <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-4 shadow-lg sticky top-6">
