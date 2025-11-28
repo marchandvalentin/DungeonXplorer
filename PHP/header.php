@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto px-10 py-5 flex flex-col md:flex-row justify-between items-center gap-5">
 
             <div class="flex ml-0 items-center gap-4 transition-transform duration-300 hover:scale-105 cursor-pointer">
-                <img src="./res/logo/Logo.png" alt="Logo" class="h-12 drop-shadow-[0_4px_8px_rgba(198,40,40,0.4)] hover:drop-shadow-[0_6px_12px_rgba(198,40,40,0.6)] transition-all duration-300">
+                <img src="/res/logo/Logo.png" alt="Logo" class="h-12 drop-shadow-[0_4px_8px_rgba(198,40,40,0.4)] hover:drop-shadow-[0_6px_12px_rgba(198,40,40,0.6)] transition-all duration-300">
                 <div class="gradient-red relative text-3xl md:text-4xl font-bold tracking-[0.15em] uppercase">
                     <a href="/">
                         DungeonXPlorer
