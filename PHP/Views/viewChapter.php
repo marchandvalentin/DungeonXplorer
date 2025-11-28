@@ -79,35 +79,70 @@
 
             <!-- Hero Information Bar at Bottom -->
             <div class="mt-8 bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg">
-                <div class="flex items-center justify-between flex-wrap gap-4">
-                    <!-- Hero Name -->
-                    <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-red/10 border-2 border-medieval-red/50 flex items-center justify-center">
-                            <span class="text-3xl">⚔️</span>
+                <div class="flex items-center justify-between flex-wrap gap-8">
+                    <!-- Hero Info Left Side -->
+                    <div class="flex items-center gap-6">
+                        <!-- Circular Health Display -->
+                        <?php 
+                        $pv = $hero['pv'] ?? 0;
+                        $maxPv = 100; // You can adjust this or pull from DB
+                        $pvPercentage = min(100, max(0, ($pv / $maxPv) * 100));
+                        
+                        // Color based on health percentage
+                        if ($pvPercentage > 70) {
+                            $pvColor = '#10b981'; // Green
+                        } elseif ($pvPercentage > 40) {
+                            $pvColor = '#f59e0b'; // Orange
+                        } elseif ($pvPercentage > 20) {
+                            $pvColor = '#ef4444'; // Red
+                        } else {
+                            $pvColor = '#991b1b'; // Dark Red
+                        }
+                        ?>
+                        <div class="relative w-24 h-24">
+                            <!-- Background Circle -->
+                            <svg class="transform -rotate-90 w-24 h-24">
+                                <circle cx="48" cy="48" r="40" stroke="rgba(139,40,40,0.2)" stroke-width="8" fill="none"/>
+                                <circle cx="48" cy="48" r="40" 
+                                        stroke="<?php echo $pvColor; ?>" 
+                                        stroke-width="8" 
+                                        fill="none"
+                                        stroke-dasharray="<?php echo 2 * M_PI * 40; ?>"
+                                        stroke-dashoffset="<?php echo 2 * M_PI * 40 * (1 - $pvPercentage / 100); ?>"
+                                        stroke-linecap="round"
+                                        style="transition: stroke-dashoffset 0.5s ease, stroke 0.3s ease;"/>
+                            </svg>
+                            <!-- PV Value in Center -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold" style="color: <?php echo $pvColor; ?>;">
+                                        <?php echo $pv; ?>
+                                    </div>
+                                    <div class="text-xs text-medieval-cream/60">PV</div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="text-xs text-medieval-cream/60">Héros</div>
-                            <div class="text-xl font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></div>
-                        </div>
-                    </div>
 
-                    <!-- Hero Stats -->
-                    <div class="flex gap-4 flex-wrap">
-                        <div class="bg-[rgba(198,40,40,0.2)] px-4 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">PV</div>
-                            <div class="text-lg font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['pv'] ?? 0); ?></div>
-                        </div>
-                        <div class="bg-[rgba(198,40,40,0.2)] px-4 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">Mana</div>
-                            <div class="text-lg font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['mana'] ?? 0); ?></div>
-                        </div>
-                        <div class="bg-[rgba(198,40,40,0.2)] px-4 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">Force</div>
-                            <div class="text-lg font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['strength'] ?? 0); ?></div>
-                        </div>
-                        <div class="bg-[rgba(198,40,40,0.2)] px-4 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">XP</div>
-                            <div class="text-lg font-bold text-yellow-400"><?php echo htmlspecialchars($hero['xp'] ?? 0); ?></div>
+                        <!-- Hero Name and Stats -->
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                <div class="text-xs text-medieval-cream/60">Héros</div>
+                                <div class="text-2xl font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="text-center">
+                                    <div class="text-xs text-medieval-cream/60">Mana</div>
+                                    <div class="text-lg font-bold text-blue-400"><?php echo htmlspecialchars($hero['mana'] ?? 0); ?></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-medieval-cream/60">Force</div>
+                                    <div class="text-lg font-bold text-red-400"><?php echo htmlspecialchars($hero['strength'] ?? 0); ?></div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-xs text-medieval-cream/60">XP</div>
+                                    <div class="text-lg font-bold text-yellow-400"><?php echo htmlspecialchars($hero['xp'] ?? 0); ?></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
