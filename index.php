@@ -94,11 +94,11 @@ $router->get('/chapter/{hero}/{chapter_id}', function($hero, $chapter_id) {
 });
 
 
-$router->get('/save/{hero_id}?{chapter_id}', function($hero_id, $chapter_id) {
-
+$router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+    $controller = new HeroSelectionController();
     if (isset($_SESSION['user_id'])) {
         saveHeroProgress($hero_id, $chapter_id, 'finished');
-        header('Location: /heros');
+        $controller->show();
         exit();
     } else {
         header('Location: /login');
@@ -108,5 +108,5 @@ $router->get('/save/{hero_id}?{chapter_id}', function($hero_id, $chapter_id) {
 
 // Run the router
 $router->run();
- 
+
 ?>
