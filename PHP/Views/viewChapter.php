@@ -95,58 +95,35 @@
                 </div>
             </div>
 
-            <!-- Book Container -->
+            <!-- Content Container -->
             <div class="flex-1">
-                <!-- Open Book Layout -->
-                <div class="grid md:grid-cols-2 gap-8 bg-[rgba(42,30,20,0.6)] border-4 border-[rgba(139,40,40,0.5)] rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] p-8 md:p-12" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.8), rgba(26, 22, 20, 0.9));">
+                <div class="bg-[rgba(42,30,20,0.6)] border-4 border-[rgba(139,40,40,0.5)] rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] p-8 md:p-12" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.8), rgba(26, 22, 20, 0.9));">
                     
-                    <!-- Left Page -->
-                <div class="border-r-2 border-[rgba(139,40,40,0.3)] pr-8 flex flex-col justify-between">
-                    <div>
-                        <!-- Chapter Title -->
-                        <div class="mb-8">
-                            <h1 class="gradient-red text-4xl font-bold tracking-wider uppercase mb-4">
-                                Chapitre <?php echo htmlspecialchars($chapter['id'] ?? '1'); ?>: <?php echo htmlspecialchars($chapter['titre'] ?? 'Titre du Chapitre'); ?>
-                            </h1>
-                            <div class="w-24 h-1 bg-gradient-to-r from-medieval-red to-transparent"></div>
-                        </div>
-
-                        <!-- Chapter Text Content -->
-                        <div class="text-medieval-cream/90 leading-relaxed space-y-4 text-justify">
-                            <p>
-                                <?php echo nl2br(htmlspecialchars($chapter['content'] ?? 'Contenu du chapitre introuvable')); ?>
-                            </p>
-                        </div>
+                    <!-- Chapter Image - Top Right -->
+                    <div class="float-right ml-6 mb-6 w-80 rounded-lg overflow-hidden border-2 border-[rgba(139,40,40,0.3)] shadow-lg">
+                        <img src="<?php echo htmlspecialchars($chapter['image'] ?? 'https://placehold.co/600x400/2d2520/e8d4b0?text=Image+du+Chapitre'); ?>" alt="Illustration du chapitre" class="w-full h-auto object-cover">
                     </div>
 
-                    <!-- Bottom Left Navigation -->
-                    <div class="mt-8 pt-6 border-t border-[rgba(139,40,40,0.3)]">
+                    <!-- Chapter Title -->
+                    <div class="mb-8">
+                        <h1 class="gradient-red text-4xl font-bold tracking-wider uppercase mb-4">
+                            Chapitre <?php echo htmlspecialchars($chapter['id'] ?? '1'); ?>: <?php echo htmlspecialchars($chapter['titre'] ?? 'Titre du Chapitre'); ?>
+                        </h1>
+                        <div class="w-24 h-1 bg-gradient-to-r from-medieval-red to-transparent"></div>
+                    </div>
+
+                    <!-- Chapter Text Content -->
+                    <div class="text-medieval-cream/90 leading-relaxed space-y-4 text-justify">
+                        <?php echo nl2br(htmlspecialchars($chapter['content'] ?? 'Contenu du chapitre introuvable')); ?>
+                    </div>
+
+                    <!-- Navigation Buttons at Bottom -->
+                    <div class="clear-both mt-8 pt-6 border-t border-[rgba(139,40,40,0.3)] flex justify-between gap-4">
                         <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                            ← Choix 1
+                            Choix 1
                         </a>
-                    </div>
-                </div>
-
-                <!-- Right Page -->
-                <div class="pl-8 flex flex-col justify-between">
-                    <div>
-                        <!-- Chapter Image -->
-                        <div class="mb-8 rounded-lg overflow-hidden border-2 border-[rgba(139,40,40,0.3)] shadow-lg">
-                            <img src="https://placehold.co/600x400/2d2520/e8d4b0?text=Image+du+Chapitre" alt="Illustration du chapitre" class="w-full h-auto object-cover">
-                        </div>
-
-                        <!-- Additional Content -->
-                        <div class="text-medieval-cream/90 leading-relaxed space-y-4 text-justify">
-                            <p>
-                                [Suite de l'histoire ou description complémentaire...]
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Bottom Right Navigation -->
-                    <div class="mt-8 pt-6 border-t border-[rgba(139,40,40,0.3)] text-right">
                         <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                            Choix 2 →
+                            Choix 2 
                         </a>
                     </div>
                 </div>
