@@ -14,10 +14,10 @@
     
     <!-- Chapter Book Section -->
     <section class="max-w-7xl mx-auto px-6 py-20">
-        <div class="flex gap-8 items-start">
+        <div class="flex gap-6 items-start">
             <!-- Hero Information Sidebar - Left Side -->
-            <div class="w-80 flex-shrink-0">
-                <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg sticky top-6">
+            <div class="w-64 flex-shrink-0">
+                <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-4 shadow-lg sticky top-6">
                     <!-- Circular Health Display -->
                     <?php 
                     $pv = $hero['pv'] ?? 0;
@@ -35,24 +35,24 @@
                         $pvColor = '#991b1b'; // Dark Red
                     }
                     ?>
-                    <div class="flex flex-col items-center gap-6">
-                        <div class="relative w-32 h-32">
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="relative w-24 h-24">
                             <!-- Background Circle -->
-                            <svg class="transform -rotate-90 w-32 h-32">
-                                <circle cx="64" cy="64" r="56" stroke="rgba(139,40,40,0.2)" stroke-width="10" fill="none"/>
-                                <circle cx="64" cy="64" r="56" 
+                            <svg class="transform -rotate-90 w-24 h-24">
+                                <circle cx="48" cy="48" r="40" stroke="rgba(139,40,40,0.2)" stroke-width="8" fill="none"/>
+                                <circle cx="48" cy="48" r="40" 
                                         stroke="<?php echo $pvColor; ?>" 
-                                        stroke-width="10" 
+                                        stroke-width="8" 
                                         fill="none"
-                                        stroke-dasharray="<?php echo 2 * M_PI * 56; ?>"
-                                        stroke-dashoffset="<?php echo 2 * M_PI * 56 * (1 - $pvPercentage / 100); ?>"
+                                        stroke-dasharray="<?php echo 2 * M_PI * 40; ?>"
+                                        stroke-dashoffset="<?php echo 2 * M_PI * 40 * (1 - $pvPercentage / 100); ?>"
                                         stroke-linecap="round"
                                         style="transition: stroke-dashoffset 0.5s ease, stroke 0.3s ease;"/>
                             </svg>
                             <!-- PV Value in Center -->
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="text-center">
-                                    <div class="text-3xl font-bold" style="color: <?php echo $pvColor; ?>;">
+                                    <div class="text-2xl font-bold" style="color: <?php echo $pvColor; ?>;">
                                         <?php echo $pv; ?>
                                     </div>
                                     <div class="text-xs text-medieval-cream/60">PV</div>
@@ -63,28 +63,28 @@
                         <!-- Hero Name -->
                         <div class="text-center">
                             <div class="text-xs text-medieval-cream/60">Héros</div>
-                            <div class="text-2xl font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></div>
+                            <div class="text-xl font-bold text-medieval-lightred"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></div>
                         </div>
 
                         <!-- Hero Stats -->
-                        <div class="w-full space-y-3">
-                            <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
-                                <div class="text-xs text-medieval-cream/60 mb-1">Mana</div>
-                                <div class="text-2xl font-bold text-blue-400"><?php echo htmlspecialchars($hero['mana'] ?? 0); ?></div>
+                        <div class="w-full space-y-2">
+                            <div class="bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20">
+                                <div class="text-xs text-medieval-cream/60">Mana</div>
+                                <div class="text-lg font-bold text-blue-400"><?php echo htmlspecialchars($hero['mana'] ?? 0); ?></div>
                             </div>
-                            <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
-                                <div class="text-xs text-medieval-cream/60 mb-1">Force</div>
-                                <div class="text-2xl font-bold text-red-400"><?php echo htmlspecialchars($hero['strength'] ?? 0); ?></div>
+                            <div class="bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20">
+                                <div class="text-xs text-medieval-cream/60">Force</div>
+                                <div class="text-lg font-bold text-red-400"><?php echo htmlspecialchars($hero['strength'] ?? 0); ?></div>
                             </div>
-                            <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
-                                <div class="text-xs text-medieval-cream/60 mb-1">Expérience</div>
-                                <div class="text-2xl font-bold text-yellow-400"><?php echo htmlspecialchars($hero['xp'] ?? 0); ?></div>
+                            <div class="bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20">
+                                <div class="text-xs text-medieval-cream/60">XP</div>
+                                <div class="text-lg font-bold text-yellow-400"><?php echo htmlspecialchars($hero['xp'] ?? 0); ?></div>
                             </div>
                         </div>
 
                         <!-- Back Button -->
-                        <div class="w-full pt-4 border-t border-[rgba(139,40,40,0.3)]">
-                            <a href="/heros" class="flex items-center justify-center gap-2 px-4 py-3 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 transition-all duration-300 w-full">
+                        <div class="w-full pt-3 border-t border-[rgba(139,40,40,0.3)]">
+                            <a href="/heros" class="flex items-center justify-center gap-2 px-3 py-2 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream text-sm font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 transition-all duration-300 w-full">
                                 ← Retour
                             </a>
                         </div>
