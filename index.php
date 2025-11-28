@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/PHP/BDD/bdd_connection.php';
+require_once __DIR__ . '/PHP/BDD/bdd_functions.php';
 require 'vendor/autoload.php';
 require 'PHP/Controller/LoginController.php';
 require 'PHP/Controller/RegisterController.php';
