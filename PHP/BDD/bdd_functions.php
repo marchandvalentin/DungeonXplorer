@@ -321,19 +321,19 @@
 
     function saveHeroProgress($hero_id, $chapter_id, $status) {
         global $pdo;
-        $isAlredaySavedStmt = $pdo->prepare("SELECT COUNT(*) FROM Hero_progress WHERE hero_id = :hero_id");
+        $isAlredaySavedStmt = $pdo->prepare("SELECT COUNT(*) FROM Hero_Progress WHERE hero_id = :hero_id");
         $isAlredaySavedStmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
         $isSaved = $isAlredaySavedStmt->execute();
         
         if($isSaved && $isSaved->fetchColumn() > 0){
             //update
-            $stmt = $pdo->prepare("UPDATE Hero_progress SET chapter_id = :chapter_id, status = :status WHERE hero_id = :hero_id");
+            $stmt = $pdo->prepare("UPDATE Hero_Progress SET chapter_id = :chapter_id, status = :status WHERE hero_id = :hero_id");
             $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
             $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
             return $stmt->execute();
         }else{
-            $stmt = $pdo->prepare("INSERT INTO Hero_progress (hero_id, chapter_id, status) VALUES (:hero_id, :chapter_id, :status)");
+            $stmt = $pdo->prepare("INSERT INTO Hero_Progress (hero_id, chapter_id, status) VALUES (:hero_id, :chapter_id, :status)");
             $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
             $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
             $stmt->bindParam(':status', $status, PDO::PARAM_STR);
@@ -343,7 +343,7 @@
 
     function getHeroProgress($hero_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT chapter_id, status FROM Hero_progress WHERE hero_id = :hero_id");
+        $stmt = $pdo->prepare("SELECT chapter_id, status FROM Hero_Progress WHERE hero_id = :hero_id");
         $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
