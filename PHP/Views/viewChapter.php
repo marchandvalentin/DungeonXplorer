@@ -11,10 +11,7 @@
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php include 'PHP/header.php'; ?>
-    <?php
-        require_once __DIR__ . '/../BDD/bdd_functions.php';
-        $chapter = getContentAndImageFromChapterId(1); 
-    ?>
+    <?php require_once __DIR__ . '/../BDD/bdd_functions.php';?>
     <!-- Chapter Book Section -->
     <section class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex gap-6 items-start">
