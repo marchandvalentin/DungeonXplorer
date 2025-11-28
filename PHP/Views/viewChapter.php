@@ -116,11 +116,16 @@
 
                     <!-- Navigation Buttons at Bottom -->
                     <div class="clear-both mt-8 pt-6 border-t border-[rgba(139,40,40,0.3)] flex justify-between gap-4">
-                        <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                            Choix 1
+                    
+                        <?php
+                            $links = getLinksAtChapter($chapter['id'] ?? 1);
+                        ?>
+                    
+                        <a href="/chapter/<?php echo $hero['id']; ?>/<?php echo $links[0]['next_chapter_id'] ?? ''; ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
+                            <?php echo $links[0]['description'] ?? 'pas de description'; ?>
                         </a>
-                        <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                            Choix 2 
+                        <a href="/chapter/<?php echo $hero['id']; ?>/<?php echo $links[1]['next_chapter_id'] ?? ''; ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
+                            <?php echo $links[1]['description'] ?? 'pas de description'; ?>
                         </a>
                     </div>
                 </div>
