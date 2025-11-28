@@ -27,6 +27,7 @@
         <?php if (!empty($heros)): ?>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 <?php foreach ($heros as $hero): ?>
+                    <?php $progress = getHeroProgress($hero['id']); ?>
                     <div class="hero-save-card relative group rounded-2xl p-6 border border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden transition-all duration-300 hover:-translate-y-3 hover:border-medieval-red/60 hover:shadow-[0_16px_40px_rgba(198,40,40,0.4)]" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.6), rgba(26, 22, 20, 0.8)); backdrop-filter: blur(10px);">
                         
                         <!-- Hero Header -->
@@ -65,7 +66,7 @@
 
                         <!-- Action Buttons -->
                         <div class="flex gap-3">
-                            <button onclick="window.location.href='/chapter/<?php echo $hero['id']; ?>/<?php echo getHeroProgress($hero['id']) ?? 1; ?>'" class="flex-1 px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:scale-105 hover:shadow-[0_8px_20px_rgba(198,40,40,0.4)] transition-all duration-300">
+                            <button onclick="window.location.href='/chapter/<?php echo htmlspecialchars($hero['id']); ?>/<?php echo htmlspecialchars($progress ?? 1); ?>'" class="flex-1 px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:scale-105 hover:shadow-[0_8px_20px_rgba(198,40,40,0.4)] transition-all duration-300">
                                 Jouer
                             </button>
                             <button class="px-4 py-3 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 hover:scale-105 transition-all duration-300">
