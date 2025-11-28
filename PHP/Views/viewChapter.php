@@ -15,6 +15,10 @@
     <!-- Chapter Book Section -->
     <section class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex gap-6 items-start">
+            <button onclick="window.location.href='/save'" class="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream text-sm font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 transition-all duration-300">
+                Quitter et sauvegarder
+            </button>
+
             <!-- Hero Information Sidebar - Left Side -->
             <div class="w-64 flex-shrink-0">
                 <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-4 shadow-lg sticky top-6">
@@ -120,7 +124,7 @@
                         <?php
                             $links = getLinksAtChapter($chapter['id'] ?? 1);
                         ?>
-                    
+
                         <a href="/chapter/<?php echo $hero['id']; ?>/<?php echo $links[0]['next_chapter_id'] ?? ''; ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
                             <?php echo $links[0]['description'] ?? 'pas de description'; ?>
                         </a>
