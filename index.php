@@ -82,6 +82,16 @@ $router->post('/create-hero', function() {
     $controller->create();
 });
 
+$router->get('/chapter', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new ChapterController();
+        $controller->show();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
 // Run the router
 $router->run();
  
