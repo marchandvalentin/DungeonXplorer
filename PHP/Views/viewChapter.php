@@ -106,7 +106,7 @@
                         <!-- Chapter Title -->
                         <div class="mb-8">
                             <h1 class="gradient-red text-4xl font-bold tracking-wider uppercase mb-4">
-                                Chapitre <?php echo htmlspecialchars($chapter['id'] ?? '1'); ?>: <?php echo htmlspecialchars($chapter['title'] ?? 'Titre du Chapitre'); ?>
+                                Chapitre <?php echo htmlspecialchars($chapter['id'] ?? '1'); ?>: <?php echo htmlspecialchars($chapter['titre'] ?? 'Titre du Chapitre'); ?>
                             </h1>
                             <div class="w-24 h-1 bg-gradient-to-r from-medieval-red to-transparent"></div>
                         </div>
