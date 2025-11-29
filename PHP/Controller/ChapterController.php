@@ -39,6 +39,9 @@
                 exit;
             }
             
+            // Make sure $chapter_id is available in the view
+            $chapter_id = (int)$chapter_id;
+            
             include __DIR__ . '/../Views/viewFight.php';
         }
 

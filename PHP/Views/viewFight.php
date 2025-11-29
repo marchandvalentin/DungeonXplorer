@@ -158,8 +158,8 @@
 
         window.monsterData = {
             name: "<?php echo htmlspecialchars($monster['name']); ?>",
-            pv: <?php echo $monster['health']; ?>,
-            maxPv: <?php echo $monster['health']; ?>,
+            pv: <?php echo $monster['pv']; ?>,
+            maxPv: <?php echo $monster['pv']; ?>,
             mana: <?php echo $monster['mana']; ?>,
             maxMana: <?php echo $monster['mana']; ?>,
             strength: <?php echo $monster['strength']; ?>,
