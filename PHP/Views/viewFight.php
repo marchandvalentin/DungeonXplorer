@@ -121,13 +121,13 @@
 
         <!-- Action Buttons -->
         <div id="action-buttons" class="grid md:grid-cols-3 gap-4">
-            <button onclick="playerAttack()" class="px-6 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
+            <button id="btn-attack" class="px-6 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
                 ⚔️ Attaque Physique
             </button>
-            <button onclick="playerMagicAttack()" class="px-6 py-4 bg-gradient-to-r from-blue-600/20 to-blue-600/30 border-2 border-blue-500/80 rounded-lg text-blue-400 font-bold tracking-wide hover:from-blue-600/30 hover:to-blue-600/40 hover:-translate-y-1 transition-all duration-300">
+            <button id="btn-magic" class="px-6 py-4 bg-gradient-to-r from-blue-600/20 to-blue-600/30 border-2 border-blue-500/80 rounded-lg text-blue-400 font-bold tracking-wide hover:from-blue-600/30 hover:to-blue-600/40 hover:-translate-y-1 transition-all duration-300">
                 🔮 Attaque Magique
             </button>
-            <button onclick="flee()" class="px-6 py-4 bg-gradient-to-r from-gray-600/20 to-gray-600/30 border-2 border-gray-500/80 rounded-lg text-gray-400 font-bold tracking-wide hover:from-gray-600/30 hover:to-gray-600/40 hover:-translate-y-1 transition-all duration-300">
+            <button id="btn-flee" class="px-6 py-4 bg-gradient-to-r from-gray-600/20 to-gray-600/30 border-2 border-gray-500/80 rounded-lg text-gray-400 font-bold tracking-wide hover:from-gray-600/30 hover:to-gray-600/40 hover:-translate-y-1 transition-all duration-300">
                 🏃 Fuir
             </button>
         </div>
@@ -171,6 +171,12 @@
             const currentChapterId = <?php echo $chapter_id; ?>;
 
             initializeCombat(heroData, monsterData, currentChapterId);
+            
+            // Attach event listeners
+            document.getElementById('btn-attack').addEventListener('click', playerAttack);
+            document.getElementById('btn-magic').addEventListener('click', playerMagicAttack);
+            document.getElementById('btn-flee').addEventListener('click', flee);
+            
             startCombat();
         });
     </script>
