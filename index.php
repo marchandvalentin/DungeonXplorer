@@ -12,9 +12,27 @@ require 'PHP/Controller/ChapterController.php';
 use Bramus\Router\Router;
 
 // Handle static files BEFORE router initialization
-$request_uri = $_SERVER['REQUEST_URI'];
-if (preg_match('#\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$#i', $request_uri)) {
-    return false; // Let Apache handle static files
+$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+if (preg_match('#^/(JS|CSS|res)/(.+)\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$#i', $request_uri, $matches)) {
+    $file_path = __DIR__ . $request_uri;
+    if (file_exists($file_path)) {
+        // Set correct content type
+        $mime_types = [
+            'js' => 'application/javascript',
+            'css' => 'text/css',
+            'png' => 'image/png',
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'svg' => 'image/svg+xml',
+        ];
+        $ext = strtolower($matches[3]);
+        if (isset($mime_types[$ext])) {
+            header('Content-Type: ' . $mime_types[$ext]);
+        }
+        readfile($file_path);
+        exit;
+    }
 }
 
 // Initialize the router
