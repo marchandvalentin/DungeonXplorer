@@ -80,7 +80,7 @@
                     <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
                         <div class="flex justify-between items-center">
                             <span class="text-medieval-cream font-semibold">PV</span>
-                            <span id="monster-pv" class="text-xl font-bold text-green-400"><?php echo $monster['health']; ?></span>
+                            <span id="monster-pv" class="text-xl font-bold text-green-400"><?php echo $monster['pv']; ?></span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
                             <div id="monster-pv-bar" class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: 100%"></div>
