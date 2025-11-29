@@ -17,8 +17,8 @@ function startingFight(player, enemy) {
 }
 
 function decideTurnOrder(player, enemy) {
-    let initP = Math.random() + player.initiative;
-    let initE = Math.random() + enemy.initiative;
+    let initP = Math.floor(Math.random() * 6) + 1 + player.initiative;
+    let initE = Math.floor(Math.random() * 6) + 1 + enemy.initiative;
     return (initP >= initE) ? 'player' : 'enemy';
 }
 
