@@ -92,13 +92,20 @@ function updateStats() {
 }
 
 function playerAttack() {
-    if (!isPlayerTurn) return;
-    
+    console.log('Player chooses to attack.');
+    if (!isPlayerTurn) {
+        console.log('Ce n\'est pas le tour du joueur.');
+        return;
+    }
+
     const result = attackP(hero, monster);
     addLog(`${hero.name} attaque et inflige ${result.damage} dégâts!`, 'damage');
     updateStats();
     
-    if (checkFightEnd()) return;
+    if (checkFightEnd()){
+        console.log('Le combat est terminé.');
+        return;
+    }
     
     isPlayerTurn = false;
     setTimeout(enemyTurn, 1500);
