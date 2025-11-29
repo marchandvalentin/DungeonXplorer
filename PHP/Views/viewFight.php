@@ -13,7 +13,7 @@
     
     <section class="max-w-7xl mx-auto px-6 py-8">
         <div class="text-center mb-8">
-            <h1 class="gradient-red text-5xl font-bold tracking-wider uppercase mb-4">
+            <h1 class="text-5xl font-bold tracking-wider uppercase mb-3">
                 ⚔️ Combat ⚔️
             </h1>
             <div class="w-32 h-1 mx-auto bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
