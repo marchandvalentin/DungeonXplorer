@@ -1,13 +1,9 @@
-console.log('fight.js loaded!');
-
 // Combat state variables
 let hero, monster, chapterId, turnCount, isPlayerTurn;
 
 function startingFight(player, enemy) {
     let turnNumber = 1;    
     while (true) {
-        console.log(`--- Turn ${turnNumber} ---`);
-
         break;
     }
 }
@@ -27,19 +23,16 @@ function attackP(attacker, defender) {
     let damage = Math.floor(Math.random() * 7) + attacker.strength + (attacker.weapon?.damage || 0);
     damage = Math.max(0, damage - defense);
     defender.pv -= damage;
-    console.log(`${attacker.name} attacks ${defender.name} for ${damage} damage!`);
     return {damage, defenderPv: defender.pv};
 }
 
 function attackM(attacker, defender, spell) {
     if (attacker.mana < spell.manaCost) {
-        console.log(`${attacker.name} does not have enough mana to cast ${spell.name}!`);
         return {success: false, message: 'Not enough mana'};
     }
     attacker.mana -= spell.manaCost;
     let damage = Math.floor(Math.random() * 7) + Math.floor(Math.random() * 7) + spell.damage;
     defender.pv -= damage;
-    console.log(`${attacker.name} casts ${spell.name} on ${defender.name} for ${damage} damage!`);
     return {success: true, damage, defenderPv: defender.pv, attackerMana: attacker.mana};
 }
 
@@ -86,9 +79,7 @@ function updateStats() {
 }
 
 function playerAttack() {
-    console.log('Player chooses to attack.');
     if (!isPlayerTurn) {
-        console.log('Ce n\'est pas le tour du joueur.');
         return;
     }
 
@@ -96,8 +87,7 @@ function playerAttack() {
     addLog(`${hero.name} attaque et inflige ${result.damage} dégâts!`, 'damage');
     updateStats();
     
-    if (checkFightEnd()){
-        console.log('Le combat est terminé.');
+    if (checkFightEnd()) {
         return;
     }
     
@@ -212,7 +202,6 @@ function startCombat() {
 
 // Auto-initialize - DOM is already loaded since script is at end of body
 if (window.heroData && window.monsterData && window.currentChapterId !== undefined) {
-    console.log('Initializing combat...');
     initializeCombat(window.heroData, window.monsterData, window.currentChapterId);
     
     // Attach event listeners
@@ -220,31 +209,18 @@ if (window.heroData && window.monsterData && window.currentChapterId !== undefin
     const magicBtn = document.getElementById('btn-magic');
     const fleeBtn = document.getElementById('btn-flee');
     
-    console.log('Buttons found:', attackBtn, magicBtn, fleeBtn);
-    
     if (attackBtn && magicBtn && fleeBtn) {
         attackBtn.addEventListener('click', function() {
-            console.log('Attack button clicked');
             playerAttack();
         });
         magicBtn.addEventListener('click', function() {
-            console.log('Magic button clicked');
             playerMagicAttack();
         });
         fleeBtn.addEventListener('click', function() {
-            console.log('Flee button clicked');
             flee();
         });
         
         startCombat();
-    } else {
-        console.error('Buttons not found!');
     }
-} else {
-    console.error('Combat data not found:', {
-        heroData: window.heroData,
-        monsterData: window.monsterData,
-        chapterId: window.currentChapterId
-    });
 }
 

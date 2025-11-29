@@ -168,19 +168,10 @@
 
         window.currentChapterId = <?php echo $chapter_id; ?>;
         
-        console.log('Data set:', window.heroData, window.monsterData, window.currentChapterId);
+        window.currentChapterId = <?php echo $chapter_id; ?>;
     </script>
     
-    <script>
-        <?php 
-        $fight_js_path = '/users/dx09/www-dev/JS/fight.js';
-        if (file_exists($fight_js_path)) {
-            echo file_get_contents($fight_js_path);
-        } else {
-            echo "console.error('Cannot find fight.js at: " . $fight_js_path . "');";
-        }
-        ?>
-    </script>
+    <script src="/JS/fight.js"></script>
 
     <?php include 'PHP/footer.php'; ?>
 </body>

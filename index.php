@@ -11,42 +11,21 @@ require 'PHP/Controller/ChapterController.php';
 
 use Bramus\Router\Router;
 
-// Handle static files BEFORE router initialization
-$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-// Debug logging
-error_log("Request URI: " . $request_uri);
-
-if (preg_match('#^/(JS|CSS|res)/(.+)$#i', $request_uri, $matches)) {
-    $file_path = __DIR__ . $request_uri;
-    error_log("Trying to serve: " . $file_path);
-    error_log("File exists: " . (file_exists($file_path) ? 'yes' : 'no'));
-    
-    if (file_exists($file_path)) {
-        // Set correct content type based on extension
-        $extension = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
-        $mime_types = [
-            'js' => 'application/javascript',
-            'css' => 'text/css',
-            'png' => 'image/png',
-            'jpg' => 'image/jpeg',
-            'jpeg' => 'image/jpeg',
-            'gif' => 'image/gif',
-            'svg' => 'image/svg+xml',
-        ];
-        
-        if (isset($mime_types[$extension])) {
-            header('Content-Type: ' . $mime_types[$extension]);
-        }
-        readfile($file_path);
-        exit;
-    } else {
-        error_log("File not found: " . $file_path);
-    }
-}
-
 // Initialize the router
 $router = new Router();
+
+// Serve static files (CSS, JS, images)
+$router->match('GET', '/JS/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
+$router->match('GET', '/CSS/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
+$router->match('GET', '/res/(.*)', function() {
+    return false; // Let the web server handle it
+});
 
 // Define a simple route
 $router->get('/', function() {
