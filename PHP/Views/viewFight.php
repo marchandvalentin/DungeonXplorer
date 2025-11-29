@@ -172,7 +172,14 @@
     </script>
     
     <script>
-        <?php include __DIR__ . '/../../JS/fight.js'; ?>
+        <?php 
+        $fight_js_path = __DIR__ . '/../../JS/fight.js';
+        if (file_exists($fight_js_path)) {
+            echo file_get_contents($fight_js_path);
+        } else {
+            echo "console.error('Cannot find fight.js at: " . $fight_js_path . "');";
+        }
+        ?>
     </script>
 
     <?php include 'PHP/footer.php'; ?>
