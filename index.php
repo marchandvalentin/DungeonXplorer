@@ -11,21 +11,14 @@ require 'PHP/Controller/ChapterController.php';
 
 use Bramus\Router\Router;
 
+// Handle static files BEFORE router initialization
+$request_uri = $_SERVER['REQUEST_URI'];
+if (preg_match('#\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$#i', $request_uri)) {
+    return false; // Let Apache handle static files
+}
+
 // Initialize the router
 $router = new Router();
-
-// Serve static files (CSS, JS, images)
-$router->match('GET', '/JS/(.*)', function() {
-    return false; // Let the web server handle it
-});
-
-$router->match('GET', '/CSS/(.*)', function() {
-    return false; // Let the web server handle it
-});
-
-$router->match('GET', '/res/(.*)', function() {
-    return false; // Let the web server handle it
-});
 
 // Define a simple route
 $router->get('/', function() {
