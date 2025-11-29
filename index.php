@@ -1,12 +1,13 @@
 <?php
 session_start();
-
+require_once __DIR__ . '/PHP/BDD/bdd_functions.php';
 require 'vendor/autoload.php';
 require 'PHP/Controller/LoginController.php';
 require 'PHP/Controller/RegisterController.php';
 require 'PHP/Controller/DashboardController.php';
 require 'PHP/Controller/CreateHeroController.php';
 require 'PHP/Controller/HeroSelectionController.php';
+require 'PHP/Controller/ChapterController.php';
 
 use Bramus\Router\Router;
 
@@ -82,7 +83,29 @@ $router->post('/create-hero', function() {
     $controller->create();
 });
 
+$router->get('/chapter/{hero}/{chapter_id}', function($hero, $chapter_id) {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new ChapterController();
+        $controller->show($hero, $chapter_id);
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+
+$router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+    if (isset($_SESSION['user_id'])) {
+        saveHeroProgress($hero_id, $chapter_id, 'finished');
+        header('Location: /heros');
+        exit();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
 // Run the router
 $router->run();
- 
+
 ?>

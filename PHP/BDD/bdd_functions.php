@@ -293,11 +293,11 @@
 
     function getContentAndImageFromChapterId($chapter_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT image, content FROM Chapter WHERE id = :id");
+        $stmt = $pdo->prepare("SELECT id, titre, content, image FROM Chapter WHERE id = :id");
         $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return ($result ? $result['image'] : null) && ($result ? $result['content'] : null);
+        return $result ? $result : null;
     }
 
     function getChapterTreasureById($id) {
@@ -309,16 +309,48 @@
         return $result ? $result['treasure'] : null;
     }
 
+    function getLinksAtChapter($chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT description, next_chapter_id FROM Links WHERE chapter_id = :chapter_id");
+        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     ////////////////// PROGRESS FUNCTIONS ///////////////////////
 
     function saveHeroProgress($hero_id, $chapter_id, $status) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO Hero_progress (hero_id, chapter_id, status) VALUES (:hero_id, :chapter_id, :status)");
-        $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
-        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
-        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
-        return $stmt->execute();
+        $isAlredaySavedStmt = $pdo->prepare("SELECT COUNT(*) FROM Hero_Progress WHERE hero_id = :hero_id");
+        $isAlredaySavedStmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+        $isAlredaySavedStmt->execute();
+        $isSaved = $isAlredaySavedStmt->fetchColumn();
+        
+        if($isSaved > 0){
+            //update
+            $stmt = $pdo->prepare("UPDATE Hero_Progress SET chapter_id = :chapter_id, status = :status WHERE hero_id = :hero_id");
+            $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+            $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            return $stmt->execute();
+        }else{
+            $stmt = $pdo->prepare("INSERT INTO Hero_Progress (hero_id, chapter_id, status) VALUES (:hero_id, :chapter_id, :status)");
+            $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+            $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+            $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+            return $stmt->execute();
+        } 
     }
+
+    function getHeroProgress($hero_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT chapter_id, status FROM Hero_Progress WHERE hero_id = :hero_id");
+        $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    
 
     ////////////////// USER FUNCTIONS ///////////////////////
 
