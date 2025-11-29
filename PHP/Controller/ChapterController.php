@@ -15,17 +15,6 @@
             // Check if chapter has an encounter
             $encounter = getEncounterAtChapter($chapter_id);
             
-            // DEBUG - Affichage temporaire
-            if ($encounter) {
-                echo "<pre>ENCOUNTER FOUND: ";
-                print_r($encounter);
-                echo "\nSession key: encounter_completed_$chapter_id";
-                echo "\nSession value: " . (isset($_SESSION['encounter_completed_' . $chapter_id]) ? 'SET' : 'NOT SET');
-                echo "</pre>";
-            } else {
-                echo "<pre>NO ENCOUNTER for chapter $chapter_id</pre>";
-            }
-            
             if ($encounter && !isset($_SESSION['encounter_completed_' . $chapter_id])) {
                 // Redirect to fight
                 header("Location: /fight/$hero_id/$chapter_id");
