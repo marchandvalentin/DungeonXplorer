@@ -173,7 +173,7 @@
     
     <script>
         <?php 
-        $fight_js_path = __DIR__ . '/../../JS/fight.js';
+        $fight_js_path = '/users/dx09/www-dev/JS/fight.js';
         if (file_exists($fight_js_path)) {
             echo file_get_contents($fight_js_path);
         } else {
