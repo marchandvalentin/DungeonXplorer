@@ -209,3 +209,17 @@ function startCombat() {
     }
 }
 
+// Auto-initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.heroData && window.monsterData && window.currentChapterId !== undefined) {
+        initializeCombat(window.heroData, window.monsterData, window.currentChapterId);
+        
+        // Attach event listeners
+        document.getElementById('btn-attack').addEventListener('click', playerAttack);
+        document.getElementById('btn-magic').addEventListener('click', playerMagicAttack);
+        document.getElementById('btn-flee').addEventListener('click', flee);
+        
+        startCombat();
+    }
+});
+
