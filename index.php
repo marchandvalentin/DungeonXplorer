@@ -105,6 +105,26 @@ $router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
     }
 });
 
+$router->get('/fight/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new ChapterController();
+        $controller->fight($hero_id, $chapter_id);
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+$router->post('/fight/result', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new ChapterController();
+        $controller->fightResult();
+    } else {
+        http_response_code(401);
+        exit();
+    }
+});
+
 // Run the router
 $router->run();
 

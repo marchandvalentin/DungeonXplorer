@@ -27,24 +27,24 @@ function playerTurn(player, enemy) {}
 function enemyTurn(enemy, player) {}
 
 function attackP(attacker, defender) {
-    let defense = Math.random()%7 + (int)(defender.strength / 2) + defender.armor.defense;
-    let damage = Math.random()%7 + attacker.strength + attacker.weapon.damage;
+    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2) + (defender.armor?.defense || 0);
+    let damage = Math.floor(Math.random() * 7) + attacker.strength + (attacker.weapon?.damage || 0);
     damage = Math.max(0, damage - defense);
     defender.pv -= damage;
     console.log(`${attacker.name} attacks ${defender.name} for ${damage} damage!`);
-    return 0;
+    return {damage, defenderPv: defender.pv};
 }
 
 function attackM(attacker, defender, spell) {
     if (attacker.mana < spell.manaCost) {
         console.log(`${attacker.name} does not have enough mana to cast ${spell.name}!`);
-        return -1;
+        return {success: false, message: 'Not enough mana'};
     }
     attacker.mana -= spell.manaCost;
-    let damage = ((Math.random()%7) + (Math.random()%7)) + spell.damage;
+    let damage = Math.floor(Math.random() * 7) + Math.floor(Math.random() * 7) + spell.damage;
     defender.pv -= damage;
     console.log(`${attacker.name} casts ${spell.name} on ${defender.name} for ${damage} damage!`);
-    return 0;
+    return {success: true, damage, defenderPv: defender.pv, attackerMana: attacker.mana};
 }
 
 function useItem(user, item) {}
