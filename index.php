@@ -14,6 +14,19 @@ use Bramus\Router\Router;
 // Initialize the router
 $router = new Router();
 
+// Serve static files (CSS, JS, images)
+$router->match('GET', '/JS/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
+$router->match('GET', '/CSS/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
+$router->match('GET', '/res/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
 // Define a simple route
 $router->get('/', function() {
     include 'PHP/Views/viewWelcome.php';
