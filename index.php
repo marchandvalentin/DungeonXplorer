@@ -13,10 +13,18 @@ use Bramus\Router\Router;
 
 // Handle static files BEFORE router initialization
 $request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-if (preg_match('#^/(JS|CSS|res)/(.+)\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$#i', $request_uri, $matches)) {
+
+// Debug logging
+error_log("Request URI: " . $request_uri);
+
+if (preg_match('#^/(JS|CSS|res)/(.+)$#i', $request_uri, $matches)) {
     $file_path = __DIR__ . $request_uri;
+    error_log("Trying to serve: " . $file_path);
+    error_log("File exists: " . (file_exists($file_path) ? 'yes' : 'no'));
+    
     if (file_exists($file_path)) {
-        // Set correct content type
+        // Set correct content type based on extension
+        $extension = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
         $mime_types = [
             'js' => 'application/javascript',
             'css' => 'text/css',
@@ -26,12 +34,14 @@ if (preg_match('#^/(JS|CSS|res)/(.+)\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff
             'gif' => 'image/gif',
             'svg' => 'image/svg+xml',
         ];
-        $ext = strtolower($matches[3]);
-        if (isset($mime_types[$ext])) {
-            header('Content-Type: ' . $mime_types[$ext]);
+        
+        if (isset($mime_types[$extension])) {
+            header('Content-Type: ' . $mime_types[$extension]);
         }
         readfile($file_path);
         exit;
+    } else {
+        error_log("File not found: " . $file_path);
     }
 }
 
