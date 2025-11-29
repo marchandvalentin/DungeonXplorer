@@ -1,11 +1,7 @@
+console.log('fight.js loaded!');
 
-
-
-
-
-
-
-
+// Combat state variables
+let hero, monster, chapterId, turnCount, isPlayerTurn;
 
 function startingFight(player, enemy) {
     let turnNumber = 1;    
@@ -53,9 +49,7 @@ function turnEnd(player, enemy) {}
 
 function checkVictory(player, enemy) {}
 
-// Combat system functions
-let hero, monster, chapterId, turnCount, isPlayerTurn;
-
+// Combat system functions - initializeCombat will set these values
 function initializeCombat(heroData, monsterData, currentChapterId) {
     hero = heroData;
     monster = monsterData;
