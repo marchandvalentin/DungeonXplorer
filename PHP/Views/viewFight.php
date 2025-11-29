@@ -167,6 +167,8 @@
         };
 
         window.currentChapterId = <?php echo $chapter_id; ?>;
+        
+        console.log('Data set:', window.heroData, window.monsterData, window.currentChapterId);
     </script>
     
     <script src="/JS/fight.js"></script>
