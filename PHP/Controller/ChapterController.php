@@ -14,8 +14,14 @@
             
             // Check if chapter has an encounter
             $encounter = getEncounterAtChapter($chapter_id);
+            
+            // Debug: Log what we found
+            error_log("Chapter $chapter_id - Encounter: " . ($encounter ? 'YES' : 'NO'));
+            error_log("Session completed: " . (isset($_SESSION['encounter_completed_' . $chapter_id]) ? 'YES' : 'NO'));
+            
             if ($encounter && !isset($_SESSION['encounter_completed_' . $chapter_id])) {
                 // Redirect to fight
+                error_log("Redirecting to fight: /fight/$hero_id/$chapter_id");
                 header("Location: /fight/$hero_id/$chapter_id");
                 exit;
             }
