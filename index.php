@@ -96,16 +96,15 @@ $router->post('/create-hero', function() {
     $controller->create();
 });
 
-$router->get('/chapter/{hero}/{chapter_id}', function($hero, $chapter_id) {
+$router->get('/fight/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
     if (isset($_SESSION['user_id'])) {
         $controller = new ChapterController();
-        $controller->show($hero, $chapter_id);
+        $controller->fight($hero_id, $chapter_id);
     } else {
         header('Location: /login');
         exit();
     }
 });
-
 
 $router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
     if (isset($_SESSION['user_id'])) {
@@ -118,10 +117,10 @@ $router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
     }
 });
 
-$router->get('/fight/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+$router->get('/chapter/{hero}/{chapter_id}', function($hero, $chapter_id) {
     if (isset($_SESSION['user_id'])) {
         $controller = new ChapterController();
-        $controller->fight($hero_id, $chapter_id);
+        $controller->show($hero, $chapter_id);
     } else {
         header('Location: /login');
         exit();
