@@ -145,51 +145,29 @@
     </section>
 
     <script>
-        // Initialize combat with PHP data
-        document.addEventListener('DOMContentLoaded', function() {
-            const heroData = {
-                id: <?php echo $hero['id']; ?>,
-                name: "<?php echo htmlspecialchars($hero['name']); ?>",
-                pv: <?php echo $hero['pv']; ?>,
-                maxPv: <?php echo $hero['pv']; ?>,
-                mana: <?php echo $hero['mana']; ?>,
-                maxMana: <?php echo $hero['mana']; ?>,
-                strength: <?php echo $hero['strength']; ?>,
-                initiative: <?php echo $hero['initiative']; ?>
-            };
+        // Pass data to fight.js
+        window.heroData = {
+            id: <?php echo $hero['id']; ?>,
+            name: "<?php echo htmlspecialchars($hero['name']); ?>",
+            pv: <?php echo $hero['pv']; ?>,
+            maxPv: <?php echo $hero['pv']; ?>,
+            mana: <?php echo $hero['mana']; ?>,
+            maxMana: <?php echo $hero['mana']; ?>,
+            strength: <?php echo $hero['strength']; ?>,
+            initiative: <?php echo $hero['initiative']; ?>
+        };
 
-            const monsterData = {
-                name: "<?php echo htmlspecialchars($monster['name']); ?>",
-                pv: <?php echo $monster['health']; ?>,
-                maxPv: <?php echo $monster['health']; ?>,
-                mana: <?php echo $monster['mana']; ?>,
-                maxMana: <?php echo $monster['mana']; ?>,
-                strength: <?php echo $monster['strength']; ?>,
-                initiative: <?php echo $monster['initiative']; ?>
-            };
+        window.monsterData = {
+            name: "<?php echo htmlspecialchars($monster['name']); ?>",
+            pv: <?php echo $monster['health']; ?>,
+            maxPv: <?php echo $monster['health']; ?>,
+            mana: <?php echo $monster['mana']; ?>,
+            maxMana: <?php echo $monster['mana']; ?>,
+            strength: <?php echo $monster['strength']; ?>,
+            initiative: <?php echo $monster['initiative']; ?>
+        };
 
-            const currentChapterId = <?php echo $chapter_id; ?>;
-
-            // Wait for fight.js to load
-            if (typeof initializeCombat === 'function') {
-                initializeCombat(heroData, monsterData, currentChapterId);
-                
-                // Attach event listeners
-                document.getElementById('btn-attack').addEventListener('click', function() {
-                    playerAttack();
-                });
-                document.getElementById('btn-magic').addEventListener('click', function() {
-                    playerMagicAttack();
-                });
-                document.getElementById('btn-flee').addEventListener('click', function() {
-                    flee();
-                });
-                
-                startCombat();
-            } else {
-                console.error('fight.js not loaded properly');
-            }
-        });
+        window.currentChapterId = <?php echo $chapter_id; ?>;
     </script>
 
     <?php include 'PHP/footer.php'; ?>
