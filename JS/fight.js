@@ -151,21 +151,23 @@ function showResult(victory) {
         resultTitle.textContent = '🎉 Victoire! 🎉';
         resultTitle.className = 'text-5xl font-bold mb-6 text-yellow-400';
         resultMessage.textContent = `Vous avez vaincu ${monster.name}!`;
+        
+        // Store victory status for later save
+        window.fightVictory = true;
     } else {
         resultTitle.textContent = '💀 Défaite 💀';
         resultTitle.className = 'text-5xl font-bold mb-6 text-red-400';
         resultMessage.textContent = `Vous avez été vaincu par ${monster.name}...`;
+        
+        window.fightVictory = false;
     }
     
     resultScreen.classList.remove('hidden');
-    
-    // Save combat result to server
-    saveCombatResult(victory);
 }
 
 function saveCombatResult(victory) {
     // Send AJAX request to save hero stats and combat result
-    fetch('/fight/result', {
+    return fetch('/fight/result', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -179,7 +181,10 @@ function saveCombatResult(victory) {
 }
 
 function continueAfterFight() {
-    window.location.href = `/chapter/${hero.id}/${chapterId}`;
+    // Save result, then redirect
+    saveCombatResult(window.fightVictory).then(() => {
+        window.location.href = `/chapter/${hero.id}/${chapterId}`;
+    });
 }
 
 function flee() {
