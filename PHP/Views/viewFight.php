@@ -171,7 +171,16 @@
         console.log('Data set:', window.heroData, window.monsterData, window.currentChapterId);
     </script>
     
-    <script src="/JS/fight.js"></script>
+    <script src="/JS/fight.js" onerror="console.error('ERREUR: fight.js ne charge pas!')"></script>
+    <script>
+        // Fallback si fight.js ne charge pas
+        setTimeout(function() {
+            if (typeof initializeCombat === 'undefined') {
+                console.error('fight.js non chargé après 1 seconde!');
+                alert('Erreur: Le script de combat ne se charge pas. Vérifiez la console.');
+            }
+        }, 1000);
+    </script>
 
     <?php include 'PHP/footer.php'; ?>
 </body>
