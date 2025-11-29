@@ -170,14 +170,25 @@
 
             const currentChapterId = <?php echo $chapter_id; ?>;
 
-            initializeCombat(heroData, monsterData, currentChapterId);
-            
-            // Attach event listeners
-            document.getElementById('btn-attack').addEventListener('click', playerAttack);
-            document.getElementById('btn-magic').addEventListener('click', playerMagicAttack);
-            document.getElementById('btn-flee').addEventListener('click', flee);
-            
-            startCombat();
+            // Wait for fight.js to load
+            if (typeof initializeCombat === 'function') {
+                initializeCombat(heroData, monsterData, currentChapterId);
+                
+                // Attach event listeners
+                document.getElementById('btn-attack').addEventListener('click', function() {
+                    playerAttack();
+                });
+                document.getElementById('btn-magic').addEventListener('click', function() {
+                    playerMagicAttack();
+                });
+                document.getElementById('btn-flee').addEventListener('click', function() {
+                    flee();
+                });
+                
+                startCombat();
+            } else {
+                console.error('fight.js not loaded properly');
+            }
         });
     </script>
 
