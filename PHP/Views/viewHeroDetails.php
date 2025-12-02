@@ -33,7 +33,7 @@
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
                         <?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?>
                     </h2>
-                    <p class="text-medieval-cream/70"><?php echo htmlspecialchars($hero['class'] ?? 'Classe inconnue'); ?></p>
+                    <p class="text-medieval-cream/70"><?php echo htmlspecialchars($hero['class']['name'] ?? 'Classe inconnue'); ?></p>
                 </div>
             </div>
 
