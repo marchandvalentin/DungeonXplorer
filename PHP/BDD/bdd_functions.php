@@ -439,6 +439,9 @@
         if (!$user) {
             return false;
         }
+        
+        return $user;
+    }
 
     function updateUserProfile($userId, $name, $email, $password = null) {
         global $pdo;
