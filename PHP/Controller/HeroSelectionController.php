@@ -42,7 +42,7 @@
 
         function showDetails($hero_id){
             $hero = getHeroById($hero_id);
-            $hero['class'] = getClassById($hero['HERO_CLASS_ID']);
+            $hero['class'] = getClassById($hero['CLASS_ID']);
             include __DIR__ . '/../Views/viewHeroDetails.php';
         }
     }
