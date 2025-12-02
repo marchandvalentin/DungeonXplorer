@@ -70,12 +70,10 @@
     function getHerosByUserId($userId){
         global $pdo;
         
-        // Préparation et exécution de la requête
         $stmt = $pdo->prepare('SELECT * FROM Hero WHERE user_id = :user_id');
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Récupération des résultats
         $heros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $heros;
