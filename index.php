@@ -92,20 +92,6 @@ $router->get('/heros', function() {
     }
 });
 
-$router->get('/profile/{user_id}', function($user_id) {
-    if (isset($_SESSION['user_id'])) {
-        $user = getUserById($user_id);
-        if ($user) {
-            include __DIR__ . '/PHP/Views/viewProfile.php';
-        } else {
-            echo "Utilisateur non trouvé.";
-        }
-    } else {
-        header('Location: /login');
-        exit();
-    }
-});
-
 $router->get('/createHero', function() {
     if (!isset($_SESSION['user_id'])) {
         header('Location: /login');
