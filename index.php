@@ -58,9 +58,12 @@ $router->get('/logout', function() {
     $controller->logout();
 });
 
-$router->get('/profile', function() {
+$router->get('/profile/{user_id}', function($user_id) {
     $controller = new ProfileController();
-    $controller->show();
+    $user = getUserById($user_id);
+    if ($user) {
+        $controller->show($user);
+    }
 });
 
 $router->post('/profile/update', function() {

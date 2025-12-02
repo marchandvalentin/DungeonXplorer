@@ -31,7 +31,7 @@
                 </div>
                 <div class="ml-6">
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
-                        <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Utilisateur'); ?>
+                        <?php echo htmlspecialchars($user['user_name'] ?? 'Utilisateur'); ?>
                     </h2>
                     <p class="text-medieval-cream/70">Membre depuis <?php echo date('d/m/Y'); ?></p>
                 </div>
@@ -45,7 +45,7 @@
                         <div>
                             <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nom</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream" id="displayName"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
+                                <p class="text-medieval-cream" id="displayName"><?php echo htmlspecialchars($user['user_name'] ?? ''); ?></p>
                             </div>
                         </div>
 
@@ -53,7 +53,7 @@
                         <div>
                             <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Email</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream" id="displayEmail"><?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?></p>
+                                <p class="text-medieval-cream" id="displayEmail"><?php echo htmlspecialchars($user['user_email'] ?? ''); ?></p>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                     <div>
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">ID de compte</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream/50">#<?php echo $_SESSION['user_id'] ?? 'N/A'; ?></p>
+                            <p class="text-medieval-cream/50">#<?php echo $user['user_id'] ?? 'N/A'; ?></p>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                 <div>
                     <?php 
                         require_once __DIR__ . '/../BDD/bdd_functions.php';
-                        $heros = getHerosByUserId($_SESSION['user_id'] ?? 0);
+                        $heros = getHerosByUserId($user['user_id'] ?? 0);
 
                         foreach ($heros as $hero):?>
                             <div class="mt-8 p-4 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg">
