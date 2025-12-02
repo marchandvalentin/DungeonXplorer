@@ -27,7 +27,15 @@
             <!-- Hero Header -->
             <div class="flex items-center mb-8 pb-8 border-b border-[rgba(139,40,40,0.3)]">
                 <div class="w-24 h-24 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-lightred/10 border-4 border-medieval-red/50 flex items-center justify-center text-5xl">
-                    ⚔️
+                    <?php 
+                        $classEmojis = [
+                            'Guerrier' => '⚔️',
+                            'Mage' => '🔮',
+                            'Voleur' => '🗡️'
+                        ];
+                        $className = $hero['class']['name'] ?? '';
+                        echo $classEmojis[$className] ?? '🛡️';
+                    ?>
                 </div>
                 <div class="ml-6">
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
@@ -44,7 +52,7 @@
                     <div>
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Niveau</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['level'] ?? 'N/A'); ?></p>
+                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['xp'] ?? 'N/A'); ?></p>
                         </div>
                     </div>
 
