@@ -430,7 +430,8 @@
 
     function getUserById($user_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id");
+        // Try both column name variations
+        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id OR USER_ID = :user_id");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
