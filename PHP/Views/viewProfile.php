@@ -66,7 +66,7 @@
                     <div>
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">ID de compte</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream/50">#<?php echo $userProfile['USER_ID'] ?? 'N/A'; ?></p>
+                            <p class="text-medieval-cream/50"><?php echo $userProfile['USER_ID'] ?? 'N/A'; ?></p>
                         </div>
                     </div>
                 </div>
