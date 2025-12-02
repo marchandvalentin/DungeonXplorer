@@ -39,6 +39,26 @@
             <p class="text-medieval-cream/70 mt-4">Bienvenue, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Administrateur'); ?>!</p>
         </div>
 
+        <!-- Tab Navigation -->
+        <div class="mb-8 border-b border-[rgba(139,40,40,0.3)]">
+            <div class="flex space-x-2">
+                <button onclick="switchTab('overview')" id="tab-overview" class="tab-button active px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    📊 Vue d'ensemble
+                </button>
+                <button onclick="switchTab('users')" id="tab-users" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    👥 Utilisateurs
+                </button>
+                <button onclick="switchTab('heroes')" id="tab-heroes" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    ⚔️ Héros
+                </button>
+                <button onclick="switchTab('content')" id="tab-content" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    📜 Contenu
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab Content: Overview -->
+        <div id="content-overview" class="tab-content">
         <!-- Statistics Cards Grid -->
         <div class="grid md:grid-cols-4 gap-6 mb-12">
             <!-- Card 1: Total Users -->
@@ -145,7 +165,69 @@
                 </div>
             </div>
         </div>
+        </div><!-- End Overview Tab -->
+
+        <!-- Tab Content: Users -->
+        <div id="content-users" class="tab-content hidden">
+            <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
+                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion des Utilisateurs</h2>
+                <p class="text-medieval-cream/70">Contenu de la gestion des utilisateurs ici...</p>
+            </div>
+        </div>
+
+        <!-- Tab Content: Heroes -->
+        <div id="content-heroes" class="tab-content hidden">
+            <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
+                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion des Héros</h2>
+                <p class="text-medieval-cream/70">Contenu de la gestion des héros ici...</p>
+            </div>
+        </div>
+
+        <!-- Tab Content: Content -->
+        <div id="content-content" class="tab-content hidden">
+            <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
+                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion du Contenu</h2>
+                <p class="text-medieval-cream/70">Contenu de la gestion du contenu (chapitres, monstres) ici...</p>
+            </div>
+        </div>
     </section>
+
+    <style>
+        .tab-button {
+            color: rgba(231, 211, 176, 0.7);
+            border-bottom: 3px solid transparent;
+        }
+        .tab-button:hover {
+            color: rgba(231, 211, 176, 1);
+            background: rgba(198, 40, 40, 0.1);
+        }
+        .tab-button.active {
+            color: #C62828;
+            border-bottom-color: #C62828;
+            background: rgba(198, 40, 40, 0.1);
+        }
+    </style>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            
+            // Add active class to clicked button
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+    </script>
+
     <?php include 'PHP/footer.php'; ?>
 </body>
 </html>
