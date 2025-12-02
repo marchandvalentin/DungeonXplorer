@@ -443,7 +443,13 @@
         global $pdo;
         $searchPattern = '%' . $searchTerm . '%';
         
-        $stmt = $pdo->prepare("SELECT u.id, u.name, u.email, COUNT(h.id) as hero_count FROM Users u LEFT JOIN Hero h ON u.id = h.userId WHERE UPPER(u.name) LIKE UPPER(:search) GROUP BY u.id, u.name, u.email ORDER BY u.name LIMIT 20");
+        $stmt = $pdo->prepare(
+            " SELECT u.user_id, u.user_name, u.user_email, COUNT(h.id) as hero_count FROM Users u 
+              LEFT JOIN Hero h ON u.user_id = h.user_id 
+              WHERE UPPER(u.user_name) LIKE UPPER(:search) 
+              GROUP BY u.user_id, u.user_name, u.user_email 
+              ORDER BY u.user_name LIMIT 20;");
+              
         $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
         $stmt->execute();
         
