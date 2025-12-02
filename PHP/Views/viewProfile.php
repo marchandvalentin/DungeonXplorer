@@ -82,8 +82,8 @@
                 <div>
                     <?php 
                         require_once __DIR__ . '/../BDD/bdd_functions.php';
-                        $heros = getHerosByUserId($user['user_id'] ?? 0);
-
+                        $heros = getHerosByUserId($userProfile['USER_ID'] ?? 0);
+                        
                         foreach ($heros as $hero):?>
                             <div class="mt-8 p-4 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg">
                                 <h3 class="text-xl font-bold text-medieval-lightred mb-2"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></h3>
