@@ -42,8 +42,8 @@
         <!-- Tab Navigation -->
         <div class="mb-8 border-b border-[rgba(139,40,40,0.3)]">
             <div class="flex space-x-2">
-                <button onclick="switchTab('overview')" id="tab-overview" class="tab-button active px-6 py-3 font-semibold tracking-wide transition-all duration-300">
-                    📊 Vue d'ensemble
+                <button onclick="switchTab('stats')" id="tab-stats" class="tab-button active px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    📊 Statistiques
                 </button>
                 <button onclick="switchTab('users')" id="tab-users" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
                     👥 Utilisateurs
@@ -51,8 +51,8 @@
                 <button onclick="switchTab('heroes')" id="tab-heroes" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
                     ⚔️ Héros
                 </button>
-                <button onclick="switchTab('content')" id="tab-content" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
-                    📜 Contenu
+                <button onclick="switchTab('items')" id="tab-items" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    📜 Items
                 </button>
             </div>
         </div>
@@ -170,8 +170,26 @@
         <!-- Tab Content: Users -->
         <div id="content-users" class="tab-content hidden">
             <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
-                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion des Utilisateurs</h2>
-                <p class="text-medieval-cream/70">Contenu de la gestion des utilisateurs ici...</p>
+                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Cherchez un utilisateur</h2>
+                
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input
+                            type="text" 
+                            id="userSearch" 
+                            placeholder="Entrez le nom d'un utilisateur..." 
+                            class="w-full px-4 py-3 pl-12 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            onkeyup="searchUsers()"
+                        >
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="userResults" class="space-y-3">
+                    <p class="text-medieval-cream/70 text-center py-8">Entrez un nom pour rechercher...</p>
+                </div>
             </div>
         </div>
 
@@ -184,10 +202,10 @@
         </div>
 
         <!-- Tab Content: Content -->
-        <div id="content-content" class="tab-content hidden">
+        <div id="content-items" class="tab-content hidden">
             <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
-                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion du Contenu</h2>
-                <p class="text-medieval-cream/70">Contenu de la gestion du contenu (chapitres, monstres) ici...</p>
+                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion des Items</h2>
+                <p class="text-medieval-cream/70">Contenu de la gestion des items (chapitres, monstres) ici...</p>
             </div>
         </div>
     </section>
@@ -225,6 +243,51 @@
             
             // Add active class to clicked button
             document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        function searchUsers() {
+            const searchTerm = document.getElementById('userSearch').value.toLowerCase().trim();
+            const resultsDiv = document.getElementById('userResults');
+            
+            if (searchTerm === '') {
+                resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Entrez un nom pour rechercher...</p>';
+                return;
+            }
+
+            // Show loading
+            resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Recherche en cours...</p>';
+
+            // Fetch users matching the search term
+            fetch('/dashboard/search-users?name=' + encodeURIComponent(searchTerm))
+                .then(response => response.json())
+                .then(users => {
+                    if (users.length === 0) {
+                        resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Aucun utilisateur trouvé.</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    users.forEach(user => {
+                        html += `
+                            <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4 hover:bg-[rgba(42,30,20,0.9)] hover:border-medieval-red/50 transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-medieval-cream font-semibold text-lg">${user.name}</p>
+                                        <p class="text-medieval-cream/70 text-sm">${user.email}</p>
+                                        <p class="text-medieval-cream/50 text-xs mt-1">ID: ${user.id}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-medieval-lightred font-bold">${user.hero_count || 0} héros</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">Erreur lors de la recherche.</p>';
+                });
         }
     </script>
 
