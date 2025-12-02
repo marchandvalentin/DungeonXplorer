@@ -5,30 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/personaliseColors.css">
-
-    <title>DungeonXPlorer - Connexion</title>
+    <link rel="stylesheet" href="/CSS/personaliseColors.css">
+    <script src="/JS/script.js" defer></script>
+    <title>DungeonXPlorer - Détails du Héros</title>
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php include 'PHP/header.php'; ?>
     
     <!-- Hero Details Section -->
-    <section class="max-w-7xl mx-auto px-6 py-20">
-        <div class="max-w-md mx-auto hero-card rounded-2xl p-8 border border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] relative overflow-hidden" style="background: linear-gradient(135deg, rgba(42, 30, 20, 0.6), rgba(26, 22, 20, 0.8));">
-            <div class="text-center space-y-8">
-                <h1 class="gradient-red text-4xl font-bold tracking-wider uppercase">
-                    Détails du Héros
-                </h1>
-                <div class="w-24 h-1 mx-auto bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
-                
-                <div class="text-left space-y-4">
-                    <p><span class="font-semibold text-medieval-lightred">Nom :</span> <?php echo htmlspecialchars($hero['name'] ?? 'Inconnu'); ?></p>
-                    <p><span class="font-semibold text-medieval-lightred">Classe :</span> <?php echo htmlspecialchars($hero['class'] ?? 'Inconnue'); ?></p>
-                    <p><span class="font-semibold text-medieval-lightred">Niveau :</span> <?php echo htmlspecialchars($hero['level'] ?? 'N/A'); ?></p>
-                    <p><span class="font-semibold text-medieval-lightred">Points de Vie :</span> <?php echo htmlspecialchars($hero['pv'] ?? 'N/A'); ?></p>
-                    <p><span class="font-semibold text-medieval-lightred">Force :</span> <?php echo htmlspecialchars($hero['strength'] ?? 'N/A'); ?></p>
-                    <p><span class="font-semibold text-medieval-lightred">Agilité :</span> <?php echo htmlspecialchars($hero['agility'] ?? 'N/A'); ?></p>
-                    <p><span class="font-semibold text-medieval-lightred">Intelligence :</span> <?php echo htmlspecialchars($hero['intelligence'] ?? 'N/A'); ?></p>
+    <section class="max-w-4xl mx-auto px-6 py-20">
+        <!-- Page Title -->
+        <div class="mb-12">
+            <h1 class="gradient-red text-5xl font-bold tracking-wider uppercase mb-4">
+                Détails du Héros
+            </h1>
+            <div class="w-32 h-1 bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
+        </div>
+
+        <!-- Hero Card -->
+        <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8 mb-8">
+            <!-- Hero Header -->
+            <div class="flex items-center mb-8 pb-8 border-b border-[rgba(139,40,40,0.3)]">
+                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-lightred/10 border-4 border-medieval-red/50 flex items-center justify-center text-5xl">
+                    ⚔️
+                </div>
+                <div class="ml-6">
+                    <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
+                        <?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?>
+                    </h2>
+                    <p class="text-medieval-cream/70"><?php echo htmlspecialchars($hero['class'] ?? 'Classe inconnue'); ?></p>
+                </div>
+            </div>
+
+            <!-- Hero Info -->
+            <div class="space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Level -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Niveau</label>
+                        <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['level'] ?? 'N/A'); ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Health Points -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Points de Vie</label>
+                        <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['pv'] ?? 'N/A'); ?></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div>
+                    <h3 class="text-2xl font-bold text-medieval-lightred mb-4">Statistiques</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Strength -->
+                        <div>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Force</label>
+                            <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['strength'] ?? 'N/A'); ?></p>
+                            </div>
+                        </div>
+
+                        <!-- Agility -->
+                        <div>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Agilité</label>
+                            <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['agility'] ?? 'N/A'); ?></p>
+                            </div>
+                        </div>
+
+                        <!-- Intelligence -->
+                        <div>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Intelligence</label>
+                            <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['intelligence'] ?? 'N/A'); ?></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
