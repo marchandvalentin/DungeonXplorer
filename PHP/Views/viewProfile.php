@@ -12,6 +12,10 @@
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php include 'PHP/header.php'; ?>
     
+    <script>
+        console.log(<?php echo json_encode($user); ?>);
+    </script>
+
     <!-- Profile Section -->
     <section class="max-w-4xl mx-auto px-6 py-20">
         <!-- Page Title -->
