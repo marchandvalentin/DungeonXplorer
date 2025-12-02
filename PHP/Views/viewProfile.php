@@ -81,7 +81,6 @@
                 <!-- User's Heroes Info -->
                 <div>
                     <h3 class="text-2xl font-bold text-medieval-lightred mt-12 mb-4">Héros</h3>
-                    <script >console.log(<?php echo json_encode($heros); ?>);</script>
                     <?php 
                         require_once __DIR__ . '/../BDD/bdd_functions.php';
                         $heros = getHerosByUserId($userProfile['USER_ID'] ?? 0);
