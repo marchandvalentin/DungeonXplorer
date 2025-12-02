@@ -261,6 +261,8 @@
             fetch('/dashboard/search-users?name=' + encodeURIComponent(searchTerm))
                 .then(response => response.json())
                 .then(users => {
+                    console.log('Users data:', users);
+                    
                     if (users.length === 0) {
                         resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Aucun utilisateur trouvé.</p>';
                         return;
@@ -268,13 +270,14 @@
 
                     let html = '';
                     users.forEach(user => {
+                        console.log('User:', user);
                         html += `
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4 hover:bg-[rgba(42,30,20,0.9)] hover:border-medieval-red/50 transition-all duration-300">
                                 <div class="flex justify-between items-center">
                                     <div>
-                                        <p class="text-medieval-cream font-semibold text-lg">${user.name}</p>
-                                        <p class="text-medieval-cream/70 text-sm">${user.email}</p>
-                                        <p class="text-medieval-cream/50 text-xs mt-1">ID: ${user.id}</p>
+                                        <p class="text-medieval-cream font-semibold text-lg">${user.name || 'N/A'}</p>
+                                        <p class="text-medieval-cream/70 text-sm">${user.email || 'N/A'}</p>
+                                        <p class="text-medieval-cream/50 text-xs mt-1">ID: ${user.id || 'N/A'}</p>
                                     </div>
                                     <div class="text-right">
                                         <span class="text-medieval-lightred font-bold">${user.hero_count || 0} héros</span>
@@ -286,6 +289,7 @@
                     resultsDiv.innerHTML = html;
                 })
                 .catch(error => {
+                    console.error('Error:', error);
                     resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">Erreur lors de la recherche.</p>';
                 });
         }
