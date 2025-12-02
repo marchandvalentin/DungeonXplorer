@@ -14,6 +14,19 @@ use Bramus\Router\Router;
 // Initialize the router
 $router = new Router();
 
+// Serve static files (CSS, JS, images)
+$router->match('GET', '/JS/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
+$router->match('GET', '/CSS/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
+$router->match('GET', '/res/(.*)', function() {
+    return false; // Let the web server handle it
+});
+
 // Define a simple route
 $router->get('/', function() {
     include 'PHP/Views/viewWelcome.php';
@@ -83,6 +96,27 @@ $router->post('/create-hero', function() {
     $controller->create();
 });
 
+$router->get('/fight/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new ChapterController();
+        $controller->fight($hero_id, $chapter_id);
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+$router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+    if (isset($_SESSION['user_id'])) {
+        saveHeroProgress($hero_id, $chapter_id, 'finished');
+        header('Location: /heros');
+        exit();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
 $router->get('/chapter/{hero}/{chapter_id}', function($hero, $chapter_id) {
     if (isset($_SESSION['user_id'])) {
         $controller = new ChapterController();
@@ -93,14 +127,12 @@ $router->get('/chapter/{hero}/{chapter_id}', function($hero, $chapter_id) {
     }
 });
 
-
-$router->get('/save/{hero_id}/{chapter_id}', function($hero_id, $chapter_id) {
+$router->post('/fight/result', function() {
     if (isset($_SESSION['user_id'])) {
-        saveHeroProgress($hero_id, $chapter_id, 'finished');
-        header('Location: /heros');
-        exit();
+        $controller = new ChapterController();
+        $controller->fightResult();
     } else {
-        header('Location: /login');
+        http_response_code(401);
         exit();
     }
 });

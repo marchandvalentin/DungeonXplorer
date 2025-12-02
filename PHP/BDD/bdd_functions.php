@@ -162,6 +162,15 @@
         return $result ? $result['xp'] : null;
     }
 
+    function updateHeroStats($hero_id, $pv, $mana) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE Hero SET pv = :pv, mana = :mana WHERE id = :id");
+        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+        $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     function getHeroCurrentLevel($hero_id) {
         global $pdo;
         $stmt = $pdo->prepare("SELECT level FROM Hero WHERE id = :id");
@@ -289,6 +298,16 @@
 
         $monster = getMonsterById($result['monster_id']);
         return $monster;
+    }
+
+    function getEncounterAtChapter($chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT e.id, e.monster_id, m.* FROM Encounter e 
+                               JOIN Monster m ON e.monster_id = m.id 
+                               WHERE e.chapter_id = :chapter_id");
+        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     function getContentAndImageFromChapterId($chapter_id) {
