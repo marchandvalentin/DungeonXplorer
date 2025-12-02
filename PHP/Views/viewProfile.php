@@ -87,11 +87,15 @@
                         
                         foreach ($heros as $hero):?>
                             <div class="mt-8 p-4 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg">
-                                <h3 class="text-xl font-bold text-medieval-lightred mb-2"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></h3>
-                                <p class="text-medieval-cream/70">Niveau: <?php echo htmlspecialchars($hero['level'] ?? 1); ?> | XP: <?php echo htmlspecialchars($hero['xp'] ?? 0); ?></p>
-                                <a href="/heros/<?php echo htmlspecialchars($hero['hero_id'] ?? 0); ?>" class="mt-4 inline-block px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-medieval-lightred font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                                    Voir le Héros
-                                </a>
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-medieval-lightred mb-2"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></h3>
+                                        <p class="text-medieval-cream/70">Niveau: <?php echo htmlspecialchars($hero['level'] ?? 1); ?> | XP: <?php echo htmlspecialchars($hero['xp'] ?? 0); ?></p>
+                                    </div>
+                                    <a href="/heros/<?php echo htmlspecialchars($hero['hero_id'] ?? 0); ?>" class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-medieval-lightred font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
+                                        Voir le Héros
+                                    </a>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                 </div>
