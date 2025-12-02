@@ -40,8 +40,10 @@
             include __DIR__ . '/../Views/viewHeroSelection.php';
         }
 
-
+        function showDetails($hero_id){
+            $hero = getHeroById($hero_id);
+            include __DIR__ . '/../Views/viewHeroDetails.php';
+        }
     }
-
 
 ?>

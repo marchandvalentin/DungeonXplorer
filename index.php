@@ -92,6 +92,16 @@ $router->get('/heros', function() {
     }
 });
 
+$router->get('/hero/{hero_id}', function($hero_id) {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new HeroSelectionController();
+        $controller->showDetails($hero_id);
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
 $router->get('/createHero', function() {
     if (!isset($_SESSION['user_id'])) {
         header('Location: /login');
