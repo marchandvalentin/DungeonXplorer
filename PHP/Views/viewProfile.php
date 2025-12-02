@@ -33,7 +33,7 @@
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
                         <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Utilisateur'); ?>
                     </h2>
-                    <p class="text-medieval-cream/70">Membre depuis <?php echo date('F Y'); ?></p>
+                    <p class="text-medieval-cream/70">Membre depuis <?php echo date('d/m/Y'); ?></p>
                 </div>
             </div>
 
@@ -65,6 +65,20 @@
                             <p class="text-medieval-cream/50">#<?php echo $_SESSION['user_id'] ?? 'N/A'; ?></p>
                         </div>
                     </div>
+                </div>
+
+                <!-- User's Heroes Info -->
+                <div>
+                    <?php 
+                        require_once __DIR__ . '/../BDD/bdd_functions.php';
+                        $heros = getHerosByUserId($_SESSION['user_id'] ?? 0);
+
+                        foreach ($heros as $hero):?>
+                            <div class="mt-8 p-4 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg">
+                                <h3 class="text-xl font-bold text-medieval-lightred mb-2"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></h3>
+                                <p class="text-medieval-cream/70">Niveau: <?php echo htmlspecialchars($hero['level'] ?? 1); ?> | XP: <?php echo htmlspecialchars($hero['xp'] ?? 0); ?></p>
+                            </div>
+                        <?php endforeach; ?>
                 </div>
 
                 <!-- Edit Button -->
