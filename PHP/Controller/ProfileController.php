@@ -7,7 +7,7 @@
                 header('Location: /login');
                 exit;
             }
-            $user = getUserById($user_id);
+            $userProfile = getUserById($user_id);
             include __DIR__ . '/../Views/viewProfile.php';
         }
 

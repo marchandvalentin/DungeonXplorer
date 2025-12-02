@@ -13,7 +13,7 @@
     <?php include 'PHP/header.php'; ?>
     
     <script>
-        console.log(<?php echo json_encode($user); ?>);
+        console.log(<?php echo json_encode($userProfile); ?>);
     </script>
 
     <!-- Profile Section -->
@@ -35,7 +35,7 @@
                 </div>
                 <div class="ml-6">
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
-                        <?php echo htmlspecialchars($user['USER_NAME'] ?? 'Utilisateur'); ?>
+                        <?php echo htmlspecialchars($userProfile['USER_NAME'] ?? 'Utilisateur'); ?>
                     </h2>
                     <p class="text-medieval-cream/70">Membre depuis <?php echo date('d/m/Y'); ?></p>
                 </div>
@@ -49,7 +49,7 @@
                         <div>
                             <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nom</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream" id="displayName"><?php echo htmlspecialchars($user['USER_NAME'] ?? ''); ?></p>
+                                <p class="text-medieval-cream" id="displayName"><?php echo htmlspecialchars($userProfile['USER_NAME'] ?? ''); ?></p>
                             </div>
                         </div>
 
@@ -57,7 +57,7 @@
                         <div>
                             <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Email</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream" id="displayEmail"><?php echo htmlspecialchars($user['USER_EMAIL'] ?? ''); ?></p>
+                                <p class="text-medieval-cream" id="displayEmail"><?php echo htmlspecialchars($userProfile['USER_EMAIL'] ?? ''); ?></p>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     <div>
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">ID de compte</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream/50">#<?php echo $user['USER_ID'] ?? 'N/A'; ?></p>
+                            <p class="text-medieval-cream/50">#<?php echo $userProfile['USER_ID'] ?? 'N/A'; ?></p>
                         </div>
                     </div>
                 </div>
