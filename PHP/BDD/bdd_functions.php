@@ -439,7 +439,19 @@
         if (!$user) {
             return false;
         }
-        
+
+         // If user exists, check admin status
+        if (isset($user['USER_ID'])) {
+            $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
+            $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
+            $val_admin->execute();
+            $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
+
+            $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
+        } else {
+            $user['IS_ADMIN'] = false;
+        }
+
         return $user;
     }
 
@@ -461,21 +473,6 @@
         $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
         
         return $stmt->execute();
-    }
-        
-        // If user exists, check admin status
-        if (isset($user['USER_ID'])) {
-            $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
-            $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
-            $val_admin->execute();
-            $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
-
-            $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
-        } else {
-            $user['IS_ADMIN'] = false;
-        }
-
-        return $user;
     }
 
     /////////////////////// DASHBOARD FUNCTIONS ///////////////////////
