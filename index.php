@@ -65,6 +65,11 @@ $router->get('/dashboard', function() {
     } 
 });
 
+$router->get('/dashboard/search-users', function() {
+    $controller = new DashboardController();
+    $controller->searchUsers();
+});
+
 $router->get('/heros', function() {
     if (isset($_SESSION['user_id'])) {
         $controller = new HeroSelectionController();

@@ -439,6 +439,17 @@
         return $res['count(*)'];
     }
 
+    function searchUsersByName($searchTerm) {
+        global $pdo;
+        $searchPattern = '%' . $searchTerm . '%';
+        
+        $stmt = $pdo->prepare("SELECT u.id, u.name, u.email, COUNT(h.id) as hero_count FROM Users u LEFT JOIN Hero h ON u.id = h.userId WHERE UPPER(u.name) LIKE UPPER(:search) GROUP BY u.id, u.name, u.email ORDER BY u.name LIMIT 20");
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function getActiveHeroes() {
         global $pdo;
         $stmt = $pdo->prepare("SELECT count(*) FROM Hero");
