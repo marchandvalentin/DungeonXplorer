@@ -60,10 +60,7 @@ $router->get('/logout', function() {
 
 $router->get('/profile/{user_id}', function($user_id) {
     $controller = new ProfileController();
-    $user = getUserById($user_id);
-    if ($user) {
-        $controller->show($user);
-    }
+    $controller->show($user_id);
 });
 
 $router->post('/profile/update', function() {

@@ -2,12 +2,12 @@
     require_once __DIR__ . '/../BDD/bdd_functions.php';
 
     class ProfileController {
-        function show() {
+        function show($user_id) {
             if (!isset($_SESSION['user_id'])) {
                 header('Location: /login');
                 exit;
             }
-            
+            $user = getUserById($user_id);
             include __DIR__ . '/../Views/viewProfile.php';
         }
 
