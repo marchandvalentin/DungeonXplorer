@@ -8,6 +8,7 @@ require 'PHP/Controller/DashboardController.php';
 require 'PHP/Controller/CreateHeroController.php';
 require 'PHP/Controller/HeroSelectionController.php';
 require 'PHP/Controller/ChapterController.php';
+require 'PHP/Controller/ProfileController.php';
 
 use Bramus\Router\Router;
 
@@ -55,6 +56,16 @@ $router->post('/register', function() {
 $router->get('/logout', function() {
     $controller = new LoginController();
     $controller->logout();
+});
+
+$router->get('/profile', function() {
+    $controller = new ProfileController();
+    $controller->show();
+});
+
+$router->post('/profile/update', function() {
+    $controller = new ProfileController();
+    $controller->update();
 });
 
 $router->get('/dashboard', function() {
