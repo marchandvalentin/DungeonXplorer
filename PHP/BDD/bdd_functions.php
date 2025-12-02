@@ -428,6 +428,33 @@
         return $user;
     }
 
+    function getUserById($user_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // If user not found, return false
+        if (!$user) {
+            return false;
+        }
+        
+        // If user exists, check admin status
+        if (isset($user['USER_ID'])) {
+            $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
+            $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
+            $val_admin->execute();
+            $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
+
+            $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
+        } else {
+            $user['IS_ADMIN'] = false;
+        }
+
+        return $user;
+    }
+
     /////////////////////// DASHBOARD FUNCTIONS ///////////////////////
 
     function getAllUsers() {
@@ -449,7 +476,7 @@
               WHERE UPPER(u.user_name) LIKE UPPER(:search) 
               GROUP BY u.user_id, u.user_name, u.user_email 
               ORDER BY u.user_name LIMIT 20;");
-              
+
         $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
         $stmt->execute();
         

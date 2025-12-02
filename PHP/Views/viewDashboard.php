@@ -280,6 +280,11 @@
                                         <p class="text-medieval-cream/50 text-xs mt-1">ID: ${user.user_id || 'N/A'}</p>
                                     </div>
                                     <div class="text-right">
+                                        <button class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-sm tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(198,40,40,0.4)] transition-all duration-300"
+                                                onClick="window.location.href='/profile/${user.user_id}'">
+                                            Voir Profil
+                                        </button>
+                                        <br>
                                         <span class="text-medieval-lightred font-bold">${user.hero_count || 0} héros</span>
                                     </div>
                                 </div>
