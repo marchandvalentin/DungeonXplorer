@@ -592,5 +592,23 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function getClassById($class_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class WHERE id = :id");
+        $stmt->bindParam(':id', $class_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getClassByHeroId($hero_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT c.id, c.name, c.description, c.base_pv, c.base_mana, c.strength, c.initiative 
+                               FROM Class c 
+                               JOIN Hero h ON c.id = h.class_id 
+                               WHERE h.id = :hero_id");
+        $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     
 ?>

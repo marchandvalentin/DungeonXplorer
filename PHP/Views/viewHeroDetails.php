@@ -16,8 +16,8 @@
     <section class="max-w-4xl mx-auto px-6 py-20">
         <!-- Page Title -->
         <div class="mb-12">
-            <h1 class="gradient-red text-5xl font-bold tracking-wider uppercase mb-4">
-                Détails du Héros
+            <h1 class="gradient-red text-3xl font-bold tracking-wider uppercase mb-4">
+                Détails du Héro
             </h1>
             <div class="w-32 h-1 bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
         </div>
