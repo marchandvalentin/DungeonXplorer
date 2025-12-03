@@ -107,6 +107,11 @@ $router->get('/hero/{hero_id}', function($hero_id) {
     }
 });
 
+$router->post('/hero/update/{hero_id}', function($hero_id) {
+    $controller = new HeroSelectionController();
+    $controller->update($hero_id);
+});
+
 $router->get('/createHero', function() {
     if (!isset($_SESSION['user_id'])) {
         header('Location: /login');

@@ -169,6 +169,18 @@
         return $stmt->execute();
     }
 
+    function updateHeroFullStats($hero_id, $xp, $pv, $strength, $mana, $initiative) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE Hero SET xp = :xp, pv = :pv, strength = :strength, mana = :mana, initiative = :initiative WHERE id = :id");
+        $stmt->bindParam(':xp', $xp, PDO::PARAM_INT);
+        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $strength, PDO::PARAM_INT);
+        $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+        $stmt->bindParam(':initiative', $initiative, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     function getHeroCurrentLevel($hero_id) {
         global $pdo;
         $stmt = $pdo->prepare("SELECT level FROM Hero WHERE id = :id");
