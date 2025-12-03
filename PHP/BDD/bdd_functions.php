@@ -502,6 +502,24 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function searchHeroesByName($searchTerm) {
+        global $pdo;
+        $searchPattern = '%' . $searchTerm . '%';
+        
+        $stmt = $pdo->prepare(
+            " SELECT h.id as hero_id, h.name as hero_name, h.xp, h.pv, c.name as class_name, u.user_name as owner_name, u.user_id 
+              FROM Hero h 
+              JOIN Class c ON h.class_id = c.id 
+              JOIN Users u ON h.user_id = u.user_id 
+              WHERE UPPER(h.name) LIKE UPPER(:search) 
+              ORDER BY h.name LIMIT 20;");
+
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function getActiveHeroes() {
         global $pdo;
         $stmt = $pdo->prepare("SELECT count(*) FROM Hero");

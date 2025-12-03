@@ -196,8 +196,26 @@
         <!-- Tab Content: Heroes -->
         <div id="content-heroes" class="tab-content hidden">
             <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
-                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Gestion des Héros</h2>
-                <p class="text-medieval-cream/70">Contenu de la gestion des héros ici...</p>
+                <h2 class="text-2xl font-bold text-medieval-lightred mb-6">Cherchez un Héros</h2>
+                
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input
+                            type="text" 
+                            id="heroSearch" 
+                            placeholder="Entrez le nom d'un héros..." 
+                            class="w-full px-4 py-3 pl-12 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            onkeyup="searchHeroes()"
+                        >
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="heroResults" class="space-y-3">
+                    <p class="text-medieval-cream/70 text-center py-8">Entrez un nom pour rechercher...</p>
+                </div>
             </div>
         </div>
 
@@ -284,6 +302,69 @@
                                         <button class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-sm tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(198,40,40,0.4)] transition-all duration-300 whitespace-nowrap"
                                                 onClick="window.location.href='/profile/${user.user_id}'">
                                             Voir Profil
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">Erreur lors de la recherche.</p>';
+                });
+        }
+
+        function searchHeroes() {
+            const searchTerm = document.getElementById('heroSearch').value.toLowerCase().trim();
+            const resultsDiv = document.getElementById('heroResults');
+            
+            if (searchTerm === '') {
+                resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Entrez un nom pour rechercher...</p>';
+                return;
+            }
+
+            // Show loading
+            resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Recherche en cours...</p>';
+
+            // Fetch heroes matching the search term
+            fetch('/dashboard/search-heros?name=' + encodeURIComponent(searchTerm))
+                .then(response => response.json())
+                .then(heroes => {
+                    console.log('Heroes data:', heroes);
+                    
+                    if (heroes.length === 0) {
+                        resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Aucun héros trouvé.</p>';
+                        return;
+                    }
+
+                    const classEmojis = {
+                        'Guerrier': '⚔️',
+                        'Mage': '🔮',
+                        'Voleur': '🗡️'
+                    };
+
+                    let html = '';
+                    heroes.forEach(hero => {
+                        console.log('Hero:', hero);
+                        const emoji = classEmojis[hero.class_name] || '🛡️';
+                        html += `
+                            <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4 hover:bg-[rgba(42,30,20,0.9)] hover:border-medieval-red/50 transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-4xl">${emoji}</span>
+                                        <div>
+                                            <p class="text-medieval-cream font-semibold text-lg">${hero.hero_name || 'N/A'}</p>
+                                            <p class="text-medieval-cream/70 text-sm">${hero.class_name || 'N/A'} - Niveau ${hero.xp || 1}</p>
+                                            <p class="text-medieval-cream/50 text-xs mt-1">Propriétaire: ${hero.owner_name || 'N/A'}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-medieval-lightred font-bold">${hero.pv || 0} PV</span>
+                                        <button class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-sm tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(198,40,40,0.4)] transition-all duration-300 whitespace-nowrap"
+                                                onClick="window.location.href='/hero/${hero.hero_id}'">
+                                            Voir Héros
                                         </button>
                                     </div>
                                 </div>
