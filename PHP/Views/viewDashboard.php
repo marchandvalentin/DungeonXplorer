@@ -334,7 +334,12 @@
                 .then(heroes => {
                     console.log('Heroes data:', heroes);
                     
-                    if (heroes.length === 0) {
+                    if (heroes.error) {
+                        resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">' + heroes.error + '</p>';
+                        return;
+                    }
+                    
+                    if (!Array.isArray(heroes) || heroes.length === 0) {
                         resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Aucun héros trouvé.</p>';
                         return;
                     }
