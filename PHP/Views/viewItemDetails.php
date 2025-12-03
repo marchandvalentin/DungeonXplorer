@@ -222,13 +222,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update display
+                    // Update display (only name and description, type is not saved)
                     document.getElementById('displayName').textContent = formData.get('name');
-                    document.getElementById('displayType').textContent = formData.get('type');
                     document.getElementById('displayDescription').textContent = formData.get('description');
-                    document.getElementById('displayEffectValue').textContent = formData.get('effect_value');
                     document.getElementById('headerName').textContent = formData.get('name');
-                    document.getElementById('headerType').textContent = formData.get('type');
                     
                     // Show success message
                     messageDiv.className = 'mt-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400';
