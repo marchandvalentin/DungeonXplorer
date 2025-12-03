@@ -8,6 +8,7 @@ require 'PHP/Controller/DashboardController.php';
 require 'PHP/Controller/CreateHeroController.php';
 require 'PHP/Controller/HeroSelectionController.php';
 require 'PHP/Controller/ChapterController.php';
+require 'PHP/Controller/ProfileController.php';
 
 use Bramus\Router\Router;
 
@@ -57,12 +58,32 @@ $router->get('/logout', function() {
     $controller->logout();
 });
 
+$router->get('/profile/{user_id}', function($user_id) {
+    $controller = new ProfileController();
+    $controller->show($user_id);
+});
+
+$router->post('/profile/update', function() {
+    $controller = new ProfileController();
+    $controller->update();
+});
+
 $router->get('/dashboard', function() {
     $controller = new DashboardController();
 
     if (isset($_SESSION['user_id']) && ($_SESSION['IS_ADMIN'] >= 1)) {
         $controller->show();
     } 
+});
+
+$router->get('/dashboard/search-users', function() {
+    $controller = new DashboardController();
+    $controller->searchUsers();
+});
+
+$router->get('/dashboard/search-heros', function() {
+    $controller = new DashboardController();
+    $controller->searchHeroes();
 });
 
 $router->get('/heros', function() {
@@ -74,6 +95,21 @@ $router->get('/heros', function() {
         header('Location: /login');
         exit();
     }
+});
+
+$router->get('/hero/{hero_id}', function($hero_id) {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new HeroSelectionController();
+        $controller->showDetails($hero_id);
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+$router->post('/hero/update/{hero_id}', function($hero_id) {
+    $controller = new HeroSelectionController();
+    $controller->update($hero_id);
 });
 
 $router->get('/createHero', function() {

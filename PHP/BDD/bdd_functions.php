@@ -70,12 +70,10 @@
     function getHerosByUserId($userId){
         global $pdo;
         
-        // Préparation et exécution de la requête
         $stmt = $pdo->prepare('SELECT * FROM Hero WHERE user_id = :user_id');
         $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Récupération des résultats
         $heros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $heros;
@@ -167,6 +165,18 @@
         $stmt = $pdo->prepare("UPDATE Hero SET pv = :pv, mana = :mana WHERE id = :id");
         $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
         $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function updateHeroFullStats($hero_id, $xp, $pv, $strength, $mana, $initiative) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE Hero SET xp = :xp, pv = :pv, strength = :strength, mana = :mana, initiative = :initiative WHERE id = :id");
+        $stmt->bindParam(':xp', $xp, PDO::PARAM_INT);
+        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $strength, PDO::PARAM_INT);
+        $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+        $stmt->bindParam(':initiative', $initiative, PDO::PARAM_INT);
         $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
         return $stmt->execute();
     }
@@ -428,6 +438,54 @@
         return $user;
     }
 
+    function getUserById($user_id) {
+        global $pdo;
+        // Try both column name variations
+        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id OR USER_ID = :user_id");
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // If user not found, return false
+        if (!$user) {
+            return false;
+        }
+
+         // If user exists, check admin status
+        if (isset($user['USER_ID'])) {
+            $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
+            $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
+            $val_admin->execute();
+            $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
+
+            $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
+        } else {
+            $user['IS_ADMIN'] = false;
+        }
+
+        return $user;
+    }
+
+    function updateUserProfile($userId, $name, $email, $password = null) {
+        global $pdo;
+        
+        if ($password) {
+            // Update with password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("UPDATE Users SET name = :name, email = :email, password = :password WHERE id = :id");
+            $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+        } else {
+            // Update without password
+            $stmt = $pdo->prepare("UPDATE Users SET name = :name, email = :email WHERE id = :id");
+        }
+        
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+        
+        return $stmt->execute();
+    }
+
     /////////////////////// DASHBOARD FUNCTIONS ///////////////////////
 
     function getAllUsers() {
@@ -437,6 +495,41 @@
 
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
         return $res['count(*)'];
+    }
+
+    function searchUsersByName($searchTerm) {
+        global $pdo;
+        $searchPattern = '%' . $searchTerm . '%';
+        
+        $stmt = $pdo->prepare(
+            " SELECT u.user_id, u.user_name, u.user_email, COUNT(h.id) as hero_count FROM Users u 
+              LEFT JOIN Hero h ON u.user_id = h.user_id 
+              WHERE UPPER(u.user_name) LIKE UPPER(:search) 
+              GROUP BY u.user_id, u.user_name, u.user_email 
+              ORDER BY u.user_name LIMIT 20;");
+
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchHeroesByName($searchTerm) {
+        global $pdo;
+        $searchPattern = '%' . $searchTerm . '%';
+        
+        $stmt = $pdo->prepare(
+            " SELECT h.id as hero_id, h.name as hero_name, h.xp, h.pv, c.name as class_name, u.user_name as owner_name, u.user_id 
+              FROM Hero h 
+              JOIN Class c ON h.class_id = c.id 
+              JOIN Users u ON h.user_id = u.user_id 
+              WHERE UPPER(h.name) LIKE UPPER(:search) 
+              ORDER BY h.name LIMIT 20;");
+
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getActiveHeroes() {
@@ -529,5 +622,23 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function getClassById($class_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class WHERE id = :id");
+        $stmt->bindParam(':id', $class_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getClassByHeroId($hero_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT c.id, c.name, c.description, c.base_pv, c.base_mana, c.strength, c.initiative 
+                               FROM Class c 
+                               JOIN Hero h ON c.id = h.class_id 
+                               WHERE h.id = :hero_id");
+        $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
     
 ?>
