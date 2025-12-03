@@ -52,7 +52,7 @@
                     <div>
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Niveau</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['xp'] ?? 'N/A'); ?></p>
+                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['XP'] ?? 'N/A'); ?></p>
                         </div>
                     </div>
 
@@ -79,17 +79,17 @@
 
                         <!-- Agility -->
                         <div>
-                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Agilité</label>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Mana</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['agility'] ?? 'N/A'); ?></p>
+                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['mana'] ?? 'N/A'); ?></p>
                             </div>
                         </div>
 
                         <!-- Intelligence -->
                         <div>
-                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Intelligence</label>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Initiative</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['intelligence'] ?? 'N/A'); ?></p>
+                                <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['initiative'] ?? 'N/A'); ?></p>
                             </div>
                         </div>
                     </div>
