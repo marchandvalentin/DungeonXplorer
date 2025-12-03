@@ -35,11 +35,23 @@
 
     function updateItem($item_id, $name, $description, $type, $effect_value) {
         global $pdo;
-        $stmt = $pdo->prepare("UPDATE Items SET name = :name, description = :description, type = :type, effect_value = :effect_value WHERE id = :id");
+        
+        // Get the typ_id from the type name
+        $typeStmt = $pdo->prepare("SELECT typ_id FROM Type_Item WHERE typ_libelle = :type");
+        $typeStmt->bindParam(':type', $type, PDO::PARAM_STR);
+        $typeStmt->execute();
+        $typeResult = $typeStmt->fetch(PDO::FETCH_ASSOC);
+        
+        if (!$typeResult) {
+            return false;
+        }
+        
+        $typ_id = $typeResult['typ_id'];
+        
+        $stmt = $pdo->prepare("UPDATE Items SET name = :name, description = :description, typ_id = :typ_id WHERE id = :id");
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-        $stmt->bindParam(':type', $type, PDO::PARAM_STR);
-        $stmt->bindParam(':effect_value', $effect_value, PDO::PARAM_INT);
+        $stmt->bindParam(':typ_id', $typ_id, PDO::PARAM_INT);
         $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
         return $stmt->execute();
     }
