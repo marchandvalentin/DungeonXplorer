@@ -50,9 +50,9 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <!-- Level -->
                     <div>
-                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Niveau</label>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Experience</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['XP'] ?? 'N/A'); ?></p>
+                            <p class="text-medieval-cream"><?php echo htmlspecialchars($hero['xp'] ?? 'N/A'); ?></p>
                         </div>
                     </div>
 
