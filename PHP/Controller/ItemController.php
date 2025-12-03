@@ -36,9 +36,8 @@
             $name = $data['name'] ?? null;
             $description = $data['description'] ?? null;
             $type = $data['type'] ?? null;
-            $effect_value = $data['effect_value'] ?? null;
 
-            if ($name === null || $description === null || $type === null || $effect_value === null) {
+            if ($name === null || $description === null || $type === null) {
                 echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
                 exit;
             }
