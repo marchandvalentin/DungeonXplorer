@@ -5,7 +5,7 @@
 
     function getItemById($item_id) {
         global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Items WHERE id = :id");
+        $stmt = $pdo->prepare("SELECT i.*, t.typ_libelle as type FROM Items i JOIN Type_Item t ON (t.typ_id = i.typ_id) WHERE i.id = :id");
         $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
