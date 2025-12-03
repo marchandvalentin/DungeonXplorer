@@ -86,6 +86,23 @@ $router->get('/dashboard/search-heros', function() {
     $controller->searchHeroes();
 });
 
+$router->get('/dashboard/search-items', function() {
+    $controller = new DashboardController();
+    $controller->searchItems();
+});
+
+$router->get('/item/{item_id}', function($item_id) {
+    require_once __DIR__ . '/PHP/Controller/ItemController.php';
+    $controller = new ItemController();
+    $controller->show($item_id);
+});
+
+$router->post('/item/update/{item_id}', function($item_id) {
+    require_once __DIR__ . '/PHP/Controller/ItemController.php';
+    $controller = new ItemController();
+    $controller->update($item_id);
+});
+
 $router->get('/heros', function() {
     if (isset($_SESSION['user_id'])) {
         $controller = new HeroSelectionController();

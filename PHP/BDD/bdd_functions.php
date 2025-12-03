@@ -11,6 +11,39 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    function getAllItems() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Items ORDER BY name ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchItemsByName($searchTerm) {
+        global $pdo;
+        $searchPattern = '%' . $searchTerm . '%';
+        
+        $stmt = $pdo->prepare(
+            "SELECT * FROM Items 
+             WHERE UPPER(name) LIKE UPPER(:search) 
+             ORDER BY name LIMIT 20;");
+
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function updateItem($item_id, $name, $description, $type, $effect_value) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE Items SET name = :name, description = :description, type = :type, effect_value = :effect_value WHERE id = :id");
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':type', $type, PDO::PARAM_STR);
+        $stmt->bindParam(':effect_value', $effect_value, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     /////////////// INVENTORY FUNCTIONS ///////////////////////
 
     function getInventoryByHeroId($hero_id) {

@@ -45,6 +45,26 @@
             header('Content-Type: application/json');
             echo json_encode($heroes);
         }
+
+        function searchItems(){
+            if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Unauthorized']);
+                exit;
+            }
+
+            $searchTerm = $_GET['name'] ?? '';
+            
+            if (empty($searchTerm)) {
+                echo json_encode([]);
+                exit;
+            }
+
+            $items = searchItemsByName($searchTerm);
+            
+            header('Content-Type: application/json');
+            echo json_encode($items);
+        }
     }
 
 ?>
