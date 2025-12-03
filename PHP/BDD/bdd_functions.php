@@ -33,7 +33,7 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function updateItem($item_id, $name, $description, $type, $effect_value) {
+    function updateItem($item_id, $name, $description, $type) {
         global $pdo;
         
         // Get the typ_id from the type name

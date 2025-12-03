@@ -43,7 +43,7 @@
                 exit;
             }
 
-            $result = updateItem($item_id, $name, $description, $type, $effect_value);
+            $result = updateItem($item_id, $name, $description, $type);
 
             if ($result) {
                 header('Content-Type: application/json');
