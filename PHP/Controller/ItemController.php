@@ -42,13 +42,17 @@
                 exit;
             }
 
-            $result = updateItem($item_id, $name, $description, $type);
+            try {
+                $result = updateItem($item_id, $name, $description, $type);
 
-            if ($result) {
-                header('Content-Type: application/json');
-                echo json_encode(['success' => true]);
-            } else {
-                echo json_encode(['success' => false, 'error' => 'Erreur lors de la mise à jour']);
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Erreur lors de la mise à jour - Résultat false']);
+                }
+            } catch (Exception $e) {
+                echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);
             }
         }
     }
