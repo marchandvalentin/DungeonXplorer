@@ -431,12 +431,11 @@
                     }
 
                     const typeEmojis = {
-                        'weapon': '⚔️',
-                        'armor': '🛡️',
-                        'potion': '🧪',
-                        'consumable': '🍖',
-                        'magic': '🔮',
-                        'accessory': '💍'
+                        'arme' : '⚔️',
+                        'armure' : '🛡️',
+                        'potion' : '🧪',
+                        'sort' : '🔮',
+                        'richesse' : '💎',
                     };
 
                     let html = '';
@@ -455,7 +454,7 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-4">
-                                        <span class="text-medieval-lightred font-bold">Effet: ${item.effect_value || 0}</span>
+                                        <span class="text-medieval-lightred font-bold">Effet: ${item.effect_value || 'N/A'}</span>
                                         <button class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-sm tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(198,40,40,0.4)] transition-all duration-300 whitespace-nowrap"
                                                 onClick="window.location.href='/item/${item.id}'">
                                             Voir Item

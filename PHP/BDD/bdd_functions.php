@@ -23,9 +23,9 @@
         $searchPattern = '%' . $searchTerm . '%';
         
         $stmt = $pdo->prepare(
-            "SELECT * FROM Items 
-             WHERE UPPER(name) LIKE UPPER(:search) 
-             ORDER BY name LIMIT 20;");
+            "   SELECT i.id as id, i.name as name, i.description as description, t.typ_libelle as type from Items i
+                JOIN Type_Item t on (t.typ_id = i.typ_id)
+                WHERE UPPER(i.name) like UPPER(:search);");
 
         $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
         $stmt->execute();

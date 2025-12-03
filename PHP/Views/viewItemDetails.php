@@ -29,12 +29,11 @@
                 <div class="w-24 h-24 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-lightred/10 border-4 border-medieval-red/50 flex items-center justify-center text-5xl">
                     <?php 
                         $typeEmojis = [
-                            'weapon' => '⚔️',
-                            'armor' => '🛡️',
+                            'arme' => '⚔️',
+                            'armure' => '🛡️',
                             'potion' => '🧪',
-                            'consumable' => '🍖',
-                            'magic' => '🔮',
-                            'accessory' => '💍'
+                            'sort' => '🔮',
+                            'richesse' => '💎',
                         ];
                         $itemType = $item['type'] ?? '';
                         echo $typeEmojis[$itemType] ?? '📦';
