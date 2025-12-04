@@ -247,7 +247,94 @@
                 </div>
             </div>
         </div>
+
+        <!-- Tab Content: Chapters -->
+        <div id="content-chapters" class="tab-content hidden">
+            <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-medieval-lightred">Cherchez un Chapitre</h2>
+                    <button onclick="showCreateChapterModal()" class="px-6 py-3 bg-gradient-to-r from-green-600/20 to-green-600/30 border-2 border-green-500/80 rounded-lg text-green-400 font-bold tracking-wide hover:from-green-600/30 hover:to-green-600/40 hover:-translate-y-1 transition-all duration-300">
+                        ➕ Nouveau Chapitre
+                    </button>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input
+                            type="text" 
+                            id="chapterSearch" 
+                            placeholder="Entrez l'ID d'un chapitre..." 
+                            class="w-full px-4 py-3 pl-12 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            onkeyup="searchChapters()"
+                        >
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="chapterResults" class="space-y-3">
+                    <p class="text-medieval-cream/70 text-center py-8">Entrez un ID pour rechercher...</p>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Create Chapter Modal -->
+    <div id="createChapterModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50" onclick="if(event.target === this) hideCreateChapterModal()">
+        <div class="bg-[rgba(42,30,20,0.95)] border border-[rgba(139,40,40,0.5)] rounded-xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-3xl font-bold text-medieval-lightred mb-6">Créer un Nouveau Chapitre</h2>
+            
+            <form id="createChapterForm" onsubmit="createChapter(event)">
+                <div class="space-y-6">
+                    <!-- Titre -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Titre</label>
+                        <input 
+                            type="text" 
+                            name="titre"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+
+                    <!-- Content -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Contenu</label>
+                        <textarea 
+                            name="content"
+                            rows="8"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <!-- Image -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Image (URL)</label>
+                        <input 
+                            type="text" 
+                            name="image"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                        >
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <div id="createChapterMessage" class="mt-6 hidden"></div>
+
+                <!-- Buttons -->
+                <div class="mt-8 flex gap-4">
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-green-600/20 to-green-600/30 border-2 border-green-500/80 rounded-lg text-green-400 font-bold tracking-wide hover:from-green-600/30 hover:to-green-600/40 hover:-translate-y-1 transition-all duration-300">
+                        ✓ Créer
+                    </button>
+                    <button type="button" onclick="hideCreateChapterModal()" class="px-6 py-3 bg-gradient-to-r from-gray-600/20 to-gray-600/30 border-2 border-gray-500/80 rounded-lg text-gray-400 font-bold tracking-wide hover:from-gray-600/30 hover:to-gray-600/40 hover:-translate-y-1 transition-all duration-300">
+                        ❌ Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <style>
         .tab-button {
