@@ -425,7 +425,11 @@
         $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
         $stmt->bindParam(':content', $content, PDO::PARAM_STR);
         $stmt->bindParam(':image', $image, PDO::PARAM_STR);
-        return $stmt->execute();
+        
+        if ($stmt->execute()) {
+            return $pdo->lastInsertId();
+        }
+        return false;
     }
 
     ////////////////// PROGRESS FUNCTIONS ///////////////////////

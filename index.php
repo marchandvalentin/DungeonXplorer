@@ -91,6 +91,11 @@ $router->get('/dashboard/search-items', function() {
     $controller->searchItems();
 });
 
+$router->get('/dashboard/search-chapters', function() {
+    $controller = new DashboardController();
+    $controller->searchChapters();
+});
+
 $router->get('/item/{item_id}', function($item_id) {
     require_once __DIR__ . '/PHP/Controller/ItemController.php';
     $controller = new ItemController();
@@ -101,6 +106,21 @@ $router->post('/item/update/{item_id}', function($item_id) {
     require_once __DIR__ . '/PHP/Controller/ItemController.php';
     $controller = new ItemController();
     $controller->update($item_id);
+});
+
+$router->get('/chapter-admin/{chapter_id}', function($chapter_id) {
+    $controller = new ChapterController();
+    $controller->showDetails($chapter_id);
+});
+
+$router->post('/chapter-admin/update/{chapter_id}', function($chapter_id) {
+    $controller = new ChapterController();
+    $controller->update($chapter_id);
+});
+
+$router->post('/chapter-admin/create', function() {
+    $controller = new ChapterController();
+    $controller->create();
 });
 
 $router->get('/heros', function() {

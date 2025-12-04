@@ -152,11 +152,11 @@
             }
 
             try {
-                $result = createChapter($titre, $content, $image);
+                $chapter_id = createChapter($titre, $content, $image);
 
-                if ($result) {
+                if ($chapter_id) {
                     header('Content-Type: application/json');
-                    echo json_encode(['success' => true]);
+                    echo json_encode(['success' => true, 'chapter_id' => $chapter_id]);
                 } else {
                     echo json_encode(['success' => false, 'error' => 'Erreur lors de la création']);
                 }

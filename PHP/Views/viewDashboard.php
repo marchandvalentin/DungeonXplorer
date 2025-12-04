@@ -561,6 +561,126 @@
                     resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">Erreur lors de la recherche.</p>';
                 });
         }
+
+        function searchChapters() {
+            const searchTerm = document.getElementById('chapterSearch').value.trim();
+            const resultsDiv = document.getElementById('chapterResults');
+            
+            if (searchTerm === '') {
+                resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Entrez un ID pour rechercher...</p>';
+                return;
+            }
+
+            // Show loading
+            resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Recherche en cours...</p>';
+
+            // Fetch chapters matching the search term
+            fetch('/dashboard/search-chapters?id=' + encodeURIComponent(searchTerm))
+                .then(response => response.json())
+                .then(chapters => {
+                    console.log('Chapters data:', chapters);
+                    
+                    if (chapters.error) {
+                        resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">' + chapters.error + '</p>';
+                        return;
+                    }
+                    
+                    if (!Array.isArray(chapters) || chapters.length === 0) {
+                        resultsDiv.innerHTML = '<p class="text-medieval-cream/70 text-center py-8">Aucun chapitre trouvé.</p>';
+                        return;
+                    }
+
+                    let html = '';
+                    chapters.forEach(chapter => {
+                        console.log('Chapter:', chapter);
+                        const contentPreview = (chapter.content || '').substring(0, 100) + '...';
+                        html += `
+                            <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4 hover:bg-[rgba(42,30,20,0.9)] hover:border-medieval-red/50 transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-4">
+                                        <span class="text-4xl">📜</span>
+                                        <div>
+                                            <p class="text-medieval-cream font-semibold text-lg">${chapter.titre || 'N/A'}</p>
+                                            <p class="text-medieval-cream/70 text-sm">ID: ${chapter.id}</p>
+                                            <p class="text-medieval-cream/50 text-xs mt-1">${contentPreview}</p>
+                                        </div>
+                                    </div>
+                                    <button class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-sm tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(198,40,40,0.4)] transition-all duration-300 whitespace-nowrap"
+                                            onClick="window.location.href='/chapter-admin/${chapter.id}'">
+                                        Voir Chapitre
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultsDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultsDiv.innerHTML = '<p class="text-red-400 text-center py-8">Erreur lors de la recherche.</p>';
+                });
+        }
+
+        function showCreateChapterModal() {
+            document.getElementById('createChapterModal').classList.remove('hidden');
+        }
+
+        function hideCreateChapterModal() {
+            document.getElementById('createChapterModal').classList.add('hidden');
+            document.getElementById('createChapterForm').reset();
+            document.getElementById('createChapterMessage').classList.add('hidden');
+        }
+
+        function createChapter(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const messageDiv = document.getElementById('createChapterMessage');
+
+            const data = {
+                titre: formData.get('titre'),
+                content: formData.get('content'),
+                image: formData.get('image')
+            };
+
+            fetch('/chapter-admin/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Create result:', result);
+                
+                if (result.success) {
+                    messageDiv.className = 'mt-6 p-4 bg-green-500/20 border-2 border-green-500 rounded-lg text-green-400 font-semibold';
+                    messageDiv.textContent = '✓ Chapitre créé avec succès!';
+                    messageDiv.classList.remove('hidden');
+                    
+                    // Redirect to the new chapter after 1.5s
+                    setTimeout(() => {
+                        if (result.chapter_id) {
+                            window.location.href = '/chapter-admin/' + result.chapter_id;
+                        } else {
+                            hideCreateChapterModal();
+                        }
+                    }, 1500);
+                } else {
+                    messageDiv.className = 'mt-6 p-4 bg-red-500/20 border-2 border-red-500 rounded-lg text-red-400 font-semibold';
+                    messageDiv.textContent = '❌ Erreur: ' + (result.error || 'Impossible de créer le chapitre');
+                    messageDiv.classList.remove('hidden');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                messageDiv.className = 'mt-6 p-4 bg-red-500/20 border-2 border-red-500 rounded-lg text-red-400 font-semibold';
+                messageDiv.textContent = '❌ Erreur de connexion';
+                messageDiv.classList.remove('hidden');
+            });
+        }
     </script>
 
     <?php include 'PHP/footer.php'; ?>
