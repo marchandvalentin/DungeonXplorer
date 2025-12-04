@@ -65,6 +65,26 @@
             header('Content-Type: application/json');
             echo json_encode($items);
         }
+
+        function searchChapters(){
+            if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Unauthorized']);
+                exit;
+            }
+
+            $searchTerm = $_GET['id'] ?? '';
+            
+            if (empty($searchTerm)) {
+                echo json_encode([]);
+                exit;
+            }
+
+            $chapters = searchChaptersById($searchTerm);
+            
+            header('Content-Type: application/json');
+            echo json_encode($chapters);
+        }
     }
 
 ?>

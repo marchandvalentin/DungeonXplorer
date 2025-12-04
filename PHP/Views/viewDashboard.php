@@ -52,7 +52,10 @@
                     ⚔️ Héros
                 </button>
                 <button onclick="switchTab('items')" id="tab-items" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
-                    📜 Items
+                    📦 Items
+                </button>
+                <button onclick="switchTab('chapters')" id="tab-chapters" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    📜 Chapitres
                 </button>
             </div>
         </div>

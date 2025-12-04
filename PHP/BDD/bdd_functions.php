@@ -379,6 +379,55 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function getAllChapters() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Chapter ORDER BY id ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function searchChaptersById($searchTerm) {
+        global $pdo;
+        $searchPattern = '%' . $searchTerm . '%';
+        
+        $stmt = $pdo->prepare(
+            "SELECT id, titre, content FROM Chapter 
+             WHERE CAST(id AS CHAR) LIKE :search 
+             ORDER BY id LIMIT 20;");
+
+        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getChapterById($chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Chapter WHERE id = :id");
+        $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function updateChapter($chapter_id, $titre, $content, $image) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE Chapter SET titre = :titre, content = :content, image = :image WHERE id = :id");
+        $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+        $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function createChapter($titre, $content, $image) {
+        global $pdo;
+        $stmt = $pdo->prepare("INSERT INTO Chapter (titre, content, image) VALUES (:titre, :content, :image)");
+        $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+        $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
     ////////////////// PROGRESS FUNCTIONS ///////////////////////
 
     function saveHeroProgress($hero_id, $chapter_id, $status) {

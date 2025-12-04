@@ -74,5 +74,95 @@
 
             echo json_encode(['success' => true]);
         }
+
+        function showDetails($chapter_id) {
+            if (!isset($_SESSION['user_id'])) {
+                header('Location: /login');
+                exit();
+            }
+
+            $chapter = getChapterById($chapter_id);
+            
+            if (!$chapter) {
+                header('Location: /dashboard');
+                exit();
+            }
+
+            include __DIR__ . '/../Views/viewChapterDetails.php';
+        }
+
+        function update($chapter_id) {
+            if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Unauthorized']);
+                exit;
+            }
+
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (!$data) {
+                echo json_encode(['success' => false, 'error' => 'Données invalides']);
+                exit;
+            }
+
+            $titre = $data['titre'] ?? null;
+            $content = $data['content'] ?? null;
+            $image = $data['image'] ?? '';
+
+            if ($titre === null || $content === null) {
+                echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
+                exit;
+            }
+
+            try {
+                $result = updateChapter($chapter_id, $titre, $content, $image);
+
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Erreur lors de la mise à jour']);
+                }
+            } catch (Exception $e) {
+                echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);
+            }
+        }
+
+        function create() {
+            if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Unauthorized']);
+                exit;
+            }
+
+            $data = json_decode(file_get_contents('php://input'), true);
+            
+            if (!$data) {
+                echo json_encode(['success' => false, 'error' => 'Données invalides']);
+                exit;
+            }
+
+            $titre = $data['titre'] ?? null;
+            $content = $data['content'] ?? null;
+            $image = $data['image'] ?? '';
+
+            if ($titre === null || $content === null) {
+                echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
+                exit;
+            }
+
+            try {
+                $result = createChapter($titre, $content, $image);
+
+                if ($result) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Erreur lors de la création']);
+                }
+            } catch (Exception $e) {
+                echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);
+            }
+        }
     }
 ?>
