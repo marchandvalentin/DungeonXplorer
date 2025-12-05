@@ -220,6 +220,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    user_id: <?php echo $userProfile['USER_ID'] ?? 0; ?>,
                     name: formData.get('name'),
                     email: formData.get('email'),
                     password: password || null
