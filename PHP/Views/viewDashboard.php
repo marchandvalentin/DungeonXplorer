@@ -60,8 +60,8 @@
             </div>
         </div>
 
-        <!-- Tab Content: Overview -->
-        <div id="content-overview" class="tab-content">
+        <!-- Tab Content: Stats -->
+        <div id="content-stats" class="tab-content hidden">
         <!-- Statistics Cards Grid -->
         <div class="grid md:grid-cols-4 gap-6 mb-12">
             <!-- Card 1: Total Users -->
@@ -168,7 +168,7 @@
                 </div>
             </div>
         </div>
-        </div><!-- End Overview Tab -->
+        </div><!-- End Stats Tab -->
 
         <!-- Tab Content: Users -->
         <div id="content-users" class="tab-content hidden">
@@ -335,22 +335,6 @@
             </form>
         </div>
     </div>
-
-    <style>
-        .tab-button {
-            color: rgba(231, 211, 176, 0.7);
-            border-bottom: 3px solid transparent;
-        }
-        .tab-button:hover {
-            color: rgba(231, 211, 176, 1);
-            background: rgba(198, 40, 40, 0.1);
-        }
-        .tab-button.active {
-            color: #C62828;
-            border-bottom-color: #C62828;
-            background: rgba(198, 40, 40, 0.1);
-        }
-    </style>
 
     <script>
         function switchTab(tabName) {
@@ -681,6 +665,11 @@
                 messageDiv.classList.remove('hidden');
             });
         }
+
+        // Show stats tab by default on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            switchTab('stats');
+        });
     </script>
 
     <?php include 'PHP/footer.php'; ?>
