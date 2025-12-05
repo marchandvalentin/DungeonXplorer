@@ -108,6 +108,7 @@
             $titre = $data['titre'] ?? null;
             $content = $data['content'] ?? null;
             $image = $data['image'] ?? '';
+            $links = $data['links'] ?? [];
 
             if ($titre === null || $content === null) {
                 echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
@@ -118,6 +119,21 @@
                 $result = updateChapter($chapter_id, $titre, $content, $image);
 
                 if ($result) {
+                    // Update links
+                    foreach ($links as $link) {
+                        if (isset($link['id']) && $link['id']) {
+                            // Update existing link
+                            if (!empty($link['description']) || !empty($link['next_chapter_id'])) {
+                                updateLink($link['id'], $link['description'], $link['next_chapter_id']);
+                            }
+                        } else {
+                            // Create new link
+                            if (!empty($link['description']) && !empty($link['next_chapter_id'])) {
+                                createLink($chapter_id, $link['description'], $link['next_chapter_id']);
+                            }
+                        }
+                    }
+
                     header('Content-Type: application/json');
                     echo json_encode(['success' => true]);
                 } else {
@@ -145,6 +161,7 @@
             $titre = $data['titre'] ?? null;
             $content = $data['content'] ?? null;
             $image = $data['image'] ?? '';
+            $links = $data['links'] ?? [];
 
             if ($titre === null || $content === null) {
                 echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
@@ -155,10 +172,36 @@
                 $chapter_id = createChapter($titre, $content, $image);
 
                 if ($chapter_id) {
+                    // Create links for the new chapter
+                    foreach ($links as $link) {
+                        if (!empty($link['description']) && !empty($link['next_chapter_id'])) {
+                            createLink($chapter_id, $link['description'], $link['next_chapter_id']);
+                        }
+                    }
+
                     header('Content-Type: application/json');
                     echo json_encode(['success' => true, 'chapter_id' => $chapter_id]);
                 } else {
                     echo json_encode(['success' => false, 'error' => 'Erreur lors de la création']);
+                }
+            } catch (Exception $e) {
+                echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);
+            }
+        }
+
+        function deleteLink($link_id) {
+            if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
+                http_response_code(403);
+                echo json_encode(['error' => 'Unauthorized']);
+                exit;
+            }
+
+            try {
+                $result = deleteLink($link_id);
+                if ($result) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Erreur lors de la suppression']);
                 }
             } catch (Exception $e) {
                 echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);

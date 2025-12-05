@@ -318,6 +318,19 @@
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                         >
                     </div>
+
+                    <!-- Links -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-medieval-cream/70 text-sm font-semibold">Liens (Choix)</label>
+                            <button type="button" onclick="addCreateLinkField()" class="px-3 py-1 bg-green-600/20 border border-green-500/50 rounded text-green-400 text-sm hover:bg-green-600/30 transition-all">
+                                ➕ Ajouter un lien
+                            </button>
+                        </div>
+                        <div id="createLinksContainer" class="space-y-3">
+                            <!-- Links will be added here dynamically -->
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Message -->
@@ -622,10 +635,26 @@
             const formData = new FormData(form);
             const messageDiv = document.getElementById('createChapterMessage');
 
+            // Collect links data
+            const links = [];
+            const linkItems = document.querySelectorAll('#createLinksContainer .link-item');
+            linkItems.forEach((item, index) => {
+                const description = item.querySelector('[name^="create_link_description_"]')?.value || '';
+                const next_chapter_id = item.querySelector('[name^="create_link_next_"]')?.value || '';
+                
+                if (description && next_chapter_id) {
+                    links.push({
+                        description: description,
+                        next_chapter_id: next_chapter_id
+                    });
+                }
+            });
+
             const data = {
                 titre: formData.get('titre'),
                 content: formData.get('content'),
-                image: formData.get('image')
+                image: formData.get('image'),
+                links: links
             };
 
             fetch('/chapter-admin/create', {
@@ -664,6 +693,49 @@
                 messageDiv.textContent = '❌ Erreur de connexion';
                 messageDiv.classList.remove('hidden');
             });
+        }
+
+        let createLinkCounter = 0;
+
+        function addCreateLinkField() {
+            const container = document.getElementById('createLinksContainer');
+            const newLink = document.createElement('div');
+            newLink.className = 'link-item bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4';
+            newLink.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-medieval-cream/50 text-xs mb-1 block">Description</label>
+                        <input 
+                            type="text" 
+                            name="create_link_description_${createLinkCounter}"
+                            class="w-full px-3 py-2 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded text-medieval-cream text-sm focus:border-medieval-red focus:outline-none"
+                            placeholder="Ex: Aller à gauche"
+                        >
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="flex-1">
+                            <label class="text-medieval-cream/50 text-xs mb-1 block">Chapitre suivant (ID)</label>
+                            <input 
+                                type="number" 
+                                name="create_link_next_${createLinkCounter}"
+                                class="w-full px-3 py-2 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded text-medieval-cream text-sm focus:border-medieval-red focus:outline-none"
+                                placeholder="ID"
+                            >
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" onclick="removeCreateLinkField(this)" class="px-3 py-2 bg-red-600/20 border border-red-500/50 rounded text-red-400 text-sm hover:bg-red-600/30 transition-all">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newLink);
+            createLinkCounter++;
+        }
+
+        function removeCreateLinkField(button) {
+            button.closest('.link-item').remove();
         }
 
         // Show stats tab by default on page load

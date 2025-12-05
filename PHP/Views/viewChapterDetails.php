@@ -10,7 +10,10 @@
     <title>DungeonXPlorer - Détails du Chapitre</title>
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
-    <?php include 'PHP/header.php'; ?>
+    <?php 
+        include 'PHP/header.php'; 
+        $chapterLinks = getLinksWithIdAtChapter($chapter['id']);
+    ?>
     
     <!-- Chapter Details Section -->
     <section class="max-w-4xl mx-auto px-6 py-20">
@@ -33,7 +36,7 @@
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2" id="headerTitre">
                         <?php echo htmlspecialchars($chapter['titre'] ?? 'Chapitre'); ?>
                     </h2>
-                    <p class="text-medieval-cream/70">Chapitre #<?php echo $chapter['id'] ?? 'N/A'; ?></p>
+                    <p class="text-medieval-cream/70">Chapitre <?php echo $chapter['id'] ?? 'N/A'; ?></p>
                 </div>
             </div>
 
@@ -69,6 +72,25 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">ID du chapitre</label>
                         <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
                             <p class="text-medieval-cream/50">#<?php echo $chapter['id'] ?? 'N/A'; ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Links -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Liens (Choix)</label>
+                        <div id="displayLinks" class="space-y-2">
+                            <?php if (!empty($chapterLinks)): ?>
+                                <?php foreach ($chapterLinks as $link): ?>
+                                    <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                        <p class="text-medieval-cream"><span class="text-medieval-lightred">→</span> <?php echo htmlspecialchars($link['description']); ?></p>
+                                        <p class="text-medieval-cream/50 text-sm mt-1">Vers chapitre <?php echo $link['next_chapter_id']; ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                    <p class="text-medieval-cream/50">Aucun lien</p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -123,6 +145,54 @@
                                 class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                             >
                         </div>
+
+                        <!-- Links Editing -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-medieval-cream/70 text-sm font-semibold">Liens (Choix)</label>
+                                <button type="button" onclick="addLinkField()" class="px-3 py-1 bg-green-600/20 border border-green-500/50 rounded text-green-400 text-sm hover:bg-green-600/30 transition-all">
+                                    ➕ Ajouter un lien
+                                </button>
+                            </div>
+                            <div id="linksContainer" class="space-y-3">
+                                <?php if (!empty($chapterLinks)): ?>
+                                    <?php foreach ($chapterLinks as $index => $link): ?>
+                                        <div class="link-item bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4">
+                                            <input type="hidden" name="link_id_<?php echo $index; ?>" value="<?php echo $link['id']; ?>">
+                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                <div>
+                                                    <label class="text-medieval-cream/50 text-xs mb-1 block">Description</label>
+                                                    <input 
+                                                        type="text" 
+                                                        name="link_description_<?php echo $index; ?>"
+                                                        value="<?php echo htmlspecialchars($link['description']); ?>"
+                                                        class="w-full px-3 py-2 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded text-medieval-cream text-sm focus:border-medieval-red focus:outline-none"
+                                                        placeholder="Ex: Aller à gauche"
+                                                    >
+                                                </div>
+                                                <div class="flex gap-2">
+                                                    <div class="flex-1">
+                                                        <label class="text-medieval-cream/50 text-xs mb-1 block">Chapitre suivant (ID)</label>
+                                                        <input 
+                                                            type="number" 
+                                                            name="link_next_<?php echo $index; ?>"
+                                                            value="<?php echo $link['next_chapter_id']; ?>"
+                                                            class="w-full px-3 py-2 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded text-medieval-cream text-sm focus:border-medieval-red focus:outline-none"
+                                                            placeholder="ID"
+                                                        >
+                                                    </div>
+                                                    <div class="flex items-end">
+                                                        <button type="button" onclick="removeLinkField(this)" class="px-3 py-2 bg-red-600/20 border border-red-500/50 rounded text-red-400 text-sm hover:bg-red-600/30 transition-all">
+                                                            🗑️
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Error/Success Messages -->
@@ -162,6 +232,23 @@
             const formData = new FormData(event.target);
             const messageDiv = document.getElementById('chapterMessage');
             
+            // Collect links data
+            const links = [];
+            const linkItems = document.querySelectorAll('.link-item');
+            linkItems.forEach((item, index) => {
+                const id = item.querySelector('[name^="link_id_"]')?.value || null;
+                const description = item.querySelector('[name^="link_description_"]')?.value || '';
+                const next_chapter_id = item.querySelector('[name^="link_next_"]')?.value || '';
+                
+                if (description || next_chapter_id) {
+                    links.push({
+                        id: id,
+                        description: description,
+                        next_chapter_id: next_chapter_id
+                    });
+                }
+            });
+            
             // Show loading
             messageDiv.className = 'mt-6 p-4 bg-blue-500/20 border border-blue-500/50 rounded-lg text-blue-400';
             messageDiv.textContent = 'Enregistrement en cours...';
@@ -174,27 +261,21 @@
                 body: JSON.stringify({
                     titre: formData.get('titre'),
                     content: formData.get('content'),
-                    image: formData.get('image')
+                    image: formData.get('image'),
+                    links: links
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update display
-                    document.getElementById('displayTitre').textContent = formData.get('titre');
-                    document.getElementById('displayContent').textContent = formData.get('content');
-                    document.getElementById('displayImage').textContent = formData.get('image') || 'Aucune image';
-                    document.getElementById('headerTitre').textContent = formData.get('titre');
-                    
                     // Show success message
                     messageDiv.className = 'mt-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400';
                     messageDiv.textContent = '✓ Chapitre mis à jour avec succès!';
                     
-                    // Switch back to view mode after 2 seconds
+                    // Reload page after 1.5 seconds to show updated links
                     setTimeout(() => {
-                        toggleEditMode();
-                        messageDiv.classList.add('hidden');
-                    }, 2000);
+                        window.location.reload();
+                    }, 1500);
                 } else {
                     messageDiv.className = 'mt-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400';
                     messageDiv.textContent = '❌ ' + (data.error || 'Erreur lors de la mise à jour');
@@ -204,6 +285,50 @@
                 messageDiv.className = 'mt-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400';
                 messageDiv.textContent = '❌ Erreur de connexion';
             });
+        }
+
+        let linkCounter = <?php echo count($chapterLinks); ?>;
+
+        function addLinkField() {
+            const container = document.getElementById('linksContainer');
+            const newLink = document.createElement('div');
+            newLink.className = 'link-item bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-lg p-4';
+            newLink.innerHTML = `
+                <input type="hidden" name="link_id_${linkCounter}" value="">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-medieval-cream/50 text-xs mb-1 block">Description</label>
+                        <input 
+                            type="text" 
+                            name="link_description_${linkCounter}"
+                            class="w-full px-3 py-2 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded text-medieval-cream text-sm focus:border-medieval-red focus:outline-none"
+                            placeholder="Ex: Aller à gauche"
+                        >
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="flex-1">
+                            <label class="text-medieval-cream/50 text-xs mb-1 block">Chapitre suivant (ID)</label>
+                            <input 
+                                type="number" 
+                                name="link_next_${linkCounter}"
+                                class="w-full px-3 py-2 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded text-medieval-cream text-sm focus:border-medieval-red focus:outline-none"
+                                placeholder="ID"
+                            >
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" onclick="removeLinkField(this)" class="px-3 py-2 bg-red-600/20 border border-red-500/50 rounded text-red-400 text-sm hover:bg-red-600/30 transition-all">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newLink);
+            linkCounter++;
+        }
+
+        function removeLinkField(button) {
+            button.closest('.link-item').remove();
         }
     </script>
 

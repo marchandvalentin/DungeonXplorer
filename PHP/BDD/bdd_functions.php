@@ -379,6 +379,43 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function getLinksWithIdAtChapter($chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT id, description, next_chapter_id FROM Links WHERE chapter_id = :chapter_id");
+        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function deleteLink($link_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("DELETE FROM Links WHERE id = :id");
+        $stmt->bindParam(':id', $link_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    function createLink($chapter_id, $description, $next_chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("INSERT INTO Links (chapter_id, description, next_chapter_id) VALUES (:chapter_id, :description, :next_chapter_id)");
+        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':next_chapter_id', $next_chapter_id, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return $pdo->lastInsertId();
+        }
+        return false;
+    }
+
+    function updateLink($link_id, $description, $next_chapter_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE Links SET description = :description, next_chapter_id = :next_chapter_id WHERE id = :id");
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->bindParam(':next_chapter_id', $next_chapter_id, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $link_id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
     function getAllChapters() {
         global $pdo;
         $stmt = $pdo->prepare("SELECT * FROM Chapter ORDER BY id ASC");
