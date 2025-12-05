@@ -599,7 +599,7 @@
             $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
         } else {
             // Update without password
-            $stmt = $pdo->prepare("UPDATE Users SET name = :name, email = :email WHERE id = :id");
+            $stmt = $pdo->prepare("UPDATE Users SET name = :name, email = :email WHERE user_id = :id");
         }
         
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
