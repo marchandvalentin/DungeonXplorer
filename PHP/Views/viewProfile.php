@@ -112,7 +112,7 @@
                                     type="text" 
                                     id="editName" 
                                     name="name"
-                                    value="<?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>"
+                                    value="<?php echo htmlspecialchars($userProfile['USER_NAME'] ?? ''); ?>"
                                     class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                                     required
                                 >
@@ -125,7 +125,7 @@
                                     type="email" 
                                     id="editEmail" 
                                     name="email"
-                                    value="<?php echo htmlspecialchars($_SESSION['user_email'] ?? ''); ?>"
+                                    value="<?php echo htmlspecialchars($userProfile['USER_EMAIL'] ?? ''); ?>"
                                     class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                                     required
                                 >
