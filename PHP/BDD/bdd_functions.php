@@ -595,11 +595,11 @@
         if ($password) {
             // Update with password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE Users SET name = :name, email = :email, password = :password WHERE id = :id");
+            $stmt = $pdo->prepare("UPDATE Users SET user_name = :name, user_email = :email, user_password_hash = :password WHERE user_id = :id");
             $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
         } else {
             // Update without password
-            $stmt = $pdo->prepare("UPDATE Users SET name = :name, email = :email WHERE user_id = :id");
+            $stmt = $pdo->prepare("UPDATE Users SET user_name = :name, user_email = :email WHERE user_id = :id");
         }
         
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
