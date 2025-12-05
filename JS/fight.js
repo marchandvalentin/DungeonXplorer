@@ -1,22 +1,18 @@
 // Combat state variables
 let hero, monster, chapterId, turnCount, isPlayerTurn;
 
-function startingFight(player, enemy) {
-    let turnNumber = 1;    
-    while (true) {
-        break;
-    }
-}
-
-function decideTurnOrder(player, enemy) {
+function firstturnOrder(player, enemy) {
     let initP = Math.floor(Math.random() * 6) + 1 + player.initiative;
     let initE = Math.floor(Math.random() * 6) + 1 + enemy.initiative;
     return (initP >= initE) ? 'player' : 'enemy';
 }
 
-function playerTurn(player, enemy) {}
-
-function enemyTurn(enemy, player) {}
+function decideTurnOrder(player, enemy) {
+    if(turnCount > 1) {
+        return isPlayerTurn ? 'player' : 'enemy';
+    }
+    return firstturnOrder(player, enemy);
+}
 
 function attackP(attacker, defender) {
     let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2) + (defender.armor?.defense || 0);
@@ -195,9 +191,9 @@ function flee() {
 
 function startCombat() {
     addLog('⚔️ Le combat commence!', 'normal');
-    const firstTurn = decideTurnOrder(hero, monster);
-    if (firstTurn === 'enemy') {
-        isPlayerTurn = false;
+    turnCount += 1;
+    isPlayerTurn = decideTurnOrder(hero, monster) === 'player';
+    if (!isPlayerTurn) {
         addLog(`${monster.name} a l'initiative!`, 'normal');
         setTimeout(enemyTurn, 2000);
     } else {

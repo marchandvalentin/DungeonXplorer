@@ -25,7 +25,7 @@
             <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg">
                 <div class="text-center mb-6">
                     <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-700/10 border-4 border-blue-500/50 flex items-center justify-center shadow-lg">
-                        <span class="text-6xl">🛡️</span>
+                        <span class="text-6xl"><img src="<?php echo htmlspecialchars($hero['image']); ?>" alt="<?php echo htmlspecialchars($hero['name']); ?>" class="rounded-full w-full h-full object-cover"></span>
                     </div>
                     <h2 class="text-3xl font-bold text-blue-400 mb-2"><?php echo htmlspecialchars($hero['name']); ?></h2>
                 </div>
@@ -69,7 +69,7 @@
             <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg">
                 <div class="text-center mb-6">
                     <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/30 to-red-700/10 border-4 border-red-500/50 flex items-center justify-center shadow-lg">
-                        <span class="text-6xl">👹</span>
+                        <span class="text-6xl"><img src="<?php echo htmlspecialchars($chapter['image']); ?>" alt="<?php echo htmlspecialchars($monster['name']); ?>" class="rounded-full w-full h-full object-cover"></span>
                     </div>
                     <h2 class="text-3xl font-bold text-red-400 mb-2"><?php echo htmlspecialchars($monster['name']); ?></h2>
                 </div>

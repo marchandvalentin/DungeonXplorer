@@ -33,7 +33,7 @@
                         <!-- Hero Header -->
                         <div class="text-center mb-6">
                             <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-red/10 border-2 border-medieval-red/50 flex items-center justify-center shadow-lg">
-                                <span class="text-5xl">⚔️</span>
+                                <img src="<?php echo htmlspecialchars($hero['image']); ?>" alt="image" class="w-20 h-20 object-cover rounded-full" />
                             </div>
                             <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
                                 <?php echo htmlspecialchars($hero['name']); ?>
