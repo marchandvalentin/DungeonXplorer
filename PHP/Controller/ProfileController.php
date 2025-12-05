@@ -48,9 +48,11 @@
                 $updated = updateUserProfile($userId, $name, $email, $password);
                 
                 if ($updated) {
-                    // Update session
-                    $_SESSION['user_name'] = $name;
-                    $_SESSION['user_email'] = $email;
+                    // Update session only if the user is editing their own profile
+                    if ($userId == $_SESSION['user_id']) {
+                        $_SESSION['user_name'] = $name;
+                        $_SESSION['user_email'] = $email;
+                    }
                     
                     echo json_encode(['success' => true]);
                 } else {
