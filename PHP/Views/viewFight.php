@@ -9,7 +9,13 @@
     <title>DungeonXPlorer - Combat</title>
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
-    <?php include 'PHP/header.php'; ?>
+    <?php 
+    // DEBUG - À supprimer après vérification
+    echo "<!-- DEBUG Monster data: ";
+    print_r($monster);
+    echo " -->";
+    include 'PHP/header.php'; 
+    ?>
     
     <section class="max-w-7xl mx-auto px-6 py-8">
         <div class="text-center mb-8">
@@ -68,8 +74,8 @@
             <!-- Monster Side -->
             <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg">
                 <div class="text-center mb-6">
-                    <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/30 to-red-700/10 border-4 border-red-500/50 flex items-center justify-center shadow-lg">
-                        <span class="text-6xl">imgMonstre</span>
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/30 to-red-700/10 border-4 border-red-500/50 flex items-center justify-center shadow-lg overflow-hidden">
+                        <img src="<?php echo htmlspecialchars($monster['image']); ?>" alt="<?php echo htmlspecialchars($monster['name']); ?>" class="rounded-full w-full h-full object-cover">
                     </div>
                     <h2 class="text-3xl font-bold text-red-400 mb-2"><?php echo htmlspecialchars($monster['name']); ?></h2>
                 </div>
