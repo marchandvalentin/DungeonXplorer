@@ -10,10 +10,35 @@
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php 
-    // DEBUG - À supprimer après vérification
-    echo "<!-- DEBUG Monster data: ";
-    print_r($monster);
-    echo " -->";
+    // Fonction pour obtenir l'icône du héros selon sa classe
+    function getHeroIcon($hero) {
+        $class = strtolower($hero['class'] ?? '');
+        $icons = [
+            'guerrier' => '⚔️',
+            'warrior' => '⚔️',
+            'mage' => '🔮',
+            'magicien' => '🔮',
+            'wizard' => '🔮',
+            'archer' => '🏹',
+            'voleur' => '🗡️',
+            'rogue' => '🗡️',
+            'thief' => '🗡️',
+            'paladin' => '🛡️',
+            'chevalier' => '🛡️',
+            'knight' => '🛡️',
+            'pretre' => '✨',
+            'priest' => '✨',
+            'clerc' => '✨',
+        ];
+        return $icons[$class] ?? '🗡️'; // Icône par défaut
+    }
+    
+    // Fonction pour obtenir l'icône du monstre
+    function getMonsterIcon() {
+        $monsterIcons = ['👹', '👺', '👻', '💀', '🐉', '🐺', '🦇', '🕷️', '🐍'];
+        return $monsterIcons[array_rand($monsterIcons)];
+    }
+    
     include 'PHP/header.php'; 
     ?>
     
@@ -31,9 +56,10 @@
             <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg">
                 <div class="text-center mb-6">
                     <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500/30 to-blue-700/10 border-4 border-blue-500/50 flex items-center justify-center shadow-lg">
-                        <span class="text-6xl"><img src="<?php echo htmlspecialchars($hero['image']); ?>" alt="<?php echo htmlspecialchars($hero['name']); ?>" class="rounded-full w-full h-full object-cover"></span>
+                        <span class="text-7xl"><?php echo getHeroIcon($hero); ?></span>
                     </div>
                     <h2 class="text-3xl font-bold text-blue-400 mb-2"><?php echo htmlspecialchars($hero['name']); ?></h2>
+                    <p class="text-sm text-blue-300/70 uppercase tracking-wide"><?php echo htmlspecialchars($hero['class'] ?? 'Aventurier'); ?></p>
                 </div>
 
                 <!-- Hero Stats -->
@@ -74,8 +100,8 @@
             <!-- Monster Side -->
             <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg">
                 <div class="text-center mb-6">
-                    <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/30 to-red-700/10 border-4 border-red-500/50 flex items-center justify-center shadow-lg overflow-hidden">
-                        <img src="<?php echo htmlspecialchars($monster['image']); ?>" alt="<?php echo htmlspecialchars($monster['name']); ?>" class="rounded-full w-full h-full object-cover">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-red-500/30 to-red-700/10 border-4 border-red-500/50 flex items-center justify-center shadow-lg">
+                        <span class="text-7xl"><?php echo getMonsterIcon(); ?></span>
                     </div>
                     <h2 class="text-3xl font-bold text-red-400 mb-2"><?php echo htmlspecialchars($monster['name']); ?></h2>
                 </div>
