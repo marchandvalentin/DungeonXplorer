@@ -39,7 +39,6 @@
                         <span class="text-7xl"><?php echo getHeroIcon($hero); ?></span>
                     </div>
                     <h2 class="text-3xl font-bold text-blue-400 mb-2"><?php echo htmlspecialchars($hero['name']); ?></h2>
-                    <p class="text-sm text-blue-300/70 uppercase tracking-wide"><?php echo htmlspecialchars($hero['class'] ?? 'Aventurier'); ?></p>
                 </div>
 
                 <!-- Hero Stats -->
