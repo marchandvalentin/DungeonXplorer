@@ -45,7 +45,7 @@
                 <div class="space-y-3">
                     <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
                         <div class="flex justify-between items-center">
-                            <span class="text-medieval-cream font-semibold">PV</span>
+                            <span class="text-white font-semibold">PV</span>
                             <span id="hero-pv" class="text-xl font-bold text-green-400"><?php echo $hero['pv']; ?></span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
@@ -55,7 +55,7 @@
                     
                     <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
                         <div class="flex justify-between items-center">
-                            <span class="text-medieval-cream font-semibold">Mana</span>
+                            <span class="text-white font-semibold">Mana</span>
                             <span id="hero-mana" class="text-xl font-bold text-blue-400"><?php echo $hero['mana']; ?></span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
@@ -65,11 +65,11 @@
 
                     <div class="flex gap-3">
                         <div class="flex-1 bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">Force</div>
+                            <div class="text-xs text-white/80">Force</div>
                             <div class="text-lg font-bold text-red-400"><?php echo $hero['strength']; ?></div>
                         </div>
                         <div class="flex-1 bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">Initiative</div>
+                            <div class="text-xs text-white/80">Initiative</div>
                             <div class="text-lg font-bold text-yellow-400"><?php echo $hero['initiative']; ?></div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                 <div class="space-y-3">
                     <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
                         <div class="flex justify-between items-center">
-                            <span class="text-medieval-cream font-semibold">PV</span>
+                            <span class="text-white font-semibold">PV</span>
                             <span id="monster-pv" class="text-xl font-bold text-green-400"><?php echo $monster['pv']; ?></span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
@@ -99,7 +99,7 @@
                     
                     <div class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/20">
                         <div class="flex justify-between items-center">
-                            <span class="text-medieval-cream font-semibold">Mana</span>
+                            <span class="text-white font-semibold">Mana</span>
                             <span id="monster-mana" class="text-xl font-bold text-blue-400"><?php echo $monster['mana']; ?></span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2 mt-2">
@@ -109,11 +109,11 @@
 
                     <div class="flex gap-3">
                         <div class="flex-1 bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">Force</div>
+                            <div class="text-xs text-white/80">Force</div>
                             <div class="text-lg font-bold text-red-400"><?php echo $monster['strength']; ?></div>
                         </div>
                         <div class="flex-1 bg-[rgba(198,40,40,0.2)] px-3 py-2 rounded-lg border border-medieval-red/20 text-center">
-                            <div class="text-xs text-medieval-cream/60">Initiative</div>
+                            <div class="text-xs text-white/80">Initiative</div>
                             <div class="text-lg font-bold text-yellow-400"><?php echo $monster['initiative']; ?></div>
                         </div>
                     </div>
@@ -124,8 +124,8 @@
         <!-- Combat Log -->
         <div class="bg-[rgba(42,30,20,0.8)] border-2 border-[rgba(139,40,40,0.4)] rounded-xl p-6 shadow-lg mb-8">
             <h3 class="text-2xl font-bold text-medieval-lightred mb-4">📜 Journal de Combat</h3>
-            <div id="combat-log" class="space-y-2 max-h-64 overflow-y-auto text-medieval-cream/90">
-                <p class="text-center text-medieval-cream/60 italic">Le combat commence...</p>
+            <div id="combat-log" class="space-y-2 max-h-64 overflow-y-auto text-white">
+                <p class="text-center text-white/80 italic">Le combat commence...</p>
             </div>
         </div>
 
@@ -146,7 +146,7 @@
         <div id="result-screen" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-50">
             <div class="bg-[rgba(42,30,20,0.95)] border-4 border-[rgba(139,40,40,0.5)] rounded-2xl p-12 max-w-2xl text-center">
                 <h2 id="result-title" class="text-5xl font-bold mb-6"></h2>
-                <p id="result-message" class="text-xl text-medieval-cream/90 mb-8"></p>
+                <p id="result-message" class="text-xl text-white mb-8"></p>
                 <button onclick="continueAfterFight()" class="px-8 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 transition-all duration-300">
                     Continuer
                 </button>
