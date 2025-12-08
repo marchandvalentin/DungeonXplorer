@@ -15,7 +15,7 @@
             // Check if chapter has an encounter
             $encounter = getEncounterAtChapter($chapter_id);
             
-            if ($encounter && !isset($_SESSION['encounter_completed_' . $chapter_id])) {
+            if ($encounter) {
                 // Redirect to fight
                 header("Location: /fight/$hero_id/$chapter_id");
                 exit;
@@ -60,9 +60,6 @@
             $remaining_mana = $data['remaining_mana'];
 
             if ($victory) {
-                // Mark encounter as completed
-                $_SESSION['encounter_completed_' . $chapter_id] = true;
-                
                 // Update hero stats
                 updateHeroStats($hero_id, $remaining_pv, $remaining_mana);
                 

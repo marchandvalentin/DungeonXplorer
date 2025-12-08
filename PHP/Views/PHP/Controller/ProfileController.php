@@ -21,10 +21,16 @@
             }
 
             $data = json_decode(file_get_contents('php://input'), true);
-            $userId = $_SESSION['user_id'];
+            $userId = $data['user_id'] ?? null;
             $name = trim($data['name'] ?? '');
             $email = trim($data['email'] ?? '');
             $password = $data['password'] ?? null;
+
+            // Validate user_id
+            if (!$userId) {
+                echo json_encode(['success' => false, 'error' => 'ID utilisateur manquant']);
+                exit;
+            }
 
             // Validate inputs
             if (empty($name) || empty($email)) {
@@ -42,9 +48,11 @@
                 $updated = updateUserProfile($userId, $name, $email, $password);
                 
                 if ($updated) {
-                    // Update session
-                    $_SESSION['user_name'] = $name;
-                    $_SESSION['user_email'] = $email;
+                    // Update session only if the user is editing their own profile
+                    if ($userId == $_SESSION['user_id']) {
+                        $_SESSION['user_name'] = $name;
+                        $_SESSION['user_email'] = $email;
+                    }
                     
                     echo json_encode(['success' => true]);
                 } else {

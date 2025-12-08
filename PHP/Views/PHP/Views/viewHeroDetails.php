@@ -7,66 +7,92 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/CSS/personaliseColors.css">
     <script src="/JS/script.js" defer></script>
-    <title>DungeonXPlorer - Chapitre</title>
+    <title>DungeonXPlorer - Détails du Héros</title>
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
     <?php include 'PHP/header.php'; ?>
     
-    <script>
-        console.log(<?php echo json_encode($userProfile); ?>);
-    </script>
-
-    <!-- Profile Section -->
+    <!-- Hero Details Section -->
     <section class="max-w-4xl mx-auto px-6 py-20">
         <!-- Page Title -->
         <div class="mb-12">
-            <h1 class="gradient-red text-5xl font-bold tracking-wider uppercase mb-4">
-                Profil
+            <h1 class="gradient-red text-3xl font-bold tracking-wider uppercase mb-4">
+                Détails du Héro
             </h1>
             <div class="w-32 h-1 bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
         </div>
 
-        <!-- Profile Card -->
+        <!-- Hero Card -->
         <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8 mb-8">
-            <!-- Profile Header -->
+            <!-- Hero Header -->
             <div class="flex items-center mb-8 pb-8 border-b border-[rgba(139,40,40,0.3)]">
                 <div class="w-24 h-24 rounded-full bg-gradient-to-br from-medieval-red/30 to-medieval-lightred/10 border-4 border-medieval-red/50 flex items-center justify-center text-5xl">
-                    👤
+                    <?php 
+                        $classEmojis = [
+                            'Guerrier' => '⚔️',
+                            'Mage' => '🔮',
+                            'Voleur' => '🗡️'
+                        ];
+                        $className = $hero['class']['name'] ?? '';
+                        echo $classEmojis[$className] ?? '🛡️';
+                    ?>
                 </div>
                 <div class="ml-6">
                     <h2 class="text-3xl font-bold text-medieval-lightred mb-2">
-                        <?php echo htmlspecialchars($userProfile['USER_NAME'] ?? 'Utilisateur'); ?>
+                        <?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?>
                     </h2>
-                    <p class="text-medieval-cream/70">Membre depuis <?php echo date('d/m/Y'); ?></p>
+                    <p class="text-medieval-cream/70"><?php echo htmlspecialchars($hero['class']['name'] ?? 'Classe inconnue'); ?></p>
                 </div>
             </div>
 
-            <!-- Profile Info (View Mode) -->
+            <!-- Hero Info (View Mode) -->
             <div id="viewMode">
                 <div class="space-y-6">
                     <div class="grid md:grid-cols-2 gap-6">
-                        <!-- Name -->
+                        <!-- Level -->
                         <div>
-                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nom</label>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Experience</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream" id="displayName"><?php echo htmlspecialchars($userProfile['USER_NAME'] ?? ''); ?></p>
+                                <p class="text-medieval-cream" id="displayXp"><?php echo htmlspecialchars($hero['xp'] ?? 'N/A'); ?></p>
                             </div>
                         </div>
 
-                        <!-- Email -->
+                        <!-- Health Points -->
                         <div>
-                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Email</label>
+                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Points de Vie</label>
                             <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                                <p class="text-medieval-cream" id="displayEmail"><?php echo htmlspecialchars($userProfile['USER_EMAIL'] ?? ''); ?></p>
+                                <p class="text-medieval-cream" id="displayPv"><?php echo htmlspecialchars($hero['pv'] ?? 'N/A'); ?></p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Account Info -->
+                    <!-- Stats Section -->
                     <div>
-                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">ID de compte</label>
-                        <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream/50"><?php echo $userProfile['USER_ID'] ?? 'N/A'; ?></p>
+                        <h3 class="text-2xl font-bold text-medieval-lightred mb-4">Statistiques</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <!-- Strength -->
+                            <div>
+                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Force</label>
+                                <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                    <p class="text-medieval-cream" id="displayStrength"><?php echo htmlspecialchars($hero['strength'] ?? 'N/A'); ?></p>
+                                </div>
+                            </div>
+
+                            <!-- Mana -->
+                            <div>
+                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Mana</label>
+                                <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                    <p class="text-medieval-cream" id="displayMana"><?php echo htmlspecialchars($hero['mana'] ?? 'N/A'); ?></p>
+                                </div>
+                            </div>
+
+                            <!-- Initiative -->
+                            <div>
+                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Initiative</label>
+                                <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
+                                    <p class="text-medieval-cream" id="displayInitiative"><?php echo htmlspecialchars($hero['initiative'] ?? 'N/A'); ?></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,89 +100,88 @@
                 <!-- Edit Button -->
                 <div class="mt-8">
                     <button onclick="toggleEditMode()" class="px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-medieval-lightred font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                        ✏️ Modifier le profil
+                        ✏️ Modifier le héros
                     </button>
-                </div>
-
-                <!-- User's Heroes Info -->
-                <div>
-                    <h3 class="text-2xl font-bold text-medieval-lightred mt-12 mb-4">Héros</h3>
-                    <?php 
-                        require_once __DIR__ . '/../BDD/bdd_functions.php';
-                        $heros = getHerosByUserId($userProfile['USER_ID'] ?? 0);
-                        foreach ($heros as $hero):?>
-                            <div class="mt-8 p-4 bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h3 class="text-xl font-bold text-medieval-lightred mb-2"><?php echo htmlspecialchars($hero['name'] ?? 'Héros'); ?></h3>
-                                        <p class="text-medieval-cream/70">Niveau: <?php echo htmlspecialchars($hero['xp'] ?? 1); ?> | XP: <?php echo htmlspecialchars($hero['xp'] ?? 0); ?></p>
-                                    </div>
-                                    <a href="/hero/<?php echo htmlspecialchars($hero['id'] ?? 0); ?>" class="px-4 py-2 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-medieval-lightred font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                                        Voir le Héros
-                                    </a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
                 </div>
             </div>
 
-            <!-- Profile Info (Edit Mode) -->
+            <!-- Hero Info (Edit Mode) -->
             <div id="editMode" class="hidden">
-                <form id="profileForm" onsubmit="saveProfile(event)">
+                <form id="heroForm" onsubmit="saveHero(event)">
                     <div class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
-                            <!-- Name Input -->
+                            <!-- Experience Input -->
                             <div>
-                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nom</label>
+                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Experience</label>
                                 <input 
-                                    type="text" 
-                                    id="editName" 
-                                    name="name"
-                                    value="<?php echo htmlspecialchars($userProfile['USER_NAME'] ?? ''); ?>"
+                                    type="number" 
+                                    id="editXp" 
+                                    name="xp"
+                                    value="<?php echo htmlspecialchars($hero['xp'] ?? 0); ?>"
                                     class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                                    min="0"
                                     required
                                 >
                             </div>
 
-                            <!-- Email Input -->
+                            <!-- Health Points Input -->
                             <div>
-                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Email</label>
+                                <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Points de Vie</label>
                                 <input 
-                                    type="email" 
-                                    id="editEmail" 
-                                    name="email"
-                                    value="<?php echo htmlspecialchars($userProfile['USER_EMAIL'] ?? ''); ?>"
+                                    type="number" 
+                                    id="editPv" 
+                                    name="pv"
+                                    value="<?php echo htmlspecialchars($hero['pv'] ?? 0); ?>"
                                     class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                                    min="0"
                                     required
                                 >
                             </div>
                         </div>
 
-                        <!-- Password Section -->
+                        <!-- Stats Section -->
                         <div class="pt-6 border-t border-[rgba(139,40,40,0.3)]">
-                            <h3 class="text-xl font-bold text-medieval-lightred mb-4">Changer le mot de passe (optionnel)</h3>
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <!-- New Password -->
+                            <h3 class="text-xl font-bold text-medieval-lightred mb-4">Statistiques</h3>
+                            <div class="grid md:grid-cols-3 gap-6">
+                                <!-- Strength Input -->
                                 <div>
-                                    <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nouveau mot de passe</label>
+                                    <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Force</label>
                                     <input 
-                                        type="password" 
-                                        id="newPassword" 
-                                        name="password"
-                                        placeholder="Laisser vide pour ne pas changer"
+                                        type="number" 
+                                        id="editStrength" 
+                                        name="strength"
+                                        value="<?php echo htmlspecialchars($hero['strength'] ?? 0); ?>"
                                         class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                                        min="0"
+                                        required
                                     >
                                 </div>
 
-                                <!-- Confirm Password -->
+                                <!-- Mana Input -->
                                 <div>
-                                    <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Confirmer le mot de passe</label>
+                                    <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Mana</label>
                                     <input 
-                                        type="password" 
-                                        id="confirmPassword" 
-                                        name="confirmPassword"
-                                        placeholder="Confirmer le nouveau mot de passe"
+                                        type="number" 
+                                        id="editMana" 
+                                        name="mana"
+                                        value="<?php echo htmlspecialchars($hero['mana'] ?? 0); ?>"
                                         class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                                        min="0"
+                                        required
+                                    >
+                                </div>
+
+                                <!-- Initiative Input -->
+                                <div>
+                                    <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Initiative</label>
+                                    <input 
+                                        type="number" 
+                                        id="editInitiative" 
+                                        name="initiative"
+                                        value="<?php echo htmlspecialchars($hero['initiative'] ?? 0); ?>"
+                                        class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                                        min="0"
+                                        required
                                     >
                                 </div>
                             </div>
@@ -164,7 +189,7 @@
                     </div>
 
                     <!-- Error/Success Messages -->
-                    <div id="profileMessage" class="mt-6 hidden"></div>
+                    <div id="heroMessage" class="mt-6 hidden"></div>
 
                     <!-- Action Buttons -->
                     <div class="mt-8 flex gap-4">
@@ -194,47 +219,42 @@
             }
         }
 
-        function saveProfile(event) {
+        function saveHero(event) {
             event.preventDefault();
             
             const formData = new FormData(event.target);
-            const password = formData.get('password');
-            const confirmPassword = formData.get('confirmPassword');
-            const messageDiv = document.getElementById('profileMessage');
+            const messageDiv = document.getElementById('heroMessage');
             
-            // Validate passwords if provided
-            if (password && password !== confirmPassword) {
-                messageDiv.className = 'mt-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400';
-                messageDiv.textContent = 'Les mots de passe ne correspondent pas.';
-                messageDiv.classList.remove('hidden');
-                return;
-            }
-
             // Show loading
             messageDiv.className = 'mt-6 p-4 bg-blue-500/20 border border-blue-500/50 rounded-lg text-blue-400';
             messageDiv.textContent = 'Enregistrement en cours...';
             messageDiv.classList.remove('hidden');
 
             // Send update request
-            fetch('/profile/update', {
+            fetch('/hero/update/<?php echo $hero['id'] ?? 0; ?>', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    name: formData.get('name'),
-                    email: formData.get('email'),
-                    password: password || null
+                    xp: parseInt(formData.get('xp')),
+                    pv: parseInt(formData.get('pv')),
+                    strength: parseInt(formData.get('strength')),
+                    mana: parseInt(formData.get('mana')),
+                    initiative: parseInt(formData.get('initiative'))
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     // Update display
-                    document.getElementById('displayName').textContent = formData.get('name');
-                    document.getElementById('displayEmail').textContent = formData.get('email');
+                    document.getElementById('displayXp').textContent = formData.get('xp');
+                    document.getElementById('displayPv').textContent = formData.get('pv');
+                    document.getElementById('displayStrength').textContent = formData.get('strength');
+                    document.getElementById('displayMana').textContent = formData.get('mana');
+                    document.getElementById('displayInitiative').textContent = formData.get('initiative');
                     
                     // Show success message
                     messageDiv.className = 'mt-6 p-4 bg-green-500/20 border border-green-500/50 rounded-lg text-green-400';
-                    messageDiv.textContent = '✓ Profil mis à jour avec succès!';
+                    messageDiv.textContent = '✓ Héros mis à jour avec succès!';
                     
                     // Switch back to view mode after 2 seconds
                     setTimeout(() => {
@@ -252,7 +272,7 @@
             });
         }
     </script>
-    
+
     <?php include 'PHP/footer.php'; ?>
 </body>
 </html>
