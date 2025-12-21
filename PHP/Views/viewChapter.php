@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/CSS/personaliseColors.css">
-    <script src="/JS/script.js" defer></script>
-    <title>DungeonXPlorer - Chapitre</title>
-</head>
-<body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
-    <?php include 'PHP/header.php'; ?>
+<?php include 'PHP/header.php'; ?>
     
     <!-- Save and Quit Button -->
     <div class="max-w-7xl mx-auto px-6 pt-6">
@@ -97,6 +85,7 @@
                         </div>
                     </div>
                 </div>
+                    <img src="/res/sacImg/sac_fermé.png" alt="Inventory Image" class="mt-4 w-full cursor-pointer" id="openInventoryModal">
             </div>
 
             <!-- Content Container -->
@@ -139,6 +128,46 @@
             </div>
         </div>
     </section>
+    
+    <!-- Inventory Modal -->
+    <div class="hidden fixed inset-0 z-[1000] overflow-auto bg-black/70 backdrop-blur-sm" id="inventoryModal">
+        <div class="min-h-screen px-4 flex items-center justify-center">
+            <div class="relative bg-gradient-to-b from-[rgba(42,30,20,0.95)] to-[rgba(26,22,20,0.95)] border-4 border-[rgba(139,40,40,0.6)] rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.9)] p-8 max-w-2xl w-full">
+                
+                <!-- Close Button -->
+                <button class="absolute top-4 right-4 text-medieval-cream/60 hover:text-medieval-red text-4xl font-bold leading-none transition-colors duration-300 cursor-pointer" id="closeInventoryModal">
+                    &times;
+                </button>
+                
+                <!-- Modal Content -->
+                <div id="inventoryDetails">
+                    <?php
+                        $inventory = getInventoryByHeroID($hero['id']);
+                    ?>
+                    
+                    <h2 class="gradient-red text-3xl font-bold tracking-wider uppercase mb-6">
+                        Inventory of <?php echo htmlspecialchars($hero['name']); ?>
+                    </h2>
+                    
+                    <div class="w-24 h-1 bg-gradient-to-r from-medieval-red to-transparent mb-6"></div>
+                    
+                    <?php if (empty($inventory)): ?>
+                        <p class="text-medieval-cream/80 text-lg text-center py-8">Your inventory is empty.</p>
+                    <?php else: ?>
+                        <ul class="space-y-3">
+                            <?php foreach ($inventory as $item): ?>
+                                <?php $item_name = getItemById($item['item_id'])['name']; ?>
+                                <li class="bg-[rgba(198,40,40,0.2)] px-4 py-3 rounded-lg border border-medieval-red/30 text-medieval-cream/90 hover:bg-[rgba(198,40,40,0.3)] hover:border-medieval-red/50 transition-all duration-300">
+                                    <span class="font-semibold text-medieval-lightred"><?php echo htmlspecialchars($item_name); ?></span>
+                                    <span class="text-medieval-cream/60 ml-2">× <?php echo intval($item['quantity']); ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <?php include 'PHP/footer.php'; ?>
 </body>

@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/personaliseColors.css">
+    <link rel="stylesheet" href="/CSS/personaliseColors.css">
+    <link rel="stylesheet" href="/CSS/style.css">
+    <script src="/JS/script.js" defer></script>
 </head>
 <body>
-    <script src="JS/script.js" defer></script>
 
     <nav class="navbar-gradient navbar-top-line relative border-b border-medieval-red/30 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md font-inter">
         <div class="max-w-7xl mx-auto px-10 py-5 flex flex-col md:flex-row justify-between items-center gap-5">
@@ -80,5 +81,3 @@
             </ul>
         </div>
     </nav>
-    </body>
-</html>
