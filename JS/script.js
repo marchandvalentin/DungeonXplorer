@@ -35,11 +35,13 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('All modal elements found, adding event listeners');
         
         openModal.addEventListener('click', function() {
+            openModal.setAttribute('src', '/res/sacImg/sac_ouvert_plein.png');
             console.log('Opening inventory modal');
             modal.classList.remove('hidden');
         });
 
         closeModal.addEventListener('click', function() {
+            openModal.setAttribute('src', '/res/sacImg/sac_fermé.png');
             console.log('Closing inventory modal');
             modal.classList.add('hidden');
         });

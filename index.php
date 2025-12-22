@@ -8,6 +8,7 @@ require 'PHP/Controller/DashboardController.php';
 require 'PHP/Controller/CreateHeroController.php';
 require 'PHP/Controller/HeroSelectionController.php';
 require 'PHP/Controller/ChapterController.php';
+require 'PHP/Controller/InventoryController.php';
 
 use Bramus\Router\Router;
 
@@ -133,6 +134,26 @@ $router->post('/fight/result', function() {
         $controller->fightResult();
     } else {
         http_response_code(401);
+        exit();
+    }
+});
+
+$router->post('/useItem', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new InventoryController();
+        $controller->useItem();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+$router->post('/dropItem', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new InventoryController();
+        $controller->dropItem();
+    } else {
+        header('Location: /login');
         exit();
     }
 });

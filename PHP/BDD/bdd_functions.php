@@ -2,7 +2,11 @@
 require_once 'connexion.php';
 
 ////////////////// ITEM FUNCTIONS ///////////////////////
-
+/**
+ * Returns item details by its ID.
+ * @param int $item_id
+ * @return array
+ */
 function getItemById($item_id)
 {
     global $pdo;
@@ -14,6 +18,11 @@ function getItemById($item_id)
 
 /////////////// INVENTORY FUNCTIONS ///////////////////////
 
+/**
+ * Returns the inventory items for a given hero ID.
+ * @param int $hero_id
+ * @return array
+ */
 function getInventoryByHeroId($hero_id)
 {
     global $pdo;
@@ -23,6 +32,13 @@ function getInventoryByHeroId($hero_id)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Adds a specified quantity of an item to a hero's inventory by item name.
+ * @param int $hero_id
+ * @param string $item_name
+ * @param int $quantity
+ * @return bool
+ */
 function addInInventoryWithItemName($hero_id, $item_name, $quantity)
 {
     global $pdo;
@@ -56,6 +72,13 @@ function addInInventoryWithItemName($hero_id, $item_name, $quantity)
     }
 }
 
+/**
+ * Removes a specified quantity of an item from a hero's inventory by item name.
+ * If the quantity to remove is greater than or equal to the current quantity, the item is removed completely.
+ * @param int $hero_id
+ * @param string $item_name
+ * @param int $quantity
+ */
 function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
 {
     global $pdo;
@@ -66,16 +89,16 @@ function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
     $stmt->execute();
     $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //check if item exists in inventory
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM Inventory WHERE hero_id = :hero_id AND item_id = :item_id");
+    //check if item exists in inventory and get current quantity
+    $stmt = $pdo->prepare("SELECT quantity FROM Inventory WHERE hero_id = :hero_id AND item_id = :item_id");
     $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
     $stmt->bindParam(':item_id', $item['id'], PDO::PARAM_INT);
     $stmt->execute();
-    $count = $stmt->fetchColumn();
+    $current_quantity = $stmt->fetchColumn();
 
-    if ($count == 0) {
+    if ($current_quantity === false || $current_quantity == 0) {
         return false; //item not found in inventory
-    } else if ($count <= $quantity) {
+    } else if ($current_quantity <= $quantity) {
         //remove the item completely
         removeItemFromInventory($hero_id, $item_name);
     } else {
@@ -88,6 +111,12 @@ function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
     }
 }
 
+/**
+ * Removes an item completely from a hero's inventory by item name.
+ * @param int $hero_id
+ * @param string $item_name
+ * @return bool
+ */
 function removeItemFromInventory($hero_id, $item_name)
 {
     global $pdo;
@@ -105,6 +134,11 @@ function removeItemFromInventory($hero_id, $item_name)
     return $stmt->execute();
 }
 
+/**
+ * Clears the entire inventory of a hero by hero ID.
+ * @param int $hero_id
+ * @return bool
+ */
 function clearInventory($hero_id)
 {
     global $pdo;
@@ -116,7 +150,11 @@ function clearInventory($hero_id)
 }
 
 ////////////////// HERO FUNCTIONS ///////////////////////
-
+/**
+ * Returns hero details by its ID.
+ * @param int $id
+ * @return array
+ */
 function getHeroById($id)
 {
     global $pdo;
