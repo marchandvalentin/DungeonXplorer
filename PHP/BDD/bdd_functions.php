@@ -929,4 +929,31 @@ function getTotalChapters()
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
+    
+////////////////// PROPERTIES FUNCTIONS ///////////////////////
+function getItemPropertyById($item_id){
+    global $pdo;
+
+    $propids = [];
+    $propLibelles = [];
+
+    //get properties id
+    $stmt = $pdo->prepare("SELECT prop_id FROM Item_Property WHERE item_id = :item_id");
+    $stmt->bindParam(':item_id', $item_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $propids = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    //get property libelles
+    foreach($propids as $propid){
+        $stmt = $pdo->prepare("SELECT libelle FROM Property WHERE id = :prop_id");
+        $stmt->bindParam(':prop_id', $propid['prop_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $libelle = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($libelle){
+            $propLibelles[] = $libelle['libelle'];
+        }
+    }
+
+    return $propLibelles;
+}
 ?>
