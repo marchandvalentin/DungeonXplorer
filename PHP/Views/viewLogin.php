@@ -21,6 +21,15 @@
                 </h1>
                 <div class="w-24 h-1 mx-auto bg-gradient-to-r from-transparent via-medieval-red to-transparent"></div>
                 
+                <?php if (isset($_SESSION['login_error'])): ?>
+                    <div class="bg-red-900/30 border-2 border-red-500 rounded-lg p-4 text-red-400 font-semibold">
+                        <?php 
+                            echo htmlspecialchars($_SESSION['login_error']); 
+                            unset($_SESSION['login_error']);
+                        ?>
+                    </div>
+                <?php endif; ?>
+                
                 <form method="POST" action="/login" class="space-y-6">
                     <!-- Nom -->
                     <div>

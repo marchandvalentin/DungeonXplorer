@@ -20,7 +20,9 @@
                 $_SESSION['IS_ADMIN'] = $user['IS_ADMIN'] ? 1 : 0;
                 include __DIR__ . '/../Views/viewWelcome.php';
             } else {
-                echo "Identifiants incorrects";
+                $_SESSION['login_error'] = 'Email ou mot de passe incorrect.';
+                header('Location: /login');
+                exit();
             }
         }
 
