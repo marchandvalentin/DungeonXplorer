@@ -148,6 +148,26 @@ $router->post('/useItem', function() {
     }
 });
 
+$router->post('/equipItem', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new InventoryController();
+        $controller->equipItem();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
+$router->post('/unequipItem', function() {
+    if (isset($_SESSION['user_id'])) {
+        $controller = new InventoryController();
+        $controller->unequipItem();
+    } else {
+        header('Location: /login');
+        exit();
+    }
+});
+
 $router->post('/dropItem', function() {
     if (isset($_SESSION['user_id'])) {
         $controller = new InventoryController();

@@ -121,13 +121,11 @@
                     
                         <?php
                             $links = getLinksAtChapter($chapter['id'] ?? 1);
+                            foreach ($links as $link):
+                                echo "<a href=\"/chapter/{$hero['id']}/{$link['next_chapter_id']}\" class=\"inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300\">
+                                    {$link['description']}</a>";
+                            endforeach;
                         ?>
-
-                        <a href="/chapter/<?php echo $hero['id']; ?>/<?php echo $links[0]['next_chapter_id'] ?? ''; ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                            <?php echo $links[0]['description'] ?? 'pas de description'; ?>
-                        </a>
-                        <a href="/chapter/<?php echo $hero['id']; ?>/<?php echo $links[1]['next_chapter_id'] ?? ''; ?>" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                            <?php echo $links[1]['description'] ?? 'pas de description'; ?>
                         </a>
                     </div>
                 </div>
@@ -170,11 +168,42 @@
                                     </div>
                                     
                                     <div class="flex gap-2">
+                                        <?php
+                                            $itemType = getItemTypeLibelle(getItemTypeById($item['item_id']));
+                                            $isEquipped = false;
+                                            
+                                            if($itemType === "armure") {
+                                                $isEquipped = ($hero['armor_item_id'] == $item['item_id']);
+                                            } elseif($itemType === "arme") {
+                                                $isEquipped = ($hero['primary_weapon_item_id'] == $item['item_id'] || $hero['secondary_weapon_item_id'] == $item['item_id']);
+                                            }
+                                            
+                                            if($itemType === "armure" || $itemType === "arme"):
+                                        ?>
+                                        <form method="POST">
+                                            <input type="hidden" name="hero_id" value="<?php echo htmlspecialchars($hero['id']); ?>">
+                                            <input type="hidden" name="item_id" value="<?php echo htmlspecialchars($item['item_id']); ?>">
+                                            <?php if($isEquipped): ?>
+                                                <button type="submit" formaction="/unequipItem" class="px-4 py-2 bg-gradient-to-r from-yellow-900/20 to-yellow-800/30 border-2 border-yellow-600/80 rounded-lg text-yellow-400 font-bold text-sm tracking-wide hover:from-yellow-800/30 hover:to-yellow-700/40 hover:-translate-y-0.5 transition-all duration-300">Déséquiper</button>
+                                            <?php else: ?>
+                                                <button type="submit" formaction="/equipItem" class="px-4 py-2 bg-gradient-to-r from-green-900/20 to-green-800/30 border-2 border-green-600/80 rounded-lg text-green-400 font-bold text-sm tracking-wide hover:from-green-800/30 hover:to-green-700/40 hover:-translate-y-0.5 transition-all duration-300">Équiper</button>
+                                            <?php endif; ?>
+                                        </form>
+
+                                        <?php elseif($itemType === "sort"): ?>
+                                        <form action="/useItem" method="POST">
+                                            <input type="hidden" name="hero_id" value="<?php echo htmlspecialchars($hero['id']); ?>">
+                                            <input type="hidden" name="item_id" value="<?php echo htmlspecialchars($item['item_id']); ?>">
+                                            <button type="submit" class="px-4 py-2 bg-gradient-to-r from-green-900/20 to-green-800/30 border-2 border-green-600/80 rounded-lg text-green-400 font-bold text-sm tracking-wide hover:from-green-800/30 hover:to-green-700/40 hover:-translate-y-0.5 transition-all duration-300">Lancer</button>
+                                        </form>
+
+                                        <?php else:?>
                                         <form action="/useItem" method="POST">
                                             <input type="hidden" name="hero_id" value="<?php echo htmlspecialchars($hero['id']); ?>">
                                             <input type="hidden" name="item_id" value="<?php echo htmlspecialchars($item['item_id']); ?>">
                                             <button type="submit" class="px-4 py-2 bg-gradient-to-r from-green-900/20 to-green-800/30 border-2 border-green-600/80 rounded-lg text-green-400 font-bold text-sm tracking-wide hover:from-green-800/30 hover:to-green-700/40 hover:-translate-y-0.5 transition-all duration-300">Utiliser</button>
                                         </form>
+                                        <?php endif; ?>
                                         
                                         <form action="/dropItem" method="POST">
                                             <input type="hidden" name="hero_id" value="<?php echo htmlspecialchars($hero['id']); ?>">

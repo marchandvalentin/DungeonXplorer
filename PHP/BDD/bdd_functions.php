@@ -16,6 +16,27 @@ function getItemById($item_id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function getItemTypeById($item_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT typ_id FROM Items WHERE id = :id");
+    $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['typ_id'] : null;
+}
+
+//////////////// TYPE ITEM FUNCTIONS ///////////////////////
+function getItemTypeLibelle($type_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT typ_libelle FROM Type_Item WHERE typ_id = :id");
+    $stmt->bindParam(':id', $type_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['typ_libelle'] : null;
+}
+
 /////////////// INVENTORY FUNCTIONS ///////////////////////
 
 /**
@@ -218,28 +239,22 @@ function updateHeroInitiative($hero_id, $new_initiative)
 function updateHeroArmorById($hero_id, $new_armor_id)
 {
     global $pdo;
-    $stmt = $pdo->prepare("UPDATE Hero SET armor = :armor WHERE id = :id");
-    $stmt->bindParam(':armor', $new_armor_id, PDO::PARAM_INT);
-    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
-    return $stmt->execute();
+    $stmt = $pdo->prepare("UPDATE Hero SET armor_item_id = :armor_item_id WHERE id = :id");
+    return $stmt->execute([':armor_item_id' => $new_armor_id, ':id' => $hero_id]);
 }
 
 function updatePrimaryWeaponById($hero_id, $new_weapon_id)
 {
     global $pdo;
-    $stmt = $pdo->prepare("UPDATE Hero SET primary_weapon = :primary_weapon WHERE id = :id");
-    $stmt->bindParam(':primary_weapon', $new_weapon_id, PDO::PARAM_INT);
-    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
-    return $stmt->execute();
+    $stmt = $pdo->prepare("UPDATE Hero SET primary_weapon_item_id = :primary_weapon_item_id WHERE id = :id");
+    return $stmt->execute([':primary_weapon_item_id' => $new_weapon_id, ':id' => $hero_id]);
 }
 
 function updateSecondaryWeaponById($hero_id, $new_weapon_id)
 {
     global $pdo;
-    $stmt = $pdo->prepare("UPDATE Hero SET secondary_weapon = :secondary_weapon WHERE id = :id");
-    $stmt->bindParam(':secondary_weapon', $new_weapon_id, PDO::PARAM_INT);
-    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
-    return $stmt->execute();
+    $stmt = $pdo->prepare("UPDATE Hero SET secondary_weapon_item_id = :secondary_weapon_item_id WHERE id = :id");
+    return $stmt->execute([':secondary_weapon_item_id' => $new_weapon_id, ':id' => $hero_id]);
 }
 
 function updateShieldById($hero_id, $new_shield_id)
@@ -679,6 +694,4 @@ function getAllClasses()
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-
 ?>

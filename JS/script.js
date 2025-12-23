@@ -50,9 +50,20 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.addEventListener('click', function(event) {
             if (event.target === modal) {
                 console.log('Clicking outside modal, closing');
+                openModal.setAttribute('src', '/res/sacImg/sac_fermé.png');
                 modal.classList.add('hidden');
             }
         });
+        
+        // Auto-open inventory if URL parameter is present
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('openInventory') === '1') {
+            console.log('Auto-opening inventory from URL parameter');
+            openModal.setAttribute('src', '/res/sacImg/sac_ouvert_plein.png');
+            modal.classList.remove('hidden');
+            // Remove the parameter from URL without page reload
+            window.history.replaceState({}, '', window.location.pathname);
+        }
     } else {
         console.error('Missing modal elements!');
     }
