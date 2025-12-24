@@ -365,9 +365,15 @@ function createHero($user_id, $hero_name, $class_id)
         return false;
     }
 
+    $class_base_pv = $pdo->prepare("SELECT base_pv FROM Class WHERE id = :class_id");
+    $class_base_pv->bindParam(':class_id', $class_id, PDO::PARAM_INT);
+    $class_base_pv->execute();
+    $base_pv_result = $class_base_pv->fetch(PDO::FETCH_ASSOC);
+    $pv_max = $base_pv_result ? $base_pv_result['base_pv'] : 0;
+
     // Insert new hero with base stats from class
-    $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, pv, mana, strength, initiative, xp, created_at) 
-                              VALUES (:user_id, :name, :class_id, :pv, :mana, :strength, :initiative, :xp, :created_at)");
+    $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, pv, mana, strength, initiative, xp, created_at,pv_max) 
+                              VALUES (:user_id, :name, :class_id, :pv, :mana, :strength, :initiative, :xp, :created_at, :pv_max)");
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->bindParam(':name', $hero_name, PDO::PARAM_STR);
     $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
@@ -377,6 +383,7 @@ function createHero($user_id, $hero_name, $class_id)
     $stmt->bindValue(':initiative', $classData['initiative'], PDO::PARAM_INT);
     $stmt->bindValue(':xp', 0, PDO::PARAM_INT);
     $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
+    $stmt->bindParam(':pv_max', $pv_max, PDO::PARAM_INT);
     return $stmt->execute();
 }
 
