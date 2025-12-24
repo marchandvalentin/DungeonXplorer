@@ -19,6 +19,7 @@ class InventoryController
 
             // Get hero details
             $hero = getHeroById($hero_id);
+            $class = getClassByHeroId($hero_id);
             
             // Verify the hero belongs to the current user
             if (!$hero || $hero['user_id'] != $_SESSION['user_id']) {
@@ -32,6 +33,33 @@ class InventoryController
             if ($item) {
                 // Apply item effect based on item type
                 $item_name = $item['name'];
+                $itemProperties = getItemPropertyById($item_id);
+                foreach($itemProperties as $property){
+                    switch($property['prop_libelle']){
+                        case 'pv':
+                            $new_hp =  $hero['pv'] + $property['value_of_property'];
+                            updateHeroPV($hero_id, $new_hp);
+                            break;
+                        case 'mana':
+                            if ($class['name'] !== 'Guerrier') {
+                                $new_mana = $hero['mana'] + $property['value_of_property'];
+                                updateHeroMana($hero_id, $new_mana);
+                            }
+                            break;
+                        case 'force':
+                            $new_strength = $hero['strength'] + $property['value_of_property'];
+                            updateHeroStrength($hero_id, $new_strength);
+                            break;
+                        case 'initiative':
+                            $new_initiative = $hero['initiative'] + $property['value_of_property'];
+                            updateHeroInitiative($hero_id, $new_initiative);
+                            break;
+                        case 'xp':
+                            $new_xp = $hero['xp'] + $property['prop_value'];
+                            updateXP($hero_id, $new_xp);
+                            break;
+                    }
+                }
                 
                 // Remove one quantity of the item from inventory
                 removeFromInventoryWithItemName($hero_id, $item_name, 1);

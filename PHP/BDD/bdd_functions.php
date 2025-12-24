@@ -236,8 +236,8 @@ function getHerosByUserId($userId)
 function updateHeroPV($hero_id, $new_health)
 {
     global $pdo;
-    $stmt = $pdo->prepare("UPDATE Hero SET health = :health WHERE id = :id");
-    $stmt->bindParam(':health', $new_health, PDO::PARAM_INT);
+    $stmt = $pdo->prepare("UPDATE Hero SET pv = :pv WHERE id = :id");
+    $stmt->bindParam(':pv', $new_health, PDO::PARAM_INT);
     $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
     return $stmt->execute();
 }
@@ -934,26 +934,19 @@ function getTotalChapters()
 function getItemPropertyById($item_id){
     global $pdo;
 
-    $propids = [];
-    $propLibelles = [];
+    $properties = [];
 
-    //get properties id
-    $stmt = $pdo->prepare("SELECT prop_id FROM Item_Property WHERE item_id = :item_id");
+    //get properties with their values
+    $stmt = $pdo->prepare("
+        SELECT ip.prop_libelle, ihp.value_of_property
+        FROM Item_Has_Property ihp
+        JOIN Item_Property ip ON ihp.prop_id = ip.prop_id
+        WHERE ihp.item_id = :item_id
+    ");
     $stmt->bindParam(':item_id', $item_id, PDO::PARAM_INT);
     $stmt->execute();
-    $propids = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    //get property libelles
-    foreach($propids as $propid){
-        $stmt = $pdo->prepare("SELECT libelle FROM Property WHERE id = :prop_id");
-        $stmt->bindParam(':prop_id', $propid['prop_id'], PDO::PARAM_INT);
-        $stmt->execute();
-        $libelle = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($libelle){
-            $propLibelles[] = $libelle['libelle'];
-        }
-    }
+    $properties = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    return $propLibelles;
+    return $properties;
 }
 ?>
