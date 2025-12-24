@@ -126,6 +126,40 @@ function addInInventoryWithItemName($hero_id, $item_name, $quantity)
     }
 }
 
+function inventoryPreset($hero_id){
+    $heroClass = getClassByHeroId($hero_id);
+
+    switch($heroClass){
+        case 'Guerrier':
+            addInInventoryWithItemName($hero_id, 'épée courte', 1);
+            addInInventoryWithItemName($hero_id, 'bouclier en bois', 1);
+            addInInventoryWithItemName($hero_id, 'armure en mithril', 1);
+            break;
+
+        case 'Mage':
+            addInInventoryWithItemName($hero_id, 'sceptre de magicien anormal', 1);
+            addInInventoryWithItemName($hero_id, 'robe de mage', 1);
+            addInInventoryWithItemName($hero_id, 'potion de mana', 2);
+            addInInventoryWithItemName($hero_id, 'potion de soin',1);
+
+            global $pdo;
+            $stmt = $pdo->prepare("SELECT name FROM Items WHERE typ_id = (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'sort')");
+            $stmt->execute();
+            $spells = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($spells as $spell) {
+                addInInventoryWithItemName($hero_id, $spell['name'], 1);
+            }
+
+            break;
+
+        case 'Voleur':
+            addInInventoryWithItemName($hero_id, 'dague de charognard', 1);
+            addInInventoryWithItemName($hero_id, 'dape de voleur', 1);
+            addInInventoryWithItemName($hero_id, 'potion de soin', 2);
+            break;
+    }
+}
+
 /**
  * Removes a specified quantity of an item from a hero's inventory by item name.
  * If the quantity to remove is greater than or equal to the current quantity, the item is removed completely.
@@ -384,7 +418,16 @@ function createHero($user_id, $hero_name, $class_id)
     $stmt->bindValue(':xp', 0, PDO::PARAM_INT);
     $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
     $stmt->bindParam(':pv_max', $pv_max, PDO::PARAM_INT);
-    return $stmt->execute();
+    try {
+        $stmt->execute();
+
+        $hero = getHeroById($pdo->lastInsertId());
+        inventoryPreset($hero['id']);
+        return true;
+    } catch (PDOException $e) {
+        // Handle exception (e.g., log the error)
+        return false;
+    }
 }
 
 function getHeroNameFromID($id)
