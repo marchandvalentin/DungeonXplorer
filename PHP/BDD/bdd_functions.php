@@ -127,7 +127,7 @@ function addInInventoryWithItemName($hero_id, $item_name, $quantity)
 }
 
 function inventoryPreset($hero_id){
-    $heroClass = getClassByHeroId($hero_id);
+    $heroClass = getClassByHeroId($hero_id)['name'];
 
     switch($heroClass){
         case 'Guerrier':
