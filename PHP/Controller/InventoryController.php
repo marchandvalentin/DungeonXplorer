@@ -86,6 +86,8 @@ class InventoryController
 
             // Get hero details
             $hero = getHeroById($hero_id);
+            $class = getClassByHeroId($hero_id);
+
             
             // Verify the hero belongs to the current user
             if (!$hero || $hero['user_id'] != $_SESSION['user_id']) {
@@ -95,6 +97,7 @@ class InventoryController
 
             // Get item details
             $item = getItemById($item_id);
+            $itemProps = getItemPropertyById($item_id);
             
             if ($item) {
                 // Get item type
@@ -110,6 +113,33 @@ class InventoryController
                     updatePrimaryWeaponById($hero_id, $item_id);
                 } elseif ($itemType === 'armure') {
                     updateHeroArmorById($hero_id, $item_id);
+                }
+
+                foreach($itemProps as $property){
+                    switch($property['prop_libelle']){
+                        case 'pv':
+                            $new_hp =  $hero['pv'] + $property['value_of_property'];
+                            updateHeroPV($hero_id, $new_hp);
+                            break;
+                        case 'mana':
+                            if ($class['name'] !== 'Guerrier') {
+                                $new_mana = $hero['mana'] + $property['value_of_property'];
+                                updateHeroMana($hero_id, $new_mana);
+                            }
+                            break;
+                        case 'force':
+                            $new_strength = $hero['strength'] + $property['value_of_property'];
+                            updateHeroStrength($hero_id, $new_strength);
+                            break;
+                        case 'initiative':
+                            $new_initiative = $hero['initiative'] + $property['value_of_property'];
+                            updateHeroInitiative($hero_id, $new_initiative);
+                            break;
+                        case 'xp':
+                            $new_xp = $hero['xp'] + $property['prop_value'];
+                            updateXP($hero_id, $new_xp);
+                            break;
+                    }
                 }
             }
 
@@ -134,6 +164,8 @@ class InventoryController
 
             // Get hero details
             $hero = getHeroById($hero_id);
+            $class = getClassByHeroId($hero_id);
+
             
             // Verify the hero belongs to the current user
             if (!$hero || $hero['user_id'] != $_SESSION['user_id']) {
@@ -143,6 +175,7 @@ class InventoryController
 
             // Get item details
             $item = getItemById($item_id);
+            $itemProps = getItemPropertyById($item_id);
             
             if ($item) {
                 // Get item type
@@ -159,6 +192,33 @@ class InventoryController
                     }
                 } elseif ($itemType === 'armure') {
                     updateHeroArmorById($hero_id, null);
+                }
+                
+                foreach($itemProps as $property){
+                    switch($property['prop_libelle']){
+                        case 'pv':
+                            $new_hp =  $hero['pv'] - $property['value_of_property'];
+                            updateHeroPV($hero_id, $new_hp);
+                            break;
+                        case 'mana':
+                            if ($class['name'] !== 'Guerrier') {
+                                $new_mana = $hero['mana'] - $property['value_of_property'];
+                                updateHeroMana($hero_id, $new_mana);
+                            }
+                            break;
+                        case 'force':
+                            $new_strength = $hero['strength'] - $property['value_of_property'];
+                            updateHeroStrength($hero_id, $new_strength);
+                            break;
+                        case 'initiative':
+                            $new_initiative = $hero['initiative'] - $property['value_of_property'];
+                            updateHeroInitiative($hero_id, $new_initiative);
+                            break;
+                        case 'xp':
+                            $new_xp = $hero['xp'] - $property['prop_value'];
+                            updateXP($hero_id, $new_xp);
+                            break;
+                    }
                 }
 
             }
