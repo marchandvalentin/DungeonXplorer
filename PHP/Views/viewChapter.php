@@ -112,7 +112,8 @@
                         
                         <!-- Chapter Image - Right Side -->
                         <div class="w-80 flex-shrink-0 rounded-lg overflow-hidden border-2 border-[rgba(139,40,40,0.3)] shadow-lg">
-                            <img src="<?php echo htmlspecialchars($chapter['image'] ?? 'https://placehold.co/600x400/2d2520/e8d4b0?text=Image+du+Chapitre'); ?>" alt="Illustration du chapitre" class="w-full h-auto object-cover">
+                            <?php if($chapter['image']): echo "<script>console.log('Image path: " . addslashes($chapter['image']) . "');</script>"; endif; ?>
+                            <img src="/res/Images_DungeonXplorer/Chapters/<?php echo htmlspecialchars($chapter['image'] ?? 'https://placehold.co/600x400/2d2520/e8d4b0?text=Image+du+Chapitre'); ?>" alt="Illustration du chapitre" class="w-full h-auto object-cover">
                         </div>
                     </div>
 
