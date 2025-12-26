@@ -272,14 +272,17 @@ if (window.heroData && window.monsterData && window.currentChapterId !== undefin
     const magicBtn = document.getElementById('btn-magic');
     const fleeBtn = document.getElementById('btn-flee');
     
+
     if (attackBtn && magicBtn && fleeBtn) {
         attackBtn.addEventListener('click', function() {
             playerAttack();
         });
         magicBtn.addEventListener('click', function() {
+            console.log('Magic attack');
             playerMagicAttack();
         });
         fleeBtn.addEventListener('click', function() {
+            console.log('Flee attempt');
             flee();
         });
         

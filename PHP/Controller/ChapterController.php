@@ -50,6 +50,8 @@
 
             $hero = getHeroById($hero_id);
             $monster = getEncounterAtChapter($chapter_id);
+            $weapon1 = getWeaponById($hero['primary_weapon_item_id'] ?? -1);
+            $weapon2 = getWeaponById($hero['secondary_weapon_item_id'] ?? -1);
             
             if (!$monster) {
                 // No monster, redirect to chapter
