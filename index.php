@@ -97,6 +97,11 @@ $router->get('/dashboard/search-chapters', function() {
     $controller->searchChapters();
 });
 
+$router->post('/dashboard/entityCreate', function() {
+    $controller = new DashboardController();
+    $controller->entityCreate();
+});
+
 $router->get('/item/{item_id}', function($item_id) {
     require_once __DIR__ . '/PHP/Controller/ItemController.php';
     $controller = new ItemController();

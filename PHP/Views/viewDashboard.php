@@ -57,6 +57,10 @@
                 <button onclick="switchTab('chapters')" id="tab-chapters" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
                     📜 Chapitres
                 </button>
+
+                <button onclick="switchTab('Entity')" id="tab-entity" class="tab-button px-6 py-3 font-semibold tracking-wide transition-all duration-300">
+                    👹 Entités
+                </button>
             </div>
         </div>
 
@@ -278,6 +282,36 @@
                 </div>
             </div>
         </div>
+        <!--Tab entity-->
+        <div id="content-Entity" class="tab-content hidden">
+            <div class="bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-xl p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-medieval-lightred">Cherchez une entité</h2>
+                    <button onclick="showCreateEntityModal()" class="px-6 py-3 bg-gradient-to-r from-green-600/20 to-green-600/30 border-2 border-green-500/80 rounded-lg text-green-400 font-bold tracking-wide hover:from-green-600/30 hover:to-green-600/40 hover:-translate-y-1 transition-all duration-300">
+                        ➕ Nouvelle entitée
+                    </button>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input
+                            type="text" 
+                            id="entitySearch" 
+                            placeholder="Entrez l'ID d'un chapitre..." 
+                            class="w-full px-4 py-3 pl-12 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            onkeyup="searchChapters()"
+                        >
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-xl">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="entityResults" class="space-y-3">
+                    <p class="text-medieval-cream/70 text-center py-8">Entrez un ID pour rechercher...</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Create Chapter Modal -->
@@ -349,6 +383,108 @@
         </div>
     </div>
 
+
+    <div id="createEntityModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50" onclick="if(event.target === this) hideCreateEntityModal()">
+        <div class="bg-[rgba(42,30,20,0.95)] border border-[rgba(139,40,40,0.5)] rounded-xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <h2 class="text-3xl font-bold text-medieval-lightred mb-6">Créer une Nouvelle Entité</h2>
+            
+            <form id="createEntityForm" onsubmit="createEntity(event)">
+                <div class="space-y-6">
+                    <!-- Titre -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nom</label>
+                        <input 
+                            type="text" 
+                            name="nom"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+
+                    <!-- Content -->
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">PV</label>
+                        <input 
+                            type="number"
+                            name="pv"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Mana</label>
+                        <input 
+                            type="number"
+                            name="mana"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Initiative</label>
+                        <input 
+                            type="number"
+                            name="initiative"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Strength</label>
+                        <input 
+                            type="number"
+                            name="strength"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Attack</label>
+                        <input 
+                            type="number"
+                            name="attack"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block"> Xp </label>
+                        <input 
+                            type="number"
+                            name="xp"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            required
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Boss</label>
+                        <input
+                            type="checkbox"
+                            name="boss"
+                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            value="1"
+                        >
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="mt-8 flex gap-4">
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-green-600/20 to-green-600/30 border-2 border-green-500/80 rounded-lg text-green-400 font-bold tracking-wide hover:from-green-600/30 hover:to-green-600/40 hover:-translate-y-1 transition-all duration-300">
+                        ✓ Créer
+                    </button>
+                    <button type="button" onclick="hideCreateEntityModal()" class="px-6 py-3 bg-gradient-to-r from-gray-600/20 to-gray-600/30 border-2 border-gray-500/80 rounded-lg text-gray-400 font-bold tracking-wide hover:from-gray-600/30 hover:to-gray-600/40 hover:-translate-y-1 transition-all duration-300">
+                        ❌ Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <script>
         function switchTab(tabName) {
             // Hide all tab contents
@@ -634,22 +770,6 @@
             const form = event.target;
             const formData = new FormData(form);
             const messageDiv = document.getElementById('createChapterMessage');
-
-            // Collect links data
-            const links = [];
-            const linkItems = document.querySelectorAll('#createLinksContainer .link-item');
-            linkItems.forEach((item, index) => {
-                const description = item.querySelector('[name^="create_link_description_"]')?.value || '';
-                const next_chapter_id = item.querySelector('[name^="create_link_next_"]')?.value || '';
-                
-                if (description && next_chapter_id) {
-                    links.push({
-                        description: description,
-                        next_chapter_id: next_chapter_id
-                    });
-                }
-            });
-
             const data = {
                 titre: formData.get('titre'),
                 content: formData.get('content'),
@@ -693,9 +813,74 @@
                 messageDiv.textContent = '❌ Erreur de connexion';
                 messageDiv.classList.remove('hidden');
             });
+
+            
+            // Collect links data
+            const links = [];
+            const linkItems = document.querySelectorAll('#createLinksContainer .link-item');
+            linkItems.forEach((item, index) => {
+                const description = item.querySelector('[name^="create_link_description_"]')?.value || '';
+                const next_chapter_id = item.querySelector('[name^="create_link_next_"]')?.value || '';
+                
+                if (description && next_chapter_id) {
+                    links.push({
+                        description: description,
+                        next_chapter_id: next_chapter_id
+                    });
+                }
+            });
         }
 
         let createLinkCounter = 0;
+
+        function showCreateEntityModal() {
+            document.getElementById('createEntityModal').classList.remove('hidden');
+        }
+
+        function hideCreateEntityModal() {
+            document.getElementById('createEntityModal').classList.add('hidden');
+            document.getElementById('createEntityForm').reset();
+        }
+
+        function createEntity(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+
+            const data = {
+                nom: formData.get('nom'),
+                pv:  formData.get('pv'),
+                mana: formData.get('mana'),
+                initiative: formData.get('initiative'),
+                strength: formData.get('strength'),
+                attack: formData.get('attack'),
+                xp: formData.get('xp'),
+                boss: formData.get('boss') ? 1 : 0,
+            };
+
+            fetch('/dashboard/entityCreate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✓ Entité créée avec succès!');
+                    hideCreateEntityModal();
+                    form.reset();
+                } else {
+                    alert('❌ Erreur: ' + (data.error || 'Erreur inconnue'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('❌ Erreur de connexion');
+            });
+        }
 
         function addCreateLinkField() {
             const container = document.getElementById('createLinksContainer');
