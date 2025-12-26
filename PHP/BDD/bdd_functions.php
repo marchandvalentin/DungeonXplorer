@@ -407,6 +407,25 @@ function getPvMax($hero_id)
     return $result ? $result['pv_max'] : null;
 }
 
+function updateManaMax($hero_id, $new_mana_max)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE Hero SET mana_max = :mana_max WHERE id = :id");
+    $stmt->bindParam(':mana_max', $new_mana_max, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function getManaMax($hero_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT mana_max FROM Hero WHERE id = :id");
+    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['mana_max'] : null;
+}
+
 function updateXp($hero_id, $new_xp)
 {
     global $pdo;
@@ -481,9 +500,15 @@ function createHero($user_id, $hero_name, $class_id)
     $base_pv_result = $class_base_pv->fetch(PDO::FETCH_ASSOC);
     $pv_max = $base_pv_result ? $base_pv_result['base_pv'] : 0;
 
+    $class_base_mana = $pdo->prepare("SELECT base_mana FROM Class WHERE id = :class_id");;
+    $class_base_mana->bindParam(':class_id', $class_id, PDO::PARAM_INT);
+    $class_base_mana->execute();
+    $base_mana_result = $class_base_mana->fetch(PDO::FETCH_ASSOC);
+    $mana_max = $base_mana_result ? $base_mana_result['base_mana'] : 0;
+
     // Insert new hero with base stats from class
-    $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, pv, mana, strength, initiative, xp, created_at,pv_max) 
-                              VALUES (:user_id, :name, :class_id, :pv, :mana, :strength, :initiative, :xp, :created_at, :pv_max)");
+    $stmt = $pdo->prepare("INSERT INTO Hero (user_id, name, class_id, pv, mana, strength, initiative, xp, created_at,pv_max, mana_max) 
+                              VALUES (:user_id, :name, :class_id, :pv, :mana, :strength, :initiative, :xp, :created_at, :pv_max, :mana_max)");
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->bindParam(':name', $hero_name, PDO::PARAM_STR);
     $stmt->bindParam(':class_id', $class_id, PDO::PARAM_INT);
@@ -494,6 +519,7 @@ function createHero($user_id, $hero_name, $class_id)
     $stmt->bindValue(':xp', 0, PDO::PARAM_INT);
     $stmt->bindParam(':created_at', $created_at, PDO::PARAM_STR);
     $stmt->bindParam(':pv_max', $pv_max, PDO::PARAM_INT);
+    $stmt->bindParam(':mana_max', $mana_max, PDO::PARAM_INT);
     try {
         $stmt->execute();
 
