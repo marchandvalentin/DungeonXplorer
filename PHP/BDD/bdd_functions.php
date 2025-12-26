@@ -16,38 +16,42 @@ function getItemById($item_id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-    function getAllItems() {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Items ORDER BY name ASC");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+function getAllItems()
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM Items ORDER BY name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function searchItemsByName($searchTerm) {
-        global $pdo;
-        $searchPattern = '%' . $searchTerm . '%';
-        
-        $stmt = $pdo->prepare(
-            "   SELECT i.id as id, i.name as name, i.description as description, t.typ_libelle as type from Items i
+function searchItemsByName($searchTerm)
+{
+    global $pdo;
+    $searchPattern = '%' . $searchTerm . '%';
+
+    $stmt = $pdo->prepare(
+        "   SELECT i.id as id, i.name as name, i.description as description, t.typ_libelle as type from Items i
                 JOIN Type_Item t on (t.typ_id = i.typ_id)
-                WHERE UPPER(i.name) like UPPER(:search);");
+                WHERE UPPER(i.name) like UPPER(:search);"
+    );
 
-        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+    $stmt->execute();
 
-    function updateItem($item_id, $name, $description, $type) {
-        global $pdo;
-        
-        // Just update name and description, don't change type
-        $stmt = $pdo->prepare("UPDATE Items SET name = :name, description = :description WHERE id = :id");
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function updateItem($item_id, $name, $description, $type)
+{
+    global $pdo;
+
+    // Just update name and description, don't change type
+    $stmt = $pdo->prepare("UPDATE Items SET name = :name, description = :description WHERE id = :id");
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 
 function getItemTypeById($item_id)
 {
@@ -126,10 +130,11 @@ function addInInventoryWithItemName($hero_id, $item_name, $quantity)
     }
 }
 
-function inventoryPreset($hero_id){
+function inventoryPreset($hero_id)
+{
     $heroClass = getClassByHeroId($hero_id)['name'];
 
-    switch($heroClass){
+    switch ($heroClass) {
         case 'Guerrier':
             addInInventoryWithItemName($hero_id, 'épée courte', 1);
             addInInventoryWithItemName($hero_id, 'bouclier en bois', 1);
@@ -140,7 +145,7 @@ function inventoryPreset($hero_id){
             addInInventoryWithItemName($hero_id, 'sceptre de magicien anormal', 1);
             addInInventoryWithItemName($hero_id, 'robe de mage', 1);
             addInInventoryWithItemName($hero_id, 'potion de mana', 2);
-            addInInventoryWithItemName($hero_id, 'potion de soin',1);
+            addInInventoryWithItemName($hero_id, 'potion de soin', 1);
 
             global $pdo;
             $stmt = $pdo->prepare("SELECT name FROM Items WHERE typ_id = (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'sort')");
@@ -198,51 +203,6 @@ function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
         return $stmt->execute();
     }
 
-    ////////////////// WEAPON FUNCTIONS ///////////////////////
-
-    function getWeaponById($weapon_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Items WHERE id = :id AND typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme')");
-        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    function getDamageFromWeaponId($weapon_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'force')");
-        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['damage'] : null;
-    }
-
-    function getInitiativeFromWeaponId($weapon_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'initiative')");
-        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['initiative'] : null;
-    }
-
-    function getManaFromWeaponId($weapon_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'mana')");
-        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['mana'] : null;
-    }
-
-    function getAllWeapons() {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Items WHERE typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme') ORDER BY name ASC");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
 }
 
 /**
@@ -281,6 +241,55 @@ function clearInventory($hero_id)
     $stmt = $pdo->prepare("DELETE FROM Inventory WHERE hero_id = :hero_id");
     $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
     return $stmt->execute();
+}
+
+////////////////// WEAPON FUNCTIONS ///////////////////////
+
+function getWeaponById($weapon_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM Items WHERE id = :id AND typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme')");
+    $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function getDamageFromWeaponId($weapon_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'force')");
+    $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['damage'] : null;
+}
+
+function getInitiativeFromWeaponId($weapon_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'initiative')");
+    $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['initiative'] : null;
+}
+
+function getManaFromWeaponId($weapon_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'mana')");
+    $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['mana'] : null;
+}
+
+function getAllWeapons()
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM Items WHERE typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme') ORDER BY name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 ////////////////// HERO FUNCTIONS ///////////////////////
@@ -417,26 +426,28 @@ function getXp($hero_id)
     return $result ? $result['xp'] : null;
 }
 
-    function updateHeroStats($hero_id, $pv, $mana) {
-        global $pdo;
-        $stmt = $pdo->prepare("UPDATE Hero SET pv = :pv, mana = :mana WHERE id = :id");
-        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
-        $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
-        $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
+function updateHeroStats($hero_id, $pv, $mana)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE Hero SET pv = :pv, mana = :mana WHERE id = :id");
+    $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+    $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 
-    function updateHeroFullStats($hero_id, $xp, $pv, $strength, $mana, $initiative) {
-        global $pdo;
-        $stmt = $pdo->prepare("UPDATE Hero SET xp = :xp, pv = :pv, strength = :strength, mana = :mana, initiative = :initiative WHERE id = :id");
-        $stmt->bindParam(':xp', $xp, PDO::PARAM_INT);
-        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
-        $stmt->bindParam(':strength', $strength, PDO::PARAM_INT);
-        $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
-        $stmt->bindParam(':initiative', $initiative, PDO::PARAM_INT);
-        $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
+function updateHeroFullStats($hero_id, $xp, $pv, $strength, $mana, $initiative)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE Hero SET xp = :xp, pv = :pv, strength = :strength, mana = :mana, initiative = :initiative WHERE id = :id");
+    $stmt->bindParam(':xp', $xp, PDO::PARAM_INT);
+    $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+    $stmt->bindParam(':strength', $strength, PDO::PARAM_INT);
+    $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+    $stmt->bindParam(':initiative', $initiative, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 
 function getHeroCurrentLevel($hero_id)
 {
@@ -503,7 +514,7 @@ function getHeroNameFromID($id)
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result ? $result['name'] : null;
-} 
+}
 
 ////////////////// MONSTER FUNCTIONS ///////////////////////
 
@@ -636,103 +647,114 @@ function getChapterTreasureById($id)
     return $result ? $result['treasure'] : null;
 }
 
-    function getLinksAtChapter($chapter_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT description, next_chapter_id FROM Links WHERE chapter_id = :chapter_id");
-        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+function getLinksAtChapter($chapter_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT description, next_chapter_id FROM Links WHERE chapter_id = :chapter_id");
+    $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getLinksWithIdAtChapter($chapter_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT id, description, next_chapter_id FROM Links WHERE chapter_id = :chapter_id");
-        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+function getLinksWithIdAtChapter($chapter_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, description, next_chapter_id FROM Links WHERE chapter_id = :chapter_id");
+    $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function deleteLink($link_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("DELETE FROM Links WHERE id = :id");
-        $stmt->bindParam(':id', $link_id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
+function deleteLink($link_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("DELETE FROM Links WHERE id = :id");
+    $stmt->bindParam(':id', $link_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 
-    function createLink($chapter_id, $description, $next_chapter_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO Links (chapter_id, description, next_chapter_id) VALUES (:chapter_id, :description, :next_chapter_id)");
-        $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
-        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-        $stmt->bindParam(':next_chapter_id', $next_chapter_id, PDO::PARAM_INT);
-        
-        if ($stmt->execute()) {
-            return $pdo->lastInsertId();
-        }
-        return false;
-    }
+function createLink($chapter_id, $description, $next_chapter_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO Links (chapter_id, description, next_chapter_id) VALUES (:chapter_id, :description, :next_chapter_id)");
+    $stmt->bindParam(':chapter_id', $chapter_id, PDO::PARAM_INT);
+    $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+    $stmt->bindParam(':next_chapter_id', $next_chapter_id, PDO::PARAM_INT);
 
-    function updateLink($link_id, $description, $next_chapter_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("UPDATE Links SET description = :description, next_chapter_id = :next_chapter_id WHERE id = :id");
-        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
-        $stmt->bindParam(':next_chapter_id', $next_chapter_id, PDO::PARAM_INT);
-        $stmt->bindParam(':id', $link_id, PDO::PARAM_INT);
-        return $stmt->execute();
+    if ($stmt->execute()) {
+        return $pdo->lastInsertId();
     }
+    return false;
+}
 
-    function getAllChapters() {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Chapter ORDER BY id ASC");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+function updateLink($link_id, $description, $next_chapter_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE Links SET description = :description, next_chapter_id = :next_chapter_id WHERE id = :id");
+    $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+    $stmt->bindParam(':next_chapter_id', $next_chapter_id, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $link_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 
-    function searchChaptersById($searchTerm) {
-        global $pdo;
-        $searchPattern = '%' . $searchTerm . '%';
-        
-        $stmt = $pdo->prepare(
-            "SELECT id, titre, content FROM Chapter 
+function getAllChapters()
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM Chapter ORDER BY id ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function searchChaptersById($searchTerm)
+{
+    global $pdo;
+    $searchPattern = '%' . $searchTerm . '%';
+
+    $stmt = $pdo->prepare(
+        "SELECT id, titre, content FROM Chapter 
              WHERE CAST(id AS CHAR) LIKE :search 
-             ORDER BY id LIMIT 20;");
+             ORDER BY id LIMIT 20;"
+    );
 
-        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+    $stmt->execute();
 
-    function getChapterById($chapter_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT * FROM Chapter WHERE id = :id");
-        $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function updateChapter($chapter_id, $titre, $content, $image) {
-        global $pdo;
-        $stmt = $pdo->prepare("UPDATE Chapter SET titre = :titre, content = :content, image = :image WHERE id = :id");
-        $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
-        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
-        $stmt->bindParam(':image', $image, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
-        return $stmt->execute();
-    }
+function getChapterById($chapter_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT * FROM Chapter WHERE id = :id");
+    $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
-    function createChapter($titre, $content, $image) {
-        global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO Chapter (titre, content, image) VALUES (:titre, :content, :image)");
-        $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
-        $stmt->bindParam(':content', $content, PDO::PARAM_STR);
-        $stmt->bindParam(':image', $image, PDO::PARAM_STR);
-        
-        if ($stmt->execute()) {
-            return $pdo->lastInsertId();
-        }
-        return false;
+function updateChapter($chapter_id, $titre, $content, $image)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE Chapter SET titre = :titre, content = :content, image = :image WHERE id = :id");
+    $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+    $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+    $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $chapter_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function createChapter($titre, $content, $image)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO Chapter (titre, content, image) VALUES (:titre, :content, :image)");
+    $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+    $stmt->bindParam(':content', $content, PDO::PARAM_STR);
+    $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+
+    if ($stmt->execute()) {
+        return $pdo->lastInsertId();
     }
+    return false;
+}
 
 ////////////////// PROGRESS FUNCTIONS ///////////////////////
 
@@ -831,53 +853,55 @@ function getUserByEmail($user_email)
     return $user;
 }
 
-    function getUserById($user_id) {
-        global $pdo;
-        // Try both column name variations
-        $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id OR USER_ID = :user_id");
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // If user not found, return false
-        if (!$user) {
-            return false;
-        }
+function getUserById($user_id)
+{
+    global $pdo;
+    // Try both column name variations
+    $stmt = $pdo->prepare("SELECT * FROM Users WHERE user_id = :user_id OR USER_ID = :user_id");
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-         // If user exists, check admin status
-        if (isset($user['USER_ID'])) {
-            $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
-            $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
-            $val_admin->execute();
-            $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
-
-            $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
-        } else {
-            $user['IS_ADMIN'] = false;
-        }
-
-        return $user;
+    // If user not found, return false
+    if (!$user) {
+        return false;
     }
 
-    function updateUserProfile($userId, $name, $email, $password = null) {
-        global $pdo;
-        
-        if ($password) {
-            // Update with password
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE Users SET user_name = :name, user_email = :email, user_password_hash = :password WHERE user_id = :id");
-            $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
-        } else {
-            // Update without password
-            $stmt = $pdo->prepare("UPDATE Users SET user_name = :name, user_email = :email WHERE user_id = :id");
-        }
-        
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
-        
-        return $stmt->execute();
+    // If user exists, check admin status
+    if (isset($user['USER_ID'])) {
+        $val_admin = $pdo->prepare("SELECT count(*) FROM admin WHERE user_id = :user_id");
+        $val_admin->bindParam(':user_id', $user['USER_ID'], PDO::PARAM_INT);
+        $val_admin->execute();
+        $admin_result = $val_admin->fetch(PDO::FETCH_ASSOC);
+
+        $user['IS_ADMIN'] = (isset($admin_result['count(*)']) && $admin_result['count(*)'] > 0) ? true : false;
+    } else {
+        $user['IS_ADMIN'] = false;
     }
+
+    return $user;
+}
+
+function updateUserProfile($userId, $name, $email, $password = null)
+{
+    global $pdo;
+
+    if ($password) {
+        // Update with password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("UPDATE Users SET user_name = :name, user_email = :email, user_password_hash = :password WHERE user_id = :id");
+        $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
+    } else {
+        // Update without password
+        $stmt = $pdo->prepare("UPDATE Users SET user_name = :name, user_email = :email WHERE user_id = :id");
+    }
+
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+
+    return $stmt->execute();
+}
 
 /////////////////////// DASHBOARD FUNCTIONS ///////////////////////
 
@@ -891,40 +915,44 @@ function getAllUsers()
     return $res['count(*)'];
 }
 
-    function searchUsersByName($searchTerm) {
-        global $pdo;
-        $searchPattern = '%' . $searchTerm . '%';
-        
-        $stmt = $pdo->prepare(
-            " SELECT u.user_id, u.user_name, u.user_email, COUNT(h.id) as hero_count FROM Users u 
+function searchUsersByName($searchTerm)
+{
+    global $pdo;
+    $searchPattern = '%' . $searchTerm . '%';
+
+    $stmt = $pdo->prepare(
+        " SELECT u.user_id, u.user_name, u.user_email, COUNT(h.id) as hero_count FROM Users u 
               LEFT JOIN Hero h ON u.user_id = h.user_id 
               WHERE UPPER(u.user_name) LIKE UPPER(:search) 
               GROUP BY u.user_id, u.user_name, u.user_email 
-              ORDER BY u.user_name LIMIT 20;");
+              ORDER BY u.user_name LIMIT 20;"
+    );
 
-        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+    $stmt->execute();
 
-    function searchHeroesByName($searchTerm) {
-        global $pdo;
-        $searchPattern = '%' . $searchTerm . '%';
-        
-        $stmt = $pdo->prepare(
-            " SELECT h.id as hero_id, h.name as hero_name, h.xp, h.pv, c.name as class_name, u.user_name as owner_name, u.user_id 
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function searchHeroesByName($searchTerm)
+{
+    global $pdo;
+    $searchPattern = '%' . $searchTerm . '%';
+
+    $stmt = $pdo->prepare(
+        " SELECT h.id as hero_id, h.name as hero_name, h.xp, h.pv, c.name as class_name, u.user_name as owner_name, u.user_id 
               FROM Hero h 
               JOIN Class c ON h.class_id = c.id 
               JOIN Users u ON h.user_id = u.user_id 
               WHERE UPPER(h.name) LIKE UPPER(:search) 
-              ORDER BY h.name LIMIT 20;");
+              ORDER BY h.name LIMIT 20;"
+    );
 
-        $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 function getActiveHeroes()
 {
@@ -1017,36 +1045,40 @@ function getTotalChapters()
     return $result['count'];
 }
 
-    // Get all classes from database
-    function getAllClasses() {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class ORDER BY name ASC");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+// Get all classes from database
+function getAllClasses()
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class ORDER BY name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
-    function getClassById($class_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class WHERE id = :id");
-        $stmt->bindParam(':id', $class_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+function getClassById($class_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, name, description, base_pv, base_mana, strength, initiative FROM Class WHERE id = :id");
+    $stmt->bindParam(':id', $class_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
-    function getClassByHeroId($hero_id) {
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT c.id, c.name, c.description, c.base_pv, c.base_mana, c.strength, c.initiative 
+function getClassByHeroId($hero_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT c.id, c.name, c.description, c.base_pv, c.base_mana, c.strength, c.initiative 
                                FROM Class c 
                                JOIN Hero h ON c.id = h.class_id 
                                WHERE h.id = :hero_id");
-        $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-    
-    
+    $stmt->bindParam(':hero_id', $hero_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
 ////////////////// PROPERTIES FUNCTIONS ///////////////////////
-function getItemPropertyById($item_id){
+function getItemPropertyById($item_id)
+{
     global $pdo;
 
     $properties = [];
