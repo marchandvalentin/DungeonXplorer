@@ -1,4 +1,5 @@
 // Combat state variables
+console.log('fight.js is loading...');
 let hero, monster, chapterId, weapon1, weapon2, turnCount, isPlayerTurn;
 
 function firstturnOrder(player, enemy) {

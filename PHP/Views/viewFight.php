@@ -9,7 +9,21 @@
     <title>DungeonXPlorer - Combat</title>
 </head>
 <body class="text-medieval-cream" style="background: linear-gradient(135deg, #0d0b0a 0%, #1a1614 50%, #0d0b0a 100%);">
-    <?php 
+    <?php
+    // DEBUG - Check if variables are set
+    if (!isset($hero)) {
+        echo '<div style="background:red;color:white;padding:20px;">ERROR: $hero is not set!</div>';
+    }
+    if (!isset($monster)) {
+        echo '<div style="background:red;color:white;padding:20px;">ERROR: $monster is not set!</div>';
+    }
+    if (!isset($weapon1)) {
+        echo '<div style="background:orange;color:white;padding:20px;">WARNING: $weapon1 is not set!</div>';
+    }
+    if (!isset($weapon2)) {
+        echo '<div style="background:orange;color:white;padding:20px;">WARNING: $weapon2 is not set!</div>';
+    }
+    
     function getHeroIcon($hero) {
         $class = strtolower($hero['class'] ?? '');
         $icons = [
@@ -220,14 +234,22 @@
         window.currentChapterId = <?php echo $chapter_id; ?>;
         
         // DEBUG - Check if data is loaded correctly
+        console.log('=== SCRIPT INLINE START ===');
         console.log('Hero Data:', window.heroData);
         console.log('Weapon 1:', window.weapon1);
         console.log('Weapon 2:', window.weapon2);
         console.log('Monster Data:', window.monsterData);
         console.log('Chapter ID:', window.currentChapterId);
+        console.log('=== SCRIPT INLINE END ===');
     </script>
     
+    <script>
+        console.log('About to load fight.js...');
+    </script>
     <script src="/JS/fight.js"></script>
+    <script>
+        console.log('After fight.js script tag');
+    </script>
 
     <?php include 'PHP/footer.php'; ?>
 </body>
