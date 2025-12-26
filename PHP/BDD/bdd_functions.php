@@ -469,6 +469,27 @@
         return false;
     }
 
+
+    ///////////////////Entity functions///////////////////
+
+    function createEntity($nom, $pv, $Mana,$Initiative,$Strength,$Attack,$Xp, $Boss) {
+        global $pdo;
+        $stmt = $pdo->prepare("INSERT INTO Monster (name, pv, mana, initative, strength, attack, xp, isboss) VALUES (:name, :pv, :mana, :initative, :strength, :attack, :xp, :isboss)");
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+        $stmt->bindParam(':mana', $mana, PDO::PARAM_INT);
+        $stmt->bindParam(':initiative', $Initiative, PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $Strength, PDO::PARAM_INT);
+        $stmt->bindParam(':attack', $Attack, PDO::PARAM_INT);
+        $stmt->bindParam(':xp', $Xp, PDO::PARAM_INT);
+        $stmt->bindParam(':isboss', $Boss, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            return $pdo->lastInsertId();
+        }
+        return false;
+    }
+
     ////////////////// PROGRESS FUNCTIONS ///////////////////////
 
     function saveHeroProgress($hero_id, $chapter_id, $status) {

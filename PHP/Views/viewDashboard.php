@@ -395,7 +395,7 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Nom</label>
                         <input 
                             type="text" 
-                            name="Nom"
+                            name="nom"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                             required
                         >
@@ -416,8 +416,9 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Mana</label>
                         <input 
                             type="number"
-                            name="Mana"
+                            name="mana"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            require
                         >
                     </div>
 
@@ -425,7 +426,7 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Initiative</label>
                         <input 
                             type="number"
-                            name="Initiative"
+                            name="initiative"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                             require
                         >
@@ -435,7 +436,7 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Strength</label>
                         <input 
                             type="number"
-                            name="Strength"
+                            name="strength"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                             require
                         >
@@ -445,7 +446,7 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Attack</label>
                         <input 
                             type="number"
-                            name="Attack"
+                            name="attack"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                         >
                     </div>
@@ -454,7 +455,7 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block"> Xp </label>
                         <input 
                             type="number"
-                            name="Xp"
+                            name="xp"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                             require
                         >
@@ -464,19 +465,10 @@
                         <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Boss</label>
                         <input
                             type="checkbox"
-                            name="Boss"
+                            name="boss"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
+                            value="1"
                             require
-                        >
-                    </div>
-
-                    <!-- Image -->
-                    <div>
-                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Image (URL)</label>
-                        <input 
-                            type="text" 
-                            name="image"
-                            class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                         >
                     </div>
                 </div>
@@ -779,54 +771,6 @@
             const form = event.target;
             const formData = new FormData(form);
             const messageDiv = document.getElementById('createChapterMessage');
-
-            // Collect links data
-            const links = [];
-            const linkItems = document.querySelectorAll('#createLinksContainer .link-item');
-            linkItems.forEach((item, index) => {
-                const description = item.querySelector('[name^="create_link_description_"]')?.value || '';
-                const next_chapter_id = item.querySelector('[name^="create_link_next_"]')?.value || '';
-                
-                if (description && next_chapter_id) {
-                    links.push({
-                        description: description,
-                        next_chapter_id: next_chapter_id
-                    });
-                }
-            });
-        }
-
-        function showCreateEntityModal() {
-            document.getElementById('createEntityModal').classList.remove('hidden');
-        }
-
-        function hideCreateEntityModal() {
-            document.getElementById('createEntityModal').classList.add('hidden');
-            document.getElementById('createEntityForm').reset();
-        }
-
-        function createEntity(event) {
-            event.preventDefault();
-            
-            const form = event.target;
-            const formData = new FormData(form);
-            const messageDiv = document.getElementById('createChapterMessage');
-
-            
-
-            const data = {
-                titre: formData.get('titre'),
-                pv:  formData.get('pv'),
-                mana: formData.get('mana'),
-                initiative: formData.get('initiative'),
-                strength: formData.get('strength'),
-                attack: formData.get('attack'),
-                xp: formData.get('xp'),
-                isboss: formData.get('isboss'),
-                image: formData.get('image'),
-            };
-        }
-
             const data = {
                 titre: formData.get('titre'),
                 content: formData.get('content'),
@@ -871,7 +815,61 @@
                 messageDiv.classList.remove('hidden');
             });
 
+            
+            // Collect links data
+            const links = [];
+            const linkItems = document.querySelectorAll('#createLinksContainer .link-item');
+            linkItems.forEach((item, index) => {
+                const description = item.querySelector('[name^="create_link_description_"]')?.value || '';
+                const next_chapter_id = item.querySelector('[name^="create_link_next_"]')?.value || '';
+                
+                if (description && next_chapter_id) {
+                    links.push({
+                        description: description,
+                        next_chapter_id: next_chapter_id
+                    });
+                }
+            });
+        }
+
         let createLinkCounter = 0;
+
+        function showCreateEntityModal() {
+            document.getElementById('createEntityModal').classList.remove('hidden');
+        }
+
+        function hideCreateEntityModal() {
+            document.getElementById('createEntityModal').classList.add('hidden');
+            document.getElementById('createEntityForm').reset();
+        }
+
+        function createEntity(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+
+            
+
+            const data = {
+                titre: formData.get('titre'),
+                pv:  formData.get('pv'),
+                mana: formData.get('mana'),
+                initiative: formData.get('initiative'),
+                strength: formData.get('strength'),
+                attack: formData.get('attack'),
+                xp: formData.get('xp'),
+                isboss: formData.get('boss'),
+            };
+
+            fetch('/dashboard/entityCreate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+        }
 
         function addCreateLinkField() {
             const container = document.getElementById('createLinksContainer');
