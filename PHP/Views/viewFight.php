@@ -184,27 +184,27 @@
             name: "<?php echo htmlspecialchars($hero['name']); ?>",
             heroClass: "<?php echo strtolower($hero['class'] ?? ''); ?>",
             pv: <?php echo $hero['pv']; ?>,
-            maxPv: <?php echo $hero['max_pv']; ?>,
+            maxPv: <?php echo $hero['pv_max']; ?>,
             mana: <?php echo $hero['mana']; ?>,
-            maxMana: <?php echo $hero['max_mana']; ?>,
+            maxMana: <?php echo $hero['mana_max']; ?>,
             strength: <?php echo $hero['strength']; ?>,
             initiative: <?php echo $hero['initiative']; ?>,
-            weaponID1: "<?php echo $hero['primary_weapon_item_id'] ?? -1; ?>",
-            weaponID2: "<?php echo $hero['secondary_weapon_item_id'] ?? -1; ?>"
+            weaponID1: <?php echo $hero['primary_weapon_item_id'] ?? -1; ?>,
+            weaponID2: <?php echo $hero['secondary_weapon_item_id'] ?? -1; ?>
         };
 
-        window.weaponData1 = {
-            id: "<?php echo $hero['primary_weapon_item_id'] ?? -1; ?>",
-            name: "<?php echo htmlspecialchars($weapon1['name'] ?? ''); ?>",
+        window.weapon1 = {
+            id: <?php echo $hero['primary_weapon_item_id'] ?? -1; ?>,
+            name: "<?php echo htmlspecialchars($weapon1['name'] ?? 'Arme Principale'); ?>",
             description: "<?php echo htmlspecialchars($weapon1['description'] ?? ''); ?>",
-            effect: "<?php echo getDamageFromWeaponId($hero['primary_weapon_item_id'] ?? -1); ?>",
+            effect: <?php echo getDamageFromWeaponId($hero['primary_weapon_item_id'] ?? -1); ?>
         };
 
-        window.weaponData2 = {
-            id: "<?php echo $hero['secondary_weapon_item_id'] ?? -1; ?>",
-            name: "<?php echo htmlspecialchars($weapon2['name'] ?? ''); ?>",
+        window.weapon2 = {
+            id: <?php echo $hero['secondary_weapon_item_id'] ?? -1; ?>,
+            name: "<?php echo htmlspecialchars($weapon2['name'] ?? 'Sans Arme'); ?>",
             description: "<?php echo htmlspecialchars($weapon2['description'] ?? ''); ?>",
-            damage: "<?php echo getDamageFromWeaponId($hero['secondary_weapon_item_id'] ?? -1); ?>",
+            effect: <?php echo getDamageFromWeaponId($hero['secondary_weapon_item_id'] ?? -1); ?>
         };
 
         window.monsterData = {
@@ -217,8 +217,6 @@
             initiative: <?php echo $monster['initiative']; ?>
         };
 
-        window.currentChapterId = <?php echo $chapter_id; ?>;
-        
         window.currentChapterId = <?php echo $chapter_id; ?>;
     </script>
     

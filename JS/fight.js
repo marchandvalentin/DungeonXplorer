@@ -217,9 +217,11 @@ if (window.heroData && window.monsterData && window.currentChapterId !== undefin
     
     if (attackBtnPrimary && attackBtnSecondary && magicBtn && fleeBtn) {
         attackBtnPrimary.addEventListener('click', function() {
+            console.log('Primary weapon attack');
             playerAttack(weapon1);
         });
         attackBtnSecondary.addEventListener('click', function() {
+            console.log('Secondary weapon attack');
             playerAttack(weapon2);
         });
         magicBtn.addEventListener('click', function() {

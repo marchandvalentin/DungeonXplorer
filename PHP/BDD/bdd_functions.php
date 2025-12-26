@@ -261,7 +261,7 @@ function getDamageFromWeaponId($weapon_id)
     $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result ? $result['damage'] : null;
+    return $result ? $result['value_of_property'] : 0;
 }
 
 function getInitiativeFromWeaponId($weapon_id)
