@@ -1,4 +1,4 @@
-# Treasure Hunter
+# DungeonXplorer
 
 Ce projet universitaire a pour objectif de créer un site web de type **« Un livre dont vous êtes le héros »**, basé sur un travail déjà entamé par une ancienne équipe. Nous avons donc dû reprendre contact avec le client afin d’obtenir des informations complémentaires, modifier la base de données existante et, bien entendu, concevoir et développer l’intégralité du site web.
 
