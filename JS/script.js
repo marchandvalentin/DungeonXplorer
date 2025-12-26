@@ -61,8 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Auto-opening inventory from URL parameter');
             openModal.setAttribute('src', '/res/sacImg/sac_ouvert_plein.png');
             modal.classList.remove('hidden');
-            // Remove the parameter from URL without page reload
-            window.history.replaceState({}, '', window.location.pathname);
         }
     } else {
         console.error('Missing modal elements!');

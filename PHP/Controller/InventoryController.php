@@ -29,6 +29,8 @@ class InventoryController
 
             // Get item details
             $item = getItemById($item_id);
+            $hpAlreadyFull = false;
+            $itemWasUsed = false;
             
             if ($item) {
                 // Apply item effect based on item type
@@ -37,39 +39,54 @@ class InventoryController
                 foreach($itemProperties as $property){
                     switch($property['prop_libelle']){
                         case 'pv':
-                            $new_hp =  $hero['pv'] + $property['value_of_property'];
-                            updateHeroPV($hero_id, $new_hp);
+                            if($hero['pv'] < $hero['pv_max']){
+                                $new_hp =  $hero['pv'] + $property['value_of_property'];
+                                updateHeroPV($hero_id, min($hero['pv_max'], $new_hp));
+                                $itemWasUsed = true;
+                            }
+                            else{
+                                // If HP is already full, mark it but continue processing other properties
+                                $hpAlreadyFull = true;
+                            }
                             break;
                         case 'mana':
                             if ($class['name'] !== 'Guerrier') {
                                 $new_mana = $hero['mana'] + $property['value_of_property'];
                                 updateHeroMana($hero_id, $new_mana);
+                                $itemWasUsed = true;
                             }
                             break;
                         case 'force':
                             $new_strength = $hero['strength'] + $property['value_of_property'];
                             updateHeroStrength($hero_id, $new_strength);
+                            $itemWasUsed = true;
                             break;
                         case 'initiative':
                             $new_initiative = $hero['initiative'] + $property['value_of_property'];
                             updateHeroInitiative($hero_id, $new_initiative);
+                            $itemWasUsed = true;
                             break;
                         case 'xp':
                             $new_xp = $hero['xp'] + $property['prop_value'];
                             updateXP($hero_id, $new_xp);
+                            $itemWasUsed = true;
                             break;
                     }
                 }
                 
-                // Remove one quantity of the item from inventory
-                removeFromInventoryWithItemName($hero_id, $item_name, 1);
+                // Only remove item from inventory if at least one property was applied
+                if ($itemWasUsed) {
+                    removeFromInventoryWithItemName($hero_id, $item_name, 1);
+                }
             }
 
             // Get current chapter to redirect back
             $progress = getHeroProgress($hero_id);
             $chapter_id = $progress['chapter_id'] ?? 1;
             
-            header("Location: /chapter/{$hero_id}/{$chapter_id}?openInventory=1");
+            // Add notification message only if HP was full AND no properties were applied
+            $notificationParam = ($hpAlreadyFull && !$itemWasUsed) ? '&notification=hpFull' : '';
+            header("Location: /chapter/{$hero_id}/{$chapter_id}?openInventory=1{$notificationParam}");
             exit();
         }
     }
@@ -111,6 +128,8 @@ class InventoryController
                 // Equip the item based on type
                 if ($itemType === 'arme') {
                     updatePrimaryWeaponById($hero_id, $item_id);
+                }elseif($itemType === 'bouclier') {
+                    updateShieldById($hero_id, $item_id);
                 } elseif ($itemType === 'armure') {
                     updateHeroArmorById($hero_id, $item_id);
                 }
@@ -118,8 +137,8 @@ class InventoryController
                 foreach($itemProps as $property){
                     switch($property['prop_libelle']){
                         case 'pv':
-                            $new_hp =  $hero['pv'] + $property['value_of_property'];
-                            updateHeroPV($hero_id, $new_hp);
+                            $new_pv_max =  $hero['pv_max'] + $property['value_of_property'];
+                            updatePvMax($hero_id, $new_pv_max);
                             break;
                         case 'mana':
                             if ($class['name'] !== 'Guerrier') {
@@ -190,6 +209,9 @@ class InventoryController
                     } elseif ($hero['secondary_weapon_item_id'] == $item_id) {
                         updateSecondaryWeaponById($hero_id, null);
                     }
+                elseif($itemType === 'bouclier') {
+                    updateShieldById($hero_id, null);
+                }
                 } elseif ($itemType === 'armure') {
                     updateHeroArmorById($hero_id, null);
                 }
@@ -197,8 +219,9 @@ class InventoryController
                 foreach($itemProps as $property){
                     switch($property['prop_libelle']){
                         case 'pv':
-                            $new_hp =  $hero['pv'] - $property['value_of_property'];
-                            updateHeroPV($hero_id, $new_hp);
+                            $new_hp =  $hero['pv_max'] - $property['value_of_property'];
+                            updatePvMax($hero_id, $new_hp);
+                            updateHeroPV($hero_id, min($hero['pv'], $new_hp));
                             break;
                         case 'mana':
                             if ($class['name'] !== 'Guerrier') {

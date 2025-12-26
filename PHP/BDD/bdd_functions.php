@@ -333,6 +333,25 @@ function updateShieldById($hero_id, $new_shield_id)
     return $stmt->execute();
 }
 
+function updatePvMax($hero_id, $new_pv_max)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("UPDATE Hero SET pv_max = :pv_max WHERE id = :id");
+    $stmt->bindParam(':pv_max', $new_pv_max, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
+
+function getPvMax($hero_id)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT pv_max FROM Hero WHERE id = :id");
+    $stmt->bindParam(':id', $hero_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result ? $result['pv_max'] : null;
+}
+
 function updateXp($hero_id, $new_xp)
 {
     global $pdo;

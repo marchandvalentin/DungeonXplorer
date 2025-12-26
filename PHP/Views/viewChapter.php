@@ -1,5 +1,40 @@
 <?php include 'PHP/header.php'; ?>
     
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="<?php echo (isset($_GET['notification']) && $_GET['notification'] === 'hpFull') ? '' : 'hidden'; ?> fixed top-8 right-8 z-[9999] bg-gradient-to-br from-[rgba(42,30,20,0.95)] to-[rgba(26,22,20,0.98)] border-2 border-medieval-red/80 rounded-xl shadow-[0_10px_40px_rgba(198,40,40,0.5)] p-4 min-w-[300px] transition-all duration-500 ease-out" style="<?php echo (isset($_GET['notification']) && $_GET['notification'] === 'hpFull') ? 'transform: translateX(0); opacity: 1;' : 'transform: translateX(400px); opacity: 0;'; ?>">
+        <div class="flex items-center gap-3">
+            <div class="flex-shrink-0 w-10 h-10 bg-medieval-red/30 rounded-full flex items-center justify-center border-2 border-medieval-red/60">
+                <span class="text-2xl">❤️</span>
+            </div>
+            <div class="flex-1">
+                <p class="text-medieval-cream font-bold text-sm" id="notificationMessage">Votre vie est déjà pleine</p>
+            </div>
+            <button onclick="document.getElementById('notificationToast').style.opacity='0'; document.getElementById('notificationToast').style.transform='translateX(400px)'; setTimeout(function(){document.getElementById('notificationToast').classList.add('hidden');}, 500);" class="flex-shrink-0 text-medieval-cream/60 hover:text-medieval-cream transition-colors duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <?php if (isset($_GET['notification']) && $_GET['notification'] === 'hpFull'): ?>
+    <script>
+    // Auto-hide notification after 3 seconds
+    setTimeout(function() {
+        var toast = document.getElementById('notificationToast');
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(400px)';
+        setTimeout(function() {
+            toast.classList.add('hidden');
+            // Clean URL without reloading
+            var url = new URL(window.location);
+            url.searchParams.delete('notification');
+            window.history.replaceState({}, '', url.toString());
+        }, 500);
+    }, 3000);
+    </script>
+    <?php endif; ?>
+    
     <!-- Save and Quit Button -->
     <div class="max-w-7xl mx-auto px-6 pt-6">
         <button onclick="window.location.href='/save/<?php echo htmlspecialchars($hero['id']); ?>/<?php echo htmlspecialchars($chapter_id); ?>'" class="flex items-center gap-2 px-4 py-2 bg-[rgba(42,30,20,0.5)] border-2 border-[rgba(139,40,40,0.3)] rounded-lg text-medieval-cream text-sm font-bold hover:bg-[rgba(139,40,40,0.3)] hover:border-medieval-red/60 transition-all duration-300">
@@ -16,7 +51,7 @@
                     <!-- Circular Health Display -->
                     <?php 
                     $pv = $hero['pv'] ?? 0;
-                    $maxPv = 100; // You can adjust this or pull from DB
+                    $maxPv = $hero['pv_max'] ?? 1;
                     $pvPercentage = min(100, max(0, ($pv / $maxPv) * 100));
                     
                     // Color based on health percentage
