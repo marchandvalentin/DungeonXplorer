@@ -24,7 +24,7 @@
                     <span class="text-medieval-cream">votre aventure médiévale fantaisie commence ici.</span>
                 </p>
                 <div class="flex flex-wrap justify-center gap-4 pt-8">
-                    <a href="createAccount.php" class="px-8 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-lg tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(198,40,40,0.4)] transition-all duration-300">
+                    <a href="<?php if(isset($_SESSION['user_id'])) echo "/heros"; else echo "/login"; ?>" class="px-8 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold text-lg tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(198,40,40,0.4)] transition-all duration-300">
                         Commencer l'Aventure !
                     </a>
                 </div>
@@ -77,9 +77,6 @@
             <p class="text-xl text-medieval-cream mb-8 max-w-2xl mx-auto">
                 Rejoignez des milliers d'aventuriers et plongez dans un monde de magie, de mystères et de batailles épiques.
             </p>
-            <a href="createAccount.php" class="inline-block px-10 py-5 bg-gradient-to-r from-medieval-red/30 to-medieval-red/40 border-2 border-medieval-red text-white font-bold text-xl tracking-wide rounded-lg hover:from-medieval-red/40 hover:to-medieval-red/50 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(198,40,40,0.5)] transition-all duration-300">
-                Créer Mon Compte Gratuitement
-            </a>
         </div>
     </section>
     

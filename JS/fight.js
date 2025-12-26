@@ -1,14 +1,26 @@
 // Combat state variables
-let hero, monster, chapterId, weapon1, weapon2, turnCount, isPlayerTurn;
+let hero, monster, chapterId, turnCount, isPlayerTurn;
 
+/**
+ * Determines who gets the first turn in combat.
+ * Rolls a d6 for each combatant and adds their initiative.
+ * Player wins ties.
+ * @param {Object} player - The player character
+ * @param {Object} enemy - The enemy monster
+ * @returns {string} 'player' or 'enemy'
+ */
 function firstturnOrder(player, enemy) {
     let initP = Math.floor(Math.random() * 6) + 1 + player.initiative;
     let initE = Math.floor(Math.random() * 6) + 1 + enemy.initiative;
-    if (hero.heroClass == 'voleur') 
-        return (initP >= initE) ? 'player' : 'enemy';
-    return (initP > initE) ? 'player' : 'enemy';
+    return (initP >= initE) ? 'player' : 'enemy';
 }
 
+/**
+ * Determines turn order. After the first turn, alternates between player and enemy.
+ * @param {Object} player - The player character
+ * @param {Object} enemy - The enemy monster
+ * @returns {string} 'player' or 'enemy'
+ */
 function decideTurnOrder(player, enemy) {
     if(turnCount > 1) {
         return isPlayerTurn ? 'player' : 'enemy';
@@ -16,14 +28,31 @@ function decideTurnOrder(player, enemy) {
     return firstturnOrder(player, enemy);
 }
 
-function attackP(attacker, defender, weapon) {
-    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2);
-    let damage = Math.floor(Math.random() * 7) + attacker.strength + (weapon ? (weapon.effect ? weapon.effect : 0) : 0);
+/**
+ * Calculates a physical attack.
+ * Defense = d6 + (defender.strength/2) + armor bonus
+ * Damage = d6 + attacker.strength + weapon bonus
+ * Final damage = max(0, damage - defense)
+ * @param {Object} attacker - The attacking character
+ * @param {Object} defender - The defending character
+ * @returns {Object} {damage, defenderPv}
+ */
+function attackP(attacker, defender) {
+    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2) + (defender.armor?.defense || 0);
+    let damage = Math.floor(Math.random() * 7) + attacker.strength + (attacker.weapon?.damage || 0);
     damage = Math.max(0, damage - defense);
     defender.pv -= damage;
     return {damage, defenderPv: defender.pv};
 }
 
+/**
+ * Calculates a magic attack.
+ * Checks if attacker has enough mana, then deals 2d6 + spell damage.
+ * @param {Object} attacker - The attacking character
+ * @param {Object} defender - The defending character
+ * @param {Object} spell - The spell being cast {manaCost, damage}
+ * @returns {Object} {success, damage, defenderPv, attackerMana} or {success: false, message}
+ */
 function attackM(attacker, defender, spell) {
     if (attacker.mana < spell.manaCost) {
         return {success: false, message: 'Not enough mana'};
@@ -40,17 +69,26 @@ function turnEnd(player, enemy) {}
 
 function checkVictory(player, enemy) {}
 
-// Combat system functions - initializeCombat will set these values
-function initializeCombat(heroData, monsterData, currentChapterId, weapon1Param, weapon2Param) {
+/**
+ * Initializes the combat system with hero and monster data.
+ * Sets up global combat variables and prepares for battle.
+ * @param {Object} heroData - Hero stats (id, name, pv, maxPv, mana, maxMana, strength, initiative)
+ * @param {Object} monsterData - Monster stats (name, pv, maxPv, mana, maxMana, strength, initiative)
+ * @param {number} currentChapterId - The ID of the current chapter
+ */
+function initializeCombat(heroData, monsterData, currentChapterId) {
     hero = heroData;
     monster = monsterData;
     chapterId = currentChapterId;
-    weapon1 = weapon1Param;
-    weapon2 = weapon2Param;
     turnCount = 0;
     isPlayerTurn = true;
 }
 
+/**
+ * Adds a message to the combat log with color coding.
+ * @param {string} message - The message to display
+ * @param {string} type - Message type: 'damage' (red), 'heal' (green), 'normal' (cream)
+ */
 function addLog(message, type = 'normal') {
     const log = document.getElementById('combat-log');
     const p = document.createElement('p');
@@ -78,13 +116,13 @@ function updateStats() {
     document.getElementById('monster-mana-bar').style.width = monsterManaPercent + '%';
 }
 
-function playerAttack(weapon) {
+function playerAttack() {
     if (!isPlayerTurn) {
         return;
     }
 
-    const result = attackP(hero, monster, weapon);
-    addLog(`${hero.name} attaque avec ${weapon.name} et inflige ${result.damage} dégâts!`, 'damage');
+    const result = attackP(hero, monster);
+    addLog(`${hero.name} attaque et inflige ${result.damage} dégâts!`, 'damage');
     updateStats();
     
     if (checkFightEnd()) {
@@ -119,7 +157,7 @@ function enemyTurn() {
     addLog(`C'est au tour de ${monster.name}...`, 'normal');
     
     setTimeout(() => {
-        const result = attackP(monster, hero, null);
+        const result = attackP(monster, hero);
         addLog(`${monster.name} attaque et inflige ${result.damage} dégâts!`, 'damage');
         updateStats();
         
@@ -129,6 +167,11 @@ function enemyTurn() {
     }, 1000);
 }
 
+/**
+ * Checks if the fight has ended (either combatant reached 0 PV).
+ * Displays the result screen if fight is over.
+ * @returns {boolean} True if fight ended, false otherwise
+ */
 function checkFightEnd() {
     if (monster.pv <= 0) {
         showResult(true);
@@ -141,6 +184,11 @@ function checkFightEnd() {
     return false;
 }
 
+/**
+ * Displays the victory or defeat screen.
+ * Hides action buttons and shows result modal with appropriate message.
+ * @param {boolean} victory - True if player won, false if player lost
+ */
 function showResult(victory) {
     document.getElementById('action-buttons').classList.add('hidden');
     const resultScreen = document.getElementById('result-screen');
@@ -165,6 +213,12 @@ function showResult(victory) {
     resultScreen.classList.remove('hidden');
 }
 
+/**
+ * Saves the combat result to the server via AJAX.
+ * Sends hero stats and victory status to /fight/result endpoint.
+ * @param {boolean} victory - True if player won, false if player lost
+ * @returns {Promise} Fetch promise
+ */
 function saveCombatResult(victory) {
     // Send AJAX request to save hero stats and combat result
     return fetch('/fight/result', {
@@ -180,6 +234,10 @@ function saveCombatResult(victory) {
     });
 }
 
+/**
+ * Handles the "Continue" button after fight ends.
+ * Saves combat result and redirects back to chapter view.
+ */
 function continueAfterFight() {
     // Save result, then redirect
     saveCombatResult(window.fightVictory).then(() => {
@@ -207,20 +265,16 @@ function startCombat() {
 
 // Auto-initialize - DOM is already loaded since script is at end of body
 if (window.heroData && window.monsterData && window.currentChapterId !== undefined) {
-    initializeCombat(window.heroData, window.monsterData, window.currentChapterId, window.weapon1, window.weapon2);
+    initializeCombat(window.heroData, window.monsterData, window.currentChapterId);
     
     // Attach event listeners
-    const attackBtnPrimary = document.getElementById('btn-primary-weapon');
-    const attackBtnSecondary = document.getElementById('btn-secondary-weapon');
+    const attackBtn = document.getElementById('btn-attack');
     const magicBtn = document.getElementById('btn-magic');
     const fleeBtn = document.getElementById('btn-flee');
     
-    if (attackBtnPrimary && attackBtnSecondary && magicBtn && fleeBtn) {
-        attackBtnPrimary.addEventListener('click', function() {
-            playerAttack(weapon1);
-        });
-        attackBtnSecondary.addEventListener('click', function() {
-            playerAttack(weapon2);
+    if (attackBtn && magicBtn && fleeBtn) {
+        attackBtn.addEventListener('click', function() {
+            playerAttack();
         });
         magicBtn.addEventListener('click', function() {
             playerMagicAttack();
@@ -232,4 +286,3 @@ if (window.heroData && window.monsterData && window.currentChapterId !== undefin
         startCombat();
     }
 }
-

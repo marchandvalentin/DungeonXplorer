@@ -292,16 +292,16 @@
 
                                     if ($itemType === "armure" || $itemType === "arme"):
                                         ?>
-                                        <form method="POST">
+                                        <form method="POST" action="<?php echo $isEquipped ? '/unequipItem' : '/equipItem'; ?>">
                                             <input type="hidden" name="hero_id"
                                                 value="<?php echo htmlspecialchars($hero['id']); ?>">
                                             <input type="hidden" name="item_id"
                                                 value="<?php echo htmlspecialchars($item['item_id']); ?>">
                                             <?php if ($isEquipped): ?>
-                                                <button type="submit" formaction="/unequipItem"
+                                                <button type="submit"
                                                     class="px-3 sm:px-4 py-2 bg-gradient-to-r from-yellow-900/20 to-yellow-800/30 border-2 border-yellow-600/80 rounded-lg text-yellow-400 font-bold text-xs sm:text-sm tracking-wide hover:from-yellow-800/30 hover:to-yellow-700/40 hover:-translate-y-0.5 transition-all duration-300 flex-1 sm:flex-none whitespace-nowrap">Déséquiper</button>
                                             <?php else: ?>
-                                                <button type="submit" formaction="/equipItem"
+                                                <button type="submit"
                                                     class="px-3 sm:px-4 py-2 bg-gradient-to-r from-green-900/20 to-green-800/30 border-2 border-green-600/80 rounded-lg text-green-400 font-bold text-xs sm:text-sm tracking-wide hover:from-green-800/30 hover:to-green-700/40 hover:-translate-y-0.5 transition-all duration-300 flex-1 sm:flex-none whitespace-nowrap">Équiper</button>
                                             <?php endif; ?>
                                         </form>

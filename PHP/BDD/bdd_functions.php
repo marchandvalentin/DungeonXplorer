@@ -5,7 +5,7 @@ require_once 'connexion.php';
 /**
  * Returns item details by its ID.
  * @param int $item_id
- * @return array
+ * @return array an associative array containing item details
  */
 function getItemById($item_id)
 {
@@ -16,6 +16,10 @@ function getItemById($item_id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Return all items stored in the database.
+ * @return array an array of all items
+ */
 function getAllItems()
 {
     global $pdo;
@@ -24,6 +28,11 @@ function getAllItems()
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Function to search an item by name or part of the name from the database.
+ * @param mixed $searchTerm the name or part of the name to search for
+ * @return array an array of items matching the search term
+ */
 function searchItemsByName($searchTerm)
 {
     global $pdo;
@@ -40,7 +49,14 @@ function searchItemsByName($searchTerm)
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
+/**
+ * Updates an item's details in the database.
+ * @param int $item_id the ID of the item to update
+ * @param string $name the new name of the item
+ * @param string $description the new description of the item
+ * @param string $type the new type of the item
+ * @return bool true on success, false on failure
+ */
 function updateItem($item_id, $name, $description, $type)
 {
     global $pdo;
@@ -52,7 +68,11 @@ function updateItem($item_id, $name, $description, $type)
     $stmt->bindParam(':id', $item_id, PDO::PARAM_INT);
     return $stmt->execute();
 }
-
+/**
+ * Gets the ID of the type of an item by its ID.
+ * @param mixed $item_id the ID of the item
+ * @return mixed the type ID of the item, or null if not found
+ */
 function getItemTypeById($item_id)
 {
     global $pdo;
@@ -64,6 +84,11 @@ function getItemTypeById($item_id)
 }
 
 //////////////// TYPE ITEM FUNCTIONS ///////////////////////
+/**
+ * Gets the libelle (name) of the type of an item by its type ID.
+ * @param mixed $type_id the ID of the type
+ * @return mixed the libelle of the type, or null if not found
+ */
 function getItemTypeLibelle($type_id)
 {
     global $pdo;
@@ -78,8 +103,8 @@ function getItemTypeLibelle($type_id)
 
 /**
  * Returns the inventory items for a given hero ID.
- * @param int $hero_id
- * @return array
+ * @param int $hero_id the ID of the hero
+ * @return array an array of inventory items
  */
 function getInventoryByHeroId($hero_id)
 {
@@ -92,10 +117,10 @@ function getInventoryByHeroId($hero_id)
 
 /**
  * Adds a specified quantity of an item to a hero's inventory by item name.
- * @param int $hero_id
- * @param string $item_name
- * @param int $quantity
- * @return bool
+ * @param int $hero_id the ID of the hero
+ * @param string $item_name the name of the item
+ * @param int $quantity the quantity to add
+ * @return bool true on success, false on failure
  */
 function addInInventoryWithItemName($hero_id, $item_name, $quantity)
 {
@@ -130,6 +155,10 @@ function addInInventoryWithItemName($hero_id, $item_name, $quantity)
     }
 }
 
+/**
+ * Sets up a default inventory preset for a hero based on their class.
+ * @param int $hero_id the ID of the hero
+ */
 function inventoryPreset($hero_id)
 {
     $heroClass = getClassByHeroId($hero_id)['name'];
@@ -159,7 +188,7 @@ function inventoryPreset($hero_id)
 
         case 'Voleur':
             addInInventoryWithItemName($hero_id, 'dague de charognard', 1);
-            addInInventoryWithItemName($hero_id, 'dape de voleur', 1);
+            addInInventoryWithItemName($hero_id, 'cape de voleur', 1);
             addInInventoryWithItemName($hero_id, 'potion de soin', 2);
             break;
     }
@@ -168,9 +197,10 @@ function inventoryPreset($hero_id)
 /**
  * Removes a specified quantity of an item from a hero's inventory by item name.
  * If the quantity to remove is greater than or equal to the current quantity, the item is removed completely.
- * @param int $hero_id
- * @param string $item_name
- * @param int $quantity
+ * @param int $hero_id the ID of the hero
+ * @param string $item_name the name of the item
+ * @param int $quantity the quantity to remove
+ * @return bool true on success, false on failure
  */
 function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
 {
@@ -202,14 +232,14 @@ function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         return $stmt->execute();
     }
-
+    return true;
 }
 
 /**
  * Removes an item completely from a hero's inventory by item name.
- * @param int $hero_id
- * @param string $item_name
- * @return bool
+ * @param int $hero_id the ID of the hero
+ * @param string $item_name the name of the item
+ * @return bool true on success, false on failure
  */
 function removeItemFromInventory($hero_id, $item_name)
 {
@@ -230,8 +260,8 @@ function removeItemFromInventory($hero_id, $item_name)
 
 /**
  * Clears the entire inventory of a hero by hero ID.
- * @param int $hero_id
- * @return bool
+ * @param int $hero_id the ID of the hero
+ * @return bool true on success, false on failure
  */
 function clearInventory($hero_id)
 {
@@ -245,6 +275,11 @@ function clearInventory($hero_id)
 
 ////////////////// WEAPON FUNCTIONS ///////////////////////
 
+/**
+ * Returns weapon details by its ID.
+ * @param int $weapon_id the ID of the weapon
+ * @return array an associative array containing weapon details
+ */
 function getWeaponById($weapon_id)
 {
     global $pdo;
@@ -254,6 +289,16 @@ function getWeaponById($weapon_id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Returns the damage value of a weapon by its ID.
+ * @param int $weapon_id the ID of the weapon
+ * @return int|null the damage value or null if not found
+ */
+/**
+ * Retrieves the damage value (force property) from a weapon.
+ * @param int $weapon_id The ID of the weapon item
+ * @return int|null The damage value or null if weapon has no force property
+ */
 function getDamageFromWeaponId($weapon_id)
 {
     global $pdo;
@@ -261,9 +306,14 @@ function getDamageFromWeaponId($weapon_id)
     $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $result ? $result['damage'] : null;
+    return $result ? $result['value_of_property'] : null;
 }
 
+/**
+ * Returns the initiative value of a weapon by its ID.
+ * @param int $weapon_id the ID of the weapon
+ * @return int|null the initiative value or null if not found
+ */
 function getInitiativeFromWeaponId($weapon_id)
 {
     global $pdo;
@@ -274,6 +324,11 @@ function getInitiativeFromWeaponId($weapon_id)
     return $result ? $result['initiative'] : null;
 }
 
+/**
+ * Returns the mana value of a weapon by its ID.
+ * @param int $weapon_id the ID of the weapon
+ * @return int|null the mana value or null if not found
+ */
 function getManaFromWeaponId($weapon_id)
 {
     global $pdo;
@@ -284,6 +339,10 @@ function getManaFromWeaponId($weapon_id)
     return $result ? $result['mana'] : null;
 }
 
+/**
+ * Return all weapons stored in the database.
+ * @return array an array of all weapons
+ */
 function getAllWeapons()
 {
     global $pdo;
@@ -295,8 +354,8 @@ function getAllWeapons()
 ////////////////// HERO FUNCTIONS ///////////////////////
 /**
  * Returns hero details by its ID.
- * @param int $id
- * @return array
+ * @param int $id the ID of the hero
+ * @return array an associative array containing hero details
  */
 function getHeroById($id)
 {
@@ -307,6 +366,12 @@ function getHeroById($id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+
+/**
+ * Returns heroes by user ID.
+ * @param int $userId the ID of the user
+ * @return array an array of heroes
+ */
 function getHerosByUserId($userId)
 {
     global $pdo;
@@ -322,6 +387,11 @@ function getHerosByUserId($userId)
     return $heros;
 }
 
+/**
+ * Updates hero's health points (PV) by hero ID.
+ * @param int $hero_id the ID of the hero
+ * @param int $new_health the new health points value
+ */
 function updateHeroPV($hero_id, $new_health)
 {
     global $pdo;
@@ -331,6 +401,12 @@ function updateHeroPV($hero_id, $new_health)
     return $stmt->execute();
 }
 
+/**
+ * Updates hero's mana by hero ID.
+ * @param mixed $hero_id the ID of the hero
+ * @param mixed $new_mana   the new mana value
+ * @return bool true on success, false on failure
+ */
 function updateHeroMana($hero_id, $new_mana)
 {
     global $pdo;
@@ -340,6 +416,12 @@ function updateHeroMana($hero_id, $new_mana)
     return $stmt->execute();
 }
 
+/**
+ * Updates hero's strength by hero ID.
+ * @param mixed $hero_id the ID of the hero
+ *  @param mixed $new_strength the new strength value
+ * @return bool true on success, false on failure
+ */
 function updateHeroStrength($hero_id, $new_strength)
 {
     global $pdo;
@@ -500,7 +582,8 @@ function createHero($user_id, $hero_name, $class_id)
     $base_pv_result = $class_base_pv->fetch(PDO::FETCH_ASSOC);
     $pv_max = $base_pv_result ? $base_pv_result['base_pv'] : 0;
 
-    $class_base_mana = $pdo->prepare("SELECT base_mana FROM Class WHERE id = :class_id");;
+    $class_base_mana = $pdo->prepare("SELECT base_mana FROM Class WHERE id = :class_id");
+    ;
     $class_base_mana->bindParam(':class_id', $class_id, PDO::PARAM_INT);
     $class_base_mana->execute();
     $base_mana_result = $class_base_mana->fetch(PDO::FETCH_ASSOC);
@@ -642,6 +725,11 @@ function getMonsterAtEncounter($encounter_id)
     return $monster;
 }
 
+/**
+ * Retrieves the encounter (monster) associated with a specific chapter.
+ * @param int $chapter_id The ID of the chapter
+ * @return array|false An associative array with monster data (id, name, pv, strength, etc.) or false if no encounter
+ */
 function getEncounterAtChapter($chapter_id)
 {
     global $pdo;
@@ -653,6 +741,11 @@ function getEncounterAtChapter($chapter_id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Retrieves chapter information including title, content and image path.
+ * @param int $chapter_id The ID of the chapter
+ * @return array|null An associative array with chapter data (id, titre, content, image) or null if not found
+ */
 function getContentAndImageFromChapterId($chapter_id)
 {
     global $pdo;
@@ -783,25 +876,26 @@ function createChapter($titre, $content, $image)
 }
 
 
-    ///////////////////Entity functions///////////////////
+///////////////////Entity functions///////////////////
 
-    function createEntity($nom, $pv, $Mana,$Initiative,$Strength,$Attack,$Xp, $Boss) {
-        global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO Monster (name, pv, mana, initiative, strength, attack, xp, isboss) VALUES (:name, :pv, :mana, :initiative, :strength, :attack, :xp, :isboss)");
-        $stmt->bindParam(':name', $nom, PDO::PARAM_STR);
-        $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
-        $stmt->bindParam(':mana', $Mana, PDO::PARAM_INT);
-        $stmt->bindParam(':initiative', $Initiative, PDO::PARAM_INT);
-        $stmt->bindParam(':strength', $Strength, PDO::PARAM_INT);
-        $stmt->bindParam(':attack', $Attack, PDO::PARAM_INT);
-        $stmt->bindParam(':xp', $Xp, PDO::PARAM_INT);
-        $stmt->bindParam(':isboss', $Boss, PDO::PARAM_INT);
-        
-        if ($stmt->execute()) {
-            return $pdo->lastInsertId();
-        }
-        return false;
+function createEntity($nom, $pv, $Mana, $Initiative, $Strength, $Attack, $Xp, $Boss)
+{
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO Monster (name, pv, mana, initiative, strength, attack, xp, isboss) VALUES (:name, :pv, :mana, :initiative, :strength, :attack, :xp, :isboss)");
+    $stmt->bindParam(':name', $nom, PDO::PARAM_STR);
+    $stmt->bindParam(':pv', $pv, PDO::PARAM_INT);
+    $stmt->bindParam(':mana', $Mana, PDO::PARAM_INT);
+    $stmt->bindParam(':initiative', $Initiative, PDO::PARAM_INT);
+    $stmt->bindParam(':strength', $Strength, PDO::PARAM_INT);
+    $stmt->bindParam(':attack', $Attack, PDO::PARAM_INT);
+    $stmt->bindParam(':xp', $Xp, PDO::PARAM_INT);
+    $stmt->bindParam(':isboss', $Boss, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
+        return $pdo->lastInsertId();
     }
+    return false;
+}
 
 ////////////////// PROGRESS FUNCTIONS ///////////////////////
 

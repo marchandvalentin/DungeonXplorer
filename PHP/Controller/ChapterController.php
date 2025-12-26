@@ -2,6 +2,15 @@
     require_once __DIR__ . '/../BDD/bdd_functions.php';
 
     class ChapterController{
+        /**
+         * Displays a chapter or redirects to fight if encounter exists.
+         * Checks authentication, loads hero and chapter data.
+         * If an encounter exists for this chapter, redirects to the fight view.
+         * Otherwise, displays the chapter content.
+         * 
+         * @param int $hero_id The ID of the hero viewing the chapter
+         * @param int $chapter_id The ID of the chapter to display
+         */
         function show($hero_id, $chapter_id){
             //if not logged in, redirect to login
             if (!isset($_SESSION['user_id'])) {
@@ -11,8 +20,6 @@
 
             $hero = getHeroById($hero_id);
             $chapter = getContentAndImageFromChapterId($chapter_id);
-            $weapon1 = getWeaponById($hero['primary_weapon_item_id'] ?? -1);
-            $weapon2 = getWeaponById($hero['secondary_weapon_item_id'] ?? -1);
             
             // Check if chapter has an encounter
             $encounter = getEncounterAtChapter($chapter_id);
@@ -26,6 +33,14 @@
             include __DIR__ . '/../Views/viewChapter.php';
         }
 
+        /**
+         * Displays the fight interface for a chapter encounter.
+         * Loads hero and monster data, then displays the combat view.
+         * Redirects to chapter view if no monster exists.
+         * 
+         * @param int $hero_id The ID of the hero in combat
+         * @param int $chapter_id The ID of the chapter containing the encounter
+         */
         function fight($hero_id, $chapter_id){
             //if not logged in, redirect to login
             if (!isset($_SESSION['user_id'])) {
@@ -48,6 +63,20 @@
             include __DIR__ . '/../Views/viewFight.php';
         }
 
+        /**
+         * AJAX endpoint to save combat results.
+         * Receives JSON data with fight outcome, updates hero stats if victorious.
+         * Awards 50 XP on victory and marks encounter as defeated.
+         * 
+         * Expected POST data:
+         * - hero_id: int
+         * - chapter_id: int
+         * - victory: bool
+         * - remaining_pv: int
+         * - remaining_mana: int
+         * 
+         * @return void Outputs JSON response {"success": true}
+         */
         function fightResult(){
             if (!isset($_SESSION['user_id'])) {
                 http_response_code(401);
