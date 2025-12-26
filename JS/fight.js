@@ -4,7 +4,9 @@ let hero, monster, chapterId, turnCount, isPlayerTurn;
 function firstturnOrder(player, enemy) {
     let initP = Math.floor(Math.random() * 6) + 1 + player.initiative;
     let initE = Math.floor(Math.random() * 6) + 1 + enemy.initiative;
-    return (initP >= initE) ? 'player' : 'enemy';
+    if (hero.heroClass == 'voleur') 
+        return (initP >= initE) ? 'player' : 'enemy';
+    return (initP > initE) ? 'player' : 'enemy';
 }
 
 function decideTurnOrder(player, enemy) {
@@ -15,7 +17,7 @@ function decideTurnOrder(player, enemy) {
 }
 
 function attackP(attacker, defender) {
-    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2) + (defender.armor?.defense || 0);
+    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2);
     let damage = Math.floor(Math.random() * 7) + attacker.strength + (attacker.weapon?.damage || 0);
     damage = Math.max(0, damage - defense);
     defender.pv -= damage;
