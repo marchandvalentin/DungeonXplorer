@@ -131,12 +131,35 @@
 
         <!-- Action Buttons -->
         <div id="action-buttons" class="grid md:grid-cols-3 gap-4">
-            <button id="btn-attack" class="px-6 py-4 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
-                ⚔️ Attaque Physique
-            </button>
+            <!-- Physical Attack Section -->
+            <div class="space-y-3">
+                <p class="text-center text-white/90 font-semibold text-sm uppercase tracking-wide">⚔️ Attaque</p>
+                <button id="btn-primary-weapon" class="w-full px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
+                    <?php 
+                    if (isset($hero['primary_weapon_item_id']) && $hero['primary_weapon_item_id']) {
+                        echo htmlspecialchars($weapon1['name']);
+                    } else {
+                        echo '✊ Arme Principale';
+                    }
+                    ?>
+                </button>
+                <button id="btn-secondary-weapon" class="w-full px-4 py-3 bg-gradient-to-r from-medieval-red/20 to-medieval-red/30 border-2 border-medieval-red/80 rounded-lg text-red-400 font-bold tracking-wide hover:from-medieval-red/30 hover:to-medieval-red/40 hover:-translate-y-1 transition-all duration-300">
+                    <?php 
+                    if (isset($hero['secondary_weapon_item_id']) && $hero['secondary_weapon_item_id']) {
+                        echo htmlspecialchars($weapon2['name']);
+                    } else {
+                        echo '✊ Sans Arme';
+                    }
+                    ?>
+                </button>
+            </div>
+            
+            <!-- Magic Attack Button -->
             <button id="btn-magic" class="px-6 py-4 bg-gradient-to-r from-blue-600/20 to-blue-600/30 border-2 border-blue-500/80 rounded-lg text-blue-400 font-bold tracking-wide hover:from-blue-600/30 hover:to-blue-600/40 hover:-translate-y-1 transition-all duration-300">
                 🔮 Attaque Magique
             </button>
+            
+            <!-- Flee Button -->
             <button id="btn-flee" class="px-6 py-4 bg-gradient-to-r from-gray-600/20 to-gray-600/30 border-2 border-gray-500/80 rounded-lg text-gray-400 font-bold tracking-wide hover:from-gray-600/30 hover:to-gray-600/40 hover:-translate-y-1 transition-all duration-300">
                 🏃 Fuir
             </button>
