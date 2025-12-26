@@ -87,9 +87,11 @@
         }
 
         function entityCreate() {
+            header('Content-Type: application/json');
+            
             if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
                 http_response_code(403);
-                echo json_encode(['error' => 'Unauthorized']);
+                echo json_encode(['success' => false, 'error' => 'Unauthorized']);
                 exit;
             }
 
@@ -107,10 +109,10 @@
             $strength = $data['strength'] ?? null;
             $attack = $data['attack'] ?? null;
             $xp = $data['xp'] ?? null;
-            $boss = !empty($data['boss']) ? 1 : 0;
+            $boss = isset($data['boss']) ? (int)$data['boss'] : 0;
 
-            if ($nom === null || $pv === null || $mana === null || $initiative === null || $strength === null || $attack === null || $xp === null) {
-                echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
+            if ($nom === null || $pv === null) {
+                echo json_encode(['success' => false, 'error' => 'Le nom et les PV sont requis']);
                 exit;
             }
 
@@ -119,7 +121,7 @@
                 if ($entity_id) {
                     echo json_encode(['success' => true, 'entity_id' => $entity_id]);
                 } else {
-                    echo json_encode(['success' => false, 'error' => 'Erreur lors de la création de l\'entité']);
+                    echo json_encode(['success' => false, 'error' => 'Impossible de créer l\'entité']);
                 }
             } catch (Exception $e) {
                 echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);

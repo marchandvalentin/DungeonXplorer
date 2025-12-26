@@ -96,6 +96,11 @@ $router->get('/dashboard/search-chapters', function() {
     $controller->searchChapters();
 });
 
+$router->post('/dashboard/entityCreate', function() {
+    $controller = new DashboardController();
+    $controller->entityCreate();
+});
+
 $router->get('/item/{item_id}', function($item_id) {
     require_once __DIR__ . '/PHP/Controller/ItemController.php';
     $controller = new ItemController();
@@ -208,17 +213,6 @@ $router->post('/fight/result', function() {
         http_response_code(401);
         exit();
     }
-});
-
-$router->post('/dashboard/entityCreate', function() {
-    if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
-        http_response_code(403);
-        echo json_encode(['error' => 'Unauthorized']);
-        exit;
-    }
-    
-    $controller = new DashboardController();
-    $controller->entityCreate();
 });
 
 // Run the router

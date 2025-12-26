@@ -418,7 +418,7 @@
                             type="number"
                             name="mana"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
-                            require
+                            required
                         >
                     </div>
 
@@ -428,7 +428,7 @@
                             type="number"
                             name="initiative"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
-                            require
+                            required
                         >
                     </div>
 
@@ -438,7 +438,7 @@
                             type="number"
                             name="strength"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
-                            require
+                            required
                         >
                     </div>
 
@@ -457,7 +457,7 @@
                             type="number"
                             name="xp"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
-                            require
+                            required
                         >
                     </div>
                     
@@ -468,7 +468,6 @@
                             name="boss"
                             class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
                             value="1"
-                            require
                         >
                     </div>
                 </div>
@@ -849,17 +848,15 @@
             const form = event.target;
             const formData = new FormData(form);
 
-            
-
             const data = {
-                titre: formData.get('titre'),
+                nom: formData.get('nom'),
                 pv:  formData.get('pv'),
                 mana: formData.get('mana'),
                 initiative: formData.get('initiative'),
                 strength: formData.get('strength'),
                 attack: formData.get('attack'),
                 xp: formData.get('xp'),
-                isboss: formData.get('boss'),
+                boss: formData.get('boss') ? 1 : 0,
             };
 
             fetch('/dashboard/entityCreate', {
@@ -869,6 +866,20 @@
                 },
                 body: JSON.stringify(data)
             })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('✓ Entité créée avec succès!');
+                    hideCreateEntityModal();
+                    form.reset();
+                } else {
+                    alert('❌ Erreur: ' + (data.error || 'Erreur inconnue'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('❌ Erreur de connexion');
+            });
         }
 
         function addCreateLinkField() {
