@@ -22,6 +22,13 @@ tailwind.config = {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DungeonXPlorer initialized! 🏰');
     
+    // Check for notification parameter (should run on all pages)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('notification') === 'hpFull') {
+        console.log('Notification parameter found: hpFull');
+        showNotification('Votre vie est déjà pleine');
+    }
+    
     // Ajout d'animations supplémentaires ou fonctionnalités JavaScript ici
     
     // Modal inventory setup
@@ -56,14 +63,63 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Auto-open inventory if URL parameter is present
-        const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('openInventory') === '1') {
             console.log('Auto-opening inventory from URL parameter');
             openModal.setAttribute('src', '/res/sacImg/sac_ouvert_plein.png');
             modal.classList.remove('hidden');
         }
+        
+        // Clean up URL parameters
+        if (urlParams.has('openInventory') || urlParams.has('notification')) {
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete('openInventory');
+            newUrl.searchParams.delete('notification');
+            window.history.replaceState({}, '', newUrl.toString());
+        }
     } else {
         console.error('Missing modal elements!');
     }
 });
+
+// Notification functions
+function showNotification(message) {
+    console.log('showNotification called with message:', message);
+    const toast = document.getElementById('notificationToast');
+    const messageElement = document.getElementById('notificationMessage');
+    
+    console.log('Toast element:', toast);
+    console.log('Message element:', messageElement);
+    
+    if (toast && messageElement) {
+        messageElement.textContent = message;
+        toast.classList.remove('hidden');
+        console.log('Notification displayed, starting animation');
+        
+        // Slide in animation
+        setTimeout(() => {
+            toast.style.transform = 'translateX(0)';
+            toast.style.opacity = '1';
+        }, 10);
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            hideNotification();
+        }, 3000);
+    } else {
+        console.error('Toast or message element not found!');
+    }
+}
+
+function hideNotification() {
+    const toast = document.getElementById('notificationToast');
+    if (toast) {
+        console.log('Hiding notification');
+        toast.style.transform = 'translateX(400px)';
+        toast.style.opacity = '0';
+        
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 500);
+    }
+}
 
