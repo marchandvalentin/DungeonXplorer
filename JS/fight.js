@@ -207,6 +207,7 @@ function startCombat() {
 
 // Auto-initialize - DOM is already loaded since script is at end of body
 if (window.heroData && window.monsterData && window.currentChapterId !== undefined) {
+    console.log('Initializing combat...');
     initializeCombat(window.heroData, window.monsterData, window.currentChapterId, window.weapon1, window.weapon2);
     
     // Attach event listeners
@@ -215,7 +216,15 @@ if (window.heroData && window.monsterData && window.currentChapterId !== undefin
     const magicBtn = document.getElementById('btn-magic');
     const fleeBtn = document.getElementById('btn-flee');
     
+    console.log('Buttons found:', {
+        primary: attackBtnPrimary,
+        secondary: attackBtnSecondary,
+        magic: magicBtn,
+        flee: fleeBtn
+    });
+    
     if (attackBtnPrimary && attackBtnSecondary && magicBtn && fleeBtn) {
+        console.log('All buttons found, attaching event listeners...');
         attackBtnPrimary.addEventListener('click', function() {
             console.log('Primary weapon attack');
             playerAttack(weapon1);
@@ -225,13 +234,25 @@ if (window.heroData && window.monsterData && window.currentChapterId !== undefin
             playerAttack(weapon2);
         });
         magicBtn.addEventListener('click', function() {
+            console.log('Magic attack');
             playerMagicAttack();
         });
         fleeBtn.addEventListener('click', function() {
+            console.log('Flee attempt');
             flee();
         });
         
         startCombat();
+    } else {
+        console.error('Some buttons are missing!');
     }
+} else {
+    console.error('Missing combat data:', {
+        heroData: window.heroData,
+        monsterData: window.monsterData,
+        chapterId: window.currentChapterId,
+        weapon1: window.weapon1,
+        weapon2: window.weapon2
+    });
 }
 

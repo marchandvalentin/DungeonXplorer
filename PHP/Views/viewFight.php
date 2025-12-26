@@ -218,6 +218,13 @@
         };
 
         window.currentChapterId = <?php echo $chapter_id; ?>;
+        
+        // DEBUG - Check if data is loaded correctly
+        console.log('Hero Data:', window.heroData);
+        console.log('Weapon 1:', window.weapon1);
+        console.log('Weapon 2:', window.weapon2);
+        console.log('Monster Data:', window.monsterData);
+        console.log('Chapter ID:', window.currentChapterId);
     </script>
     
     <script src="/JS/fight.js"></script>
