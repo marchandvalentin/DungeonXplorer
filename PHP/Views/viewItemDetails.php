@@ -76,11 +76,46 @@
                         </div>
                     </div>
 
-                    <!-- Effect Value -->
+                    <!-- Properties Dropdown -->
                     <div>
-                        <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Valeur d'Effet</label>
-                        <div class="bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3">
-                            <p class="text-medieval-cream" id="displayEffectValue"><?php echo htmlspecialchars($item['effect_value'] ?? 'N/A'); ?></p>
+                        <button onclick="toggleProperties()" class="w-full flex items-center justify-between bg-[rgba(42,30,20,0.7)] border border-[rgba(139,40,40,0.3)] rounded-lg px-4 py-3 hover:bg-[rgba(42,30,20,0.9)] transition-colors">
+                            <span class="text-medieval-cream/70 text-sm font-semibold">Propriétés de l'item</span>
+                            <svg id="propertiesIcon" class="w-5 h-5 text-medieval-cream/70 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="propertiesContent" class="hidden mt-2 bg-[rgba(42,30,20,0.5)] border border-[rgba(139,40,40,0.3)] rounded-lg overflow-hidden">
+                            <?php if (!empty($itemProperties)): ?>
+                                <div class="divide-y divide-[rgba(139,40,40,0.2)]">
+                                    <?php foreach ($itemProperties as $property): ?>
+                                        <?php if ($property['prop_libelle'] !== 'initiative'): ?>
+                                        <div class="px-4 py-3 flex justify-between items-center">
+                                            <span class="text-medieval-cream/80 capitalize">
+                                                <?php 
+                                                    $labels = [
+                                                        'pv' => 'Points de Vie',
+                                                        'mana' => 'Mana',
+                                                        'force' => 'Force',
+                                                        'xp' => 'Expérience'
+                                                    ];
+                                                    echo $labels[$property['prop_libelle']] ?? htmlspecialchars($property['prop_libelle']);
+                                                ?>
+                                            </span>
+                                            <span class="text-medieval-lightred font-bold">
+                                                <?php 
+                                                    $value = $property['value_of_property'] ?? $property['prop_value'] ?? 0;
+                                                    echo ($value > 0 ? '+' : '') . $value;
+                                                ?>
+                                            </span>
+                                        </div>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="px-4 py-3 text-medieval-cream/50 text-center">
+                                    Aucune propriété définie
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -151,19 +186,6 @@
                                 required
                             ><?php echo htmlspecialchars($item['description'] ?? ''); ?></textarea>
                         </div>
-
-                        <!-- Effect Value Input -->
-                        <div>
-                            <label class="text-medieval-cream/70 text-sm font-semibold mb-2 block">Valeur d'Effet</label>
-                            <input 
-                                type="number" 
-                                id="editEffectValue" 
-                                name="effect_value"
-                                value="<?php echo htmlspecialchars($item['effect_value'] ?? 0); ?>"
-                                class="w-full px-4 py-3 bg-[rgba(42,30,20,0.7)] border-2 border-[rgba(139,40,40,0.4)] rounded-lg text-medieval-cream placeholder-medieval-cream/50 focus:border-medieval-red focus:outline-none transition-colors duration-300"
-                                required
-                            >
-                        </div>
                     </div>
 
                     <!-- Error/Success Messages -->
@@ -184,6 +206,19 @@
     </section>
 
     <script>
+        function toggleProperties() {
+            const content = document.getElementById('propertiesContent');
+            const icon = document.getElementById('propertiesIcon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
         function toggleEditMode() {
             const viewMode = document.getElementById('viewMode');
             const editMode = document.getElementById('editMode');
@@ -215,8 +250,7 @@
                 body: JSON.stringify({
                     name: formData.get('name'),
                     type: formData.get('type'),
-                    description: formData.get('description'),
-                    effect_value: parseInt(formData.get('effect_value'))
+                    description: formData.get('description')
                 })
             })
             .then(response => response.json())

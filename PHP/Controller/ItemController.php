@@ -10,6 +10,7 @@
             }
 
             $item = getItemById($item_id);
+            $itemProperties = getItemPropertyById($item_id);
             
             if (!$item) {
                 header('Location: /dashboard');

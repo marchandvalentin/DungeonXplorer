@@ -19,6 +19,7 @@ class InventoryController
 
             // Get hero details
             $hero = getHeroById($hero_id);
+
             $class = getClassByHeroId($hero_id);
             
             // Verify the hero belongs to the current user
@@ -30,6 +31,7 @@ class InventoryController
             // Get item details
             $item = getItemById($item_id);
             $hpAlreadyFull = false;
+            $manaAlreadyFull = false;
             $itemWasUsed = false;
             
             if ($item) {
@@ -51,9 +53,15 @@ class InventoryController
                             break;
                         case 'mana':
                             if ($class['name'] !== 'Guerrier') {
-                                $new_mana = $hero['mana'] + $property['value_of_property'];
-                                updateHeroMana($hero_id, $new_mana);
-                                $itemWasUsed = true;
+                                if($hero['mana'] < $hero['mana_max']){
+                                    $new_mana = $hero['mana'] + $property['value_of_property'];
+                                    updateHeroMana($hero_id, min($hero['mana_max'], $new_mana));
+                                    $itemWasUsed = true;
+                                }
+                                else{
+                                    // If Mana is already full, mark it but continue processing other properties
+                                    $manaAlreadyFull = true;
+                                }
                             }
                             break;
                         case 'force':
@@ -84,8 +92,16 @@ class InventoryController
             $progress = getHeroProgress($hero_id);
             $chapter_id = $progress['chapter_id'] ?? 1;
             
-            // Add notification message only if HP was full AND no properties were applied
-            $notificationParam = ($hpAlreadyFull && !$itemWasUsed) ? '&notification=hpFull' : '';
+            // Add notification message if HP or mana was full AND no properties were applied
+            $notificationParam = '';
+            if (!$itemWasUsed) {
+                if ($hpAlreadyFull) {
+                    $notificationParam .= '&notification=hpFull';
+                }
+                if ($manaAlreadyFull) {
+                    $notificationParam .= ($hpAlreadyFull ? '&notification2=manaFull' : '&notification=manaFull');
+                }
+            }
             header("Location: /chapter/{$hero_id}/{$chapter_id}?openInventory=1{$notificationParam}");
             exit();
         }
@@ -135,6 +151,11 @@ class InventoryController
                 }
 
                 foreach($itemProps as $property){
+                    // Skip all properties for weapons except mana
+                    if($itemType === 'arme' && $property['prop_libelle'] !== 'mana') {
+                        continue;
+                    }
+                    
                     switch($property['prop_libelle']){
                         case 'pv':
                             $new_pv_max =  $hero['pv_max'] + $property['value_of_property'];
@@ -142,8 +163,8 @@ class InventoryController
                             break;
                         case 'mana':
                             if ($class['name'] !== 'Guerrier') {
-                                $new_mana = $hero['mana'] + $property['value_of_property'];
-                                updateHeroMana($hero_id, $new_mana);
+                                $new_mana = $hero['mana_max'] + $property['value_of_property'];
+                                updateManaMax($hero_id, $new_mana);
                             }
                             break;
                         case 'force':
@@ -225,8 +246,9 @@ class InventoryController
                             break;
                         case 'mana':
                             if ($class['name'] !== 'Guerrier') {
-                                $new_mana = $hero['mana'] - $property['value_of_property'];
-                                updateHeroMana($hero_id, $new_mana);
+                                $new_mana = $hero['mana_max'] - $property['value_of_property'];
+                                updateManaMax($hero_id, $new_mana);
+                                updateHeroMana($hero_id, min($hero['mana'], $new_mana));
                             }
                             break;
                         case 'force':
