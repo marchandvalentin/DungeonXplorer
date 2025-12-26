@@ -1,10 +1,12 @@
 // Combat state variables
-let hero, monster, chapterId, turnCount, isPlayerTurn;
+let hero, monster, chapterId, weapon1, weapon2, turnCount, isPlayerTurn;
 
 function firstturnOrder(player, enemy) {
     let initP = Math.floor(Math.random() * 6) + 1 + player.initiative;
     let initE = Math.floor(Math.random() * 6) + 1 + enemy.initiative;
-    return (initP >= initE) ? 'player' : 'enemy';
+    if (hero.heroClass == 'voleur') 
+        return (initP >= initE) ? 'player' : 'enemy';
+    return (initP > initE) ? 'player' : 'enemy';
 }
 
 function decideTurnOrder(player, enemy) {
@@ -14,9 +16,9 @@ function decideTurnOrder(player, enemy) {
     return firstturnOrder(player, enemy);
 }
 
-function attackP(attacker, defender) {
-    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2) + (defender.armor?.defense || 0);
-    let damage = Math.floor(Math.random() * 7) + attacker.strength + (attacker.weapon?.damage || 0);
+function attackP(attacker, defender, weapon) {
+    let defense = Math.floor(Math.random() * 7) + Math.floor(defender.strength / 2);
+    let damage = Math.floor(Math.random() * 7) + attacker.strength + (weapon ? (weapon.effect ? weapon.effect : 0) : 0);
     damage = Math.max(0, damage - defense);
     defender.pv -= damage;
     return {damage, defenderPv: defender.pv};
@@ -39,10 +41,12 @@ function turnEnd(player, enemy) {}
 function checkVictory(player, enemy) {}
 
 // Combat system functions - initializeCombat will set these values
-function initializeCombat(heroData, monsterData, currentChapterId) {
+function initializeCombat(heroData, monsterData, currentChapterId, weapon1Param, weapon2Param) {
     hero = heroData;
     monster = monsterData;
     chapterId = currentChapterId;
+    weapon1 = weapon1Param;
+    weapon2 = weapon2Param;
     turnCount = 0;
     isPlayerTurn = true;
 }
@@ -74,13 +78,13 @@ function updateStats() {
     document.getElementById('monster-mana-bar').style.width = monsterManaPercent + '%';
 }
 
-function playerAttack() {
+function playerAttack(weapon) {
     if (!isPlayerTurn) {
         return;
     }
 
-    const result = attackP(hero, monster);
-    addLog(`${hero.name} attaque et inflige ${result.damage} dégâts!`, 'damage');
+    const result = attackP(hero, monster, weapon);
+    addLog(`${hero.name} attaque avec ${weapon.name} et inflige ${result.damage} dégâts!`, 'damage');
     updateStats();
     
     if (checkFightEnd()) {
@@ -115,7 +119,7 @@ function enemyTurn() {
     addLog(`C'est au tour de ${monster.name}...`, 'normal');
     
     setTimeout(() => {
-        const result = attackP(monster, hero);
+        const result = attackP(monster, hero, null);
         addLog(`${monster.name} attaque et inflige ${result.damage} dégâts!`, 'damage');
         updateStats();
         
@@ -203,16 +207,20 @@ function startCombat() {
 
 // Auto-initialize - DOM is already loaded since script is at end of body
 if (window.heroData && window.monsterData && window.currentChapterId !== undefined) {
-    initializeCombat(window.heroData, window.monsterData, window.currentChapterId);
+    initializeCombat(window.heroData, window.monsterData, window.currentChapterId, window.weapon1, window.weapon2);
     
     // Attach event listeners
-    const attackBtn = document.getElementById('btn-attack');
+    const attackBtnPrimary = document.getElementById('btn-primary-weapon');
+    const attackBtnSecondary = document.getElementById('btn-secondary-weapon');
     const magicBtn = document.getElementById('btn-magic');
     const fleeBtn = document.getElementById('btn-flee');
     
-    if (attackBtn && magicBtn && fleeBtn) {
-        attackBtn.addEventListener('click', function() {
-            playerAttack();
+    if (attackBtnPrimary && attackBtnSecondary && magicBtn && fleeBtn) {
+        attackBtnPrimary.addEventListener('click', function() {
+            playerAttack(weapon1);
+        });
+        attackBtnSecondary.addEventListener('click', function() {
+            playerAttack(weapon2);
         });
         magicBtn.addEventListener('click', function() {
             playerMagicAttack();

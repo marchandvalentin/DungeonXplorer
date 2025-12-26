@@ -197,6 +197,52 @@ function removeFromInventoryWithItemName($hero_id, $item_name, $quantity)
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    ////////////////// WEAPON FUNCTIONS ///////////////////////
+
+    function getWeaponById($weapon_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Items WHERE id = :id AND typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme')");
+        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getDamageFromWeaponId($weapon_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'force')");
+        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['damage'] : null;
+    }
+
+    function getInitiativeFromWeaponId($weapon_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'initiative')");
+        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['initiative'] : null;
+    }
+
+    function getManaFromWeaponId($weapon_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'mana')");
+        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['mana'] : null;
+    }
+
+    function getAllWeapons() {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Items WHERE typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme') ORDER BY name ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
 
 /**
