@@ -210,6 +210,17 @@ $router->post('/fight/result', function() {
     }
 });
 
+$router->post('/dashboard/entityCreate', function() {
+    if (!isset($_SESSION['user_id']) || $_SESSION['IS_ADMIN'] < 1) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Unauthorized']);
+        exit;
+    }
+    
+    $controller = new DashboardController();
+    $controller->entityCreate();
+});
+
 // Run the router
 $router->run();
 

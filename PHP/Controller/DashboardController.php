@@ -107,16 +107,20 @@
             $strength = $data['strength'] ?? null;
             $attack = $data['attack'] ?? null;
             $xp = $data['xp'] ?? null;
-            $initiative = $data['initiative'] ?? null;
             $boss = !empty($data['boss']) ? 1 : 0;
 
-            if ($titre === null || $content === null) {
+            if ($nom === null || $pv === null || $mana === null || $initiative === null || $strength === null || $attack === null || $xp === null) {
                 echo json_encode(['success' => false, 'error' => 'Tous les champs sont requis']);
                 exit;
             }
 
             try {
-                $entity_id = createEntity($nom, $pv, $mana,$initiative,$strength,$attack,$xp, $boss);
+                $entity_id = createEntity($nom, $pv, $mana, $initiative, $strength, $attack, $xp, $boss);
+                if ($entity_id) {
+                    echo json_encode(['success' => true, 'entity_id' => $entity_id]);
+                } else {
+                    echo json_encode(['success' => false, 'error' => 'Erreur lors de la création de l\'entité']);
+                }
             } catch (Exception $e) {
                 echo json_encode(['success' => false, 'error' => 'Exception: ' . $e->getMessage()]);
             }
