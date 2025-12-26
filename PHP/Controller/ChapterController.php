@@ -11,6 +11,9 @@
 
             $hero = getHeroById($hero_id);
             $chapter = getContentAndImageFromChapterId($chapter_id);
+            $weapon1 = getWeaponById($hero['primary_weapon_item_id'] ?? -1);
+            $weapon2 = getWeaponById($hero['secondary_weapon_item_id'] ?? -1);
+            $classes = getClasses();
             
             // Check if chapter has an encounter
             $encounter = getEncounterAtChapter($chapter_id);

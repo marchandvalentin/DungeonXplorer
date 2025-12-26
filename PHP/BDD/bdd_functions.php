@@ -112,6 +112,23 @@
         return $heros;
     }
 
+    function getWeaponById($weapon_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM Items WHERE id = :id AND typ_id IN (SELECT typ_id FROM Type_Item WHERE typ_libelle = 'arme')");
+        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getDamageFromWeaponId($weapon_id) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT value_of_property FROM Items_Has_Property WHERE item_id = :id AND prop_id IN (SELECT prop_id FROM Item_Property WHERE prop_libelle = 'force')");
+        $stmt->bindParam(':id', $weapon_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['damage'] : null;
+    }
+
     function updateHeroPV($hero_id, $new_health) {
         global $pdo;
         $stmt = $pdo->prepare("UPDATE Hero SET health = :health WHERE id = :id");
